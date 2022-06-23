@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  CUSTOMER
+}
+
+enum OrderStatus {
+  CREATED
+  PENDING
+  SENT
+  REJECTED
+  CANCELED
+  COMPELETED
+}
+
+enum PaymentStatus {
+  NOT_PAYED
+  FULLY_PAYED
+  PARTIALLY_PAYED
+}
+
+model Address {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  state      String
+  city       String
+  postalCode Int
+  address    String
+  User       User     @relation(fields: [userId], references: [id])
+  userId     String
+}
+
+model Brand {
+  id    String @id @default(cuid())
+  name  String @unique
+  items Item[]
+}
+
+model Item {
+  id               String     @id @default(cuid())
+  name             String     @unique
+  price            Float
+  images           String[]
+  brand            Brand      @relation(fields: [brandId], references: [id])
+  brandId          String
+  currentInventory Int
+  description      String
+  categories       Category[] @relation(references: [id])
+  orders           Order[]    @relation(references: [id])
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  items     Item[]   @relation(references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Invoice {
+  id              String        @id @default(cuid())
+  expectedPayment Float
+  actualPayment   Float
+  transactionId   String?
+  paymentStatus   PaymentStatus @default(NOT_PAYED)
+  order           Order         @relation(fields: [orderId], references: [id])
+  orderId         String        @unique
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  status       OrderStatus @default(CREATED)
+  items        Item[]      @relation(references: [id])
+  total        Float
+  specialNotes String?
+  invoice      Invoice?
+  User         User        @relation(fields: [userId], references: [id])
+  userId       String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model User {
+  id          String    @id @default(cuid())
+  displayName String?
+  email       String    @unique
+  phoneNumber Int?
+  password    String
+  authToken   String?
+  role        Role      @default(CUSTOMER)
+  orders      Order[]
+  addresses   Address[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
