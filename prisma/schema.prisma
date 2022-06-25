@@ -95,15 +95,16 @@ model Order {
 }
 
 model User {
-  id          String    @id @default(cuid())
-  displayName String?
-  email       String    @unique
-  phoneNumber Int?
-  password    String
-  authToken   String?
-  role        Role      @default(CUSTOMER)
-  orders      Order[]
-  addresses   Address[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id           String    @id @default(cuid())
+  displayName  String?
+  email        String    @unique
+  phoneNumber  Int?
+  password     String
+  authToken    String?
+  authTokenExp DateTime?
+  role         Role      @default(CUSTOMER)
+  orders       Order[]
+  addresses    Address[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
