@@ -41,9 +41,11 @@ model Address {
 }
 
 model Brand {
-  id    String @id @default(cuid())
-  name  String @unique
-  items Item[]
+  id        String   @id @default(cuid())
+  name      String   @unique
+  items     Item[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Item {
@@ -51,19 +53,21 @@ model Item {
   name             String     @unique
   price            Float
   images           String[]
-  brand            Brand      @relation(fields: [brandId], references: [id])
-  brandId          String
   currentInventory Int
   description      String
-  categories       Category[] @relation(references: [id])
-  orders           Order[]    @relation(references: [id])
+  published        Boolean    @default(false)
+  brand            Brand?     @relation(fields: [brandId], references: [id])
+  brandId          String?
+  categories       Category[]
+  orders           Order[]
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
 }
 
 model Category {
   id        String   @id @default(cuid())
-  items     Item[]   @relation(references: [id])
+  name      String   @unique
+  items     Item[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -83,7 +87,7 @@ model Invoice {
 model Order {
   id           String      @id @default(cuid())
   status       OrderStatus @default(CREATED)
-  items        Item[]      @relation(references: [id])
+  items        Item[]
   total        Float
   specialNotes String?
   invoice      Invoice?
