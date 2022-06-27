@@ -9,11 +9,7 @@ function App() {
         <Route index element={<div>Home</div>} />
         <Route
           path="*"
-          element={
-            <main style={{ padding: "1rem" }}>
-              <p>There's nothing here!</p>
-            </main>
-          }
+          element={<p>There's nothing here!</p>}
         />
       </Route>
     </Routes>
