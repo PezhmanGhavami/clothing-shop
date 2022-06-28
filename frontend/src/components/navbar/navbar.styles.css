@@ -1,10 +1,12 @@
 .navbar {
   min-width: 90vw;
-  min-height: 7vh;
+  min-height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 1vw;
+  padding: 0 1.5vw;
+  background-color: #334155;
+  color: #e2e8f0;
 }
 
 .navbar-nav {
@@ -15,27 +17,120 @@
   align-items: center;
 }
 
-.navbar-link {
-  margin: 0 1vw;
-}
-.navbar-links-container a:hover,
-.active {
-  border-bottom: solid 1px black;
+.navbar-logo-container {
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 2vmin;
+  font-size: 1.2rem;
 }
 
-.navbar-others-container {
+.navbar-links-container {
+  position: fixed;
+  min-height: 100vh;
+  min-width: 45vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: #334155;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.active-links-container {
+  transform: translateX(1%);
+}
+
+.navbar-links-container li {
+  list-style: none;
+  margin: 1vh 0;
+  min-height: 3vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-link {
+  display: block;
+  font-size: 1.2rem;
+  padding: 1vmin 0;
+  width: 75%;
+  border-bottom: solid 1px transparent;
+}
+
+.active-link,
+.navbar-link:hover {
+  border-bottom-color: #e2e8f0;
+}
+
+.navbar-icon-links-container {
   display: flex;
 }
 
-.navbar-others-container div {
+.icon-link {
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-size: 1.05rem;
-  padding-left: 1vw;
+  font-size: 1.3rem;
+  padding: 2vmin;
 }
 
-.navbar-logo-container {
-  font-weight: bold;
+.burger {
+  position: fixed;
+  bottom: 15%;
+  right: 5%;
+  background-color: #334155;
+  padding: 3vmin;
+  border-radius: 100%;
+  z-index: 101;
+  cursor: pointer;
+}
+
+.burger div {
+  width: 5vmin;
+  height: 3px;
+  background-color: #e2e8f0;
+  margin: 5px;
+  transition: all 0.3s ease;
+}
+
+.burger-close #burger-top {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+.burger-close #burger-middle {
+  opacity: 0;
+}
+.burger-close #burger-bottom {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+@media only screen and (min-width: 768px) {
+  .burger {
+    display: none;
+  }
+
+  .navbar-links-container {
+    position: static;
+    min-height: auto;
+    min-width: auto;
+    display: flex;
+    flex-direction: unset;
+    justify-content: unset;
+    background-color: inherit;
+    z-index: unset;
+    transform: unset;
+    transition: unset;
+  }
+  .navbar-link {
+    color: unset;
+    margin: 0 1vw;
+    width: auto;
+    font-size: unset;
+    font-size: 1.1rem;
+  }
 }
