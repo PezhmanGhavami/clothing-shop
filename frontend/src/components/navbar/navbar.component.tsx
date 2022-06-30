@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from "react";
+import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import {
   FaUser,
@@ -18,12 +18,6 @@ const Navbar = () => {
     setOpenModal((prev) => !prev);
   };
 
-  const stopPropagation = (
-    event: MouseEvent<HTMLDivElement>
-  ) => {
-    event.stopPropagation();
-  };
-
   const pathMatchRoute = (route: string) => {
     if (route === location.pathname) {
       return true;
@@ -33,17 +27,23 @@ const Navbar = () => {
 
   return (
     <>
-      <div
-        onClick={toggleModal}
-        className={`${
-          openModal ? "burger-close " : ""
-        }burger`}
-      >
-        <div id="burger-top"></div>
-        <div id="burger-middle"></div>
-        <div id="burger-bottom"></div>
-      </div>
       <div className="navbar">
+        {openModal && (
+          <div
+            className="navigation-overlay"
+            onClick={toggleModal}
+          />
+        )}
+        <div
+          onClick={toggleModal}
+          className={`${
+            openModal ? "burger-close " : ""
+          }burger`}
+        >
+          <div id="burger-top"></div>
+          <div id="burger-middle"></div>
+          <div id="burger-bottom"></div>
+        </div>
         <nav className="navbar-nav">
           <div className="navbar-logo-container">
             <Link to={"/"}>Clothing Shop</Link>
