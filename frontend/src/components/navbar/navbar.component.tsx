@@ -131,10 +131,7 @@ const Navbar = () => {
             <Link to={"/search"} className="icon-link">
               <FaSearch title="Search" />
             </Link>
-            <Link
-              to={"/profile/wishlist"}
-              className="icon-link"
-            >
+            <Link to={"/wishlist"} className="icon-link">
               <FaHeart title="Wishlist" />
             </Link>
             <Link to={"/cart"} className="icon-link">
