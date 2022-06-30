@@ -42,7 +42,7 @@
 }
 
 .active-links-container {
-  transform: translateX(1%);
+  transform: translateX(0%);
 }
 
 .navbar-links-container li {
