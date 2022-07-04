@@ -1,4 +1,6 @@
 .container {
-  min-height: 90vh;
+  min-height: 76vh;
   min-width: 100vw;
+  background-color: var(--neutral);
+  color: var(--text-color);
 }
