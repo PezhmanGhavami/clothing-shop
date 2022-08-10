@@ -258,4 +258,4 @@ const SHOP_DATA = [
   },
 ];
 
-module.exports = SHOP_DATA;
+export default SHOP_DATA;

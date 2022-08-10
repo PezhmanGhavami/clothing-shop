@@ -1,6 +1,6 @@
-const prisma = require("../utils/prisma-client");
-const SHOP_DATA = require("./shop-data");
-const BRANDS = require("./company-names.json");
+import prisma from "../utils/prisma-client";
+import SHOP_DATA from "./shop-data";
+import * as BRANDS from "./company-names.json";
 
 async function seedDB() {
   const deleteItems = prisma.item.deleteMany({});
