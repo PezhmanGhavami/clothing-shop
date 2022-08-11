@@ -258,4 +258,19 @@ const SHOP_DATA = [
   },
 ];
 
-export default SHOP_DATA;
+const BRANDS = [
+  {
+    name: "Brand A",
+  },
+  {
+    name: "Brand B",
+  },
+  {
+    name: "Brand C",
+  },
+  {
+    name: "Brand D",
+  },
+];
+
+export { SHOP_DATA, BRANDS };
