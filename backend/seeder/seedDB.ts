@@ -26,7 +26,9 @@ async function seedDB() {
 
     const brands = await prisma.brand.findMany({});
     for (const itemOfCategory of category.items) {
-      const brandIndex = Math.floor(Math.random() * 4);
+      const brandIndex = Math.floor(
+        Math.random() * BRANDS.length
+      );
 
       await prisma.item.create({
         data: {
