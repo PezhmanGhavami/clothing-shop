@@ -3,6 +3,7 @@ dotenv.config();
 import express from "express";
 
 import usersRouter from "./routes/users-routes";
+import categoriesRouter from "./routes/categories-routes";
 
 import errorHandler from "./middlewares/error-middleware";
 
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", usersRouter);
+app.use("/api/categories", categoriesRouter);
 
 app.use("*", (req, res) => {
   res.status(404).send("Not Found");
