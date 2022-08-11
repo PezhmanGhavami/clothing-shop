@@ -17,12 +17,6 @@ async function seedDB() {
     skipDuplicates: true,
   });
 
-  await prisma.category.create({
-    data: {
-      name: "seed",
-    },
-  });
-
   for (const category of SHOP_DATA) {
     await prisma.category.create({
       data: {
@@ -41,8 +35,7 @@ async function seedDB() {
           images: [itemOfCategory.imageUrl],
           brand: { connect: { id: brands[brandIndex].id } },
           currentInventory: Math.floor(Math.random() * 20),
-          description:
-            "test description for an item that is of brand test brand",
+          description: `test description for an item that is of brand ${brands[brandIndex].name}`,
           categories: {
             connectOrCreate: [
               {

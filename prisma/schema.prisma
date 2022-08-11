@@ -48,18 +48,38 @@ model Brand {
   updatedAt DateTime @updatedAt
 }
 
+model Review {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  score     Int
+  upVotes   Int      @default(0)
+  downVotes Int      @default(0)
+  User      User     @relation(fields: [userId], references: [id])
+  userId    String
+  Item      Item     @relation(fields: [itemId], references: [id])
+  itemId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Item {
   id               String     @id @default(cuid())
   name             String     @unique
   price            Float
+  sold             Int        @default(0)
+  viewed           Int        @default(0)
   images           String[]
-  currentInventory Int
+  currentInventory Int        @default(0)
   description      String
   published        Boolean    @default(false)
-  brand            Brand?     @relation(fields: [brandId], references: [id])
-  brandId          String?
+  brand            Brand      @relation(fields: [brandId], references: [id])
+  brandId          String
   categories       Category[]
   orders           Order[]
+  reviews          Review[]
+  specifications   Json?
+  reviewsScore     Float      @default(0.0)
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
 }
@@ -109,6 +129,7 @@ model User {
   role         Role      @default(CUSTOMER)
   orders       Order[]
   addresses    Address[]
+  reviews      Review[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }
