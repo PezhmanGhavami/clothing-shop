@@ -30,16 +30,18 @@ const protect: IExpressEndpointHandler = (
       .findFirst({
         where: {
           id: (decoded as IToken).id,
-          NOT: {
-            expiredJWTs: {
-              has: token,
+          OR: [
+            {
+              expiredJWTs: { isEmpty: true },
             },
-          },
-          // OR: [
-          //   {
-          //     expiredJWTs: { isEmpty: true },
-          //   },
-          // ],
+            {
+              NOT: {
+                expiredJWTs: {
+                  has: token,
+                },
+              },
+            },
+          ],
         },
       })
       .then((user) => {
