@@ -181,23 +181,22 @@ const logoutUserFromEverywhere: IExpressEndpointHandler = (
   res,
   next
 ) => {
-  const newActiveJWTs = res.locals.user.activeJWTs.filter(
+  const newExpiredJWTs = res.locals.user.activeJWTs.filter(
     (token: string) => token !== res.locals.token
   );
-
   prisma.user
     .update({
       data: {
-        activeJWTs: newActiveJWTs,
+        activeJWTs: [res.locals.token],
         expiredJWTs: {
-          push: res.locals.token,
+          push: newExpiredJWTs,
         },
       },
       where: { id: res.locals.user.id },
     })
     .then(() => {
       return res.status(202).json({
-        message: "User logged out.",
+        message: "User logged out from all devices.",
       });
     })
     .catch((error) => {
