@@ -7,13 +7,13 @@ const brandsRouter = express.Router();
 
 brandsRouter
   .route("/")
-  .post(isAdmin, brandsController.addBrand)
+  .post(isAdmin, brandsController.createBrand)
   .get(brandsController.getBrands);
 
 brandsRouter
-  .route("/:categoryID")
+  .route("/:brandID")
   .get(brandsController.getBrand)
-  .put(isAdmin, brandsController.editBrand)
+  .put(isAdmin, brandsController.updateBrand)
   .delete(isAdmin, brandsController.deleteBrand);
 
 export default brandsRouter;

@@ -3,6 +3,7 @@ dotenv.config();
 import express from "express";
 
 import usersRouter from "./routes/users-routes";
+import brandsRouter from "./routes/brands-routes";
 import categoriesRouter from "./routes/categories-routes";
 
 import errorHandler from "./middlewares/error-middleware";
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", usersRouter);
+app.use("/api/brands", brandsRouter);
 app.use("/api/categories", categoriesRouter);
 
 app.use("*", (req, res) => {
