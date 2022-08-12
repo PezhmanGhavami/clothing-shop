@@ -157,7 +157,7 @@ const updateCategory: IExpressEndpointHandler = (
     }
   }
 
-  return prisma.category
+  prisma.category
     .update({
       data: {
         ...payload,

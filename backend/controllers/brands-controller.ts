@@ -157,7 +157,7 @@ const updateBrand: IExpressEndpointHandler = (
     }
   }
 
-  return prisma.brand
+  prisma.brand
     .update({
       data: {
         ...payload,
