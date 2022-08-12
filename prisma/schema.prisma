@@ -130,6 +130,8 @@ model User {
   orders       Order[]
   addresses    Address[]
   reviews      Review[]
+  activeJWTs   String[]  @default([])
+  expiredJWTs  String[]  @default([])
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }

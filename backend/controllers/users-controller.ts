@@ -9,7 +9,7 @@ function generateToken(id: string) {
   if (process.env.JWT_SECRET) {
     const payload: IToken = { id };
     return jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "30d",
+      expiresIn: "7d",
     });
   }
   throw new Error("Couldn't generate token.");
@@ -100,15 +100,105 @@ const loginUser: IExpressEndpointHandler = (
     })
     .then(([passwordIsCorrect, user]) => {
       if (passwordIsCorrect) {
-        return res.status(202).json({
-          id: user.id,
-          name: user.displayName,
-          email: user.email,
-          token: generateToken(user.id),
+        return prisma.user.update({
+          data: {
+            activeJWTs: {
+              push: generateToken(user.id),
+            },
+          },
+          where: {
+            id: user.id,
+          },
         });
       }
       res.status(401);
       throw new Error("Wrong email or password.");
+    })
+    .then((user) => {
+      return res.status(202).json({
+        id: user.id,
+        name: user.displayName,
+        email: user.email,
+        token: user.activeJWTs[user.activeJWTs.length - 1],
+      });
+    })
+    .catch((error) => {
+      if (res.statusCode) {
+        return next(error);
+      }
+      console.log(error);
+      res.status(500);
+      return next(new Error("Something went wrong."));
+    });
+};
+
+/**
+ * @desc   Logs out a user
+ * @route  POST /api/users/logout
+ * @access Public
+ * */
+const logoutUser: IExpressEndpointHandler = (
+  req,
+  res,
+  next
+) => {
+  const newActiveJWTs = res.locals.user.activeJWTs.filter(
+    (token: string) => token !== res.locals.token
+  );
+
+  prisma.user
+    .update({
+      data: {
+        activeJWTs: newActiveJWTs,
+        expiredJWTs: {
+          push: res.locals.token,
+        },
+      },
+      where: { id: res.locals.user.id },
+    })
+    .then(() => {
+      return res.status(202).json({
+        message: "User logged out.",
+      });
+    })
+    .catch((error) => {
+      if (res.statusCode) {
+        return next(error);
+      }
+      console.log(error);
+      res.status(500);
+      return next(new Error("Something went wrong."));
+    });
+};
+
+/**
+ * @desc   Logs out a user from all their devices except the one doing this
+ * @route  POST /api/users/logout
+ * @access Public
+ * */
+const logoutUserFromEverywhere: IExpressEndpointHandler = (
+  req,
+  res,
+  next
+) => {
+  const newActiveJWTs = res.locals.user.activeJWTs.filter(
+    (token: string) => token !== res.locals.token
+  );
+
+  prisma.user
+    .update({
+      data: {
+        activeJWTs: newActiveJWTs,
+        expiredJWTs: {
+          push: res.locals.token,
+        },
+      },
+      where: { id: res.locals.user.id },
+    })
+    .then(() => {
+      return res.status(202).json({
+        message: "User logged out.",
+      });
     })
     .catch((error) => {
       if (res.statusCode) {
@@ -139,4 +229,10 @@ const getUser: IExpressEndpointHandler = (
   res.status(200).json(user);
 };
 
-export { getUser, loginUser, registerUser };
+export {
+  getUser,
+  loginUser,
+  logoutUser,
+  registerUser,
+  logoutUserFromEverywhere,
+};

@@ -20,20 +20,36 @@ const protect: IExpressEndpointHandler = (
     //Get token from header
     const token = req.headers.authorization.split(" ")[1];
     //Verify token
+    //TODO - make this async and catch the expiration
     const decoded = jwt.verify(
       token,
       process.env.JWT_SECRET
     );
     //Get user from token
     prisma.user
-      .findUnique({
+      .findFirst({
         where: {
           id: (decoded as IToken).id,
+          NOT: {
+            expiredJWTs: {
+              has: token,
+            },
+          },
+          // OR: [
+          //   {
+          //     expiredJWTs: { isEmpty: true },
+          //   },
+          // ],
         },
       })
       .then((user) => {
-        res.locals.user = user;
-        next();
+        if (user) {
+          res.locals.user = user;
+          res.locals.token = token;
+          next();
+        } else {
+          throw new Error("No user matched.");
+        }
       })
       .catch((error) => {
         console.log(error);
