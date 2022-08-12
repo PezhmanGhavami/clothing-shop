@@ -157,30 +157,59 @@ const updateBrand: IExpressEndpointHandler = (
     }
   }
 
-  prisma.brand
-    .update({
-      data: {
-        ...payload,
-      },
-      where: { id: brandID },
-    })
-    .then((brand) => {
-      return res.status(202).json({
-        ...brand,
+  function brandUpdate() {
+    return prisma.brand
+      .update({
+        data: {
+          ...payload,
+        },
+        where: { id: brandID },
+      })
+      .then((brand) => {
+        return res.status(202).json({
+          ...brand,
+        });
+      })
+      .catch((error) => {
+        if (res.statusCode !== 200) {
+          return next(error);
+        }
+        if (error.code === "P2025") {
+          res.status(400);
+          return next(new Error("Brand doesn't exist."));
+        }
+        console.log(error);
+        res.status(500);
+        return next(new Error("Something went wrong."));
       });
-    })
-    .catch((error) => {
-      if (res.statusCode !== 200) {
-        return next(error);
-      }
-      if (error.code === "P2025") {
-        res.status(400);
-        return next(new Error("Brand doesn't exist."));
-      }
-      console.log(error);
-      res.status(500);
-      return next(new Error("Something went wrong."));
-    });
+  }
+
+  if (payload.items?.disconnect) {
+    const prismaItemsTransactions =
+      payload.items.disconnect.map((item) => {
+        return prisma.item.update({
+          data: {
+            brand: {
+              connectOrCreate: {
+                create: { name: "Unknown" },
+                where: { name: "Unknown" },
+              },
+            },
+          },
+          where: {
+            id: item.id,
+          },
+        });
+      });
+
+    delete payload.items.disconnect;
+
+    return prisma
+      .$transaction(prismaItemsTransactions)
+      .then(() => brandUpdate());
+  }
+
+  brandUpdate();
 };
 
 /**
