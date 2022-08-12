@@ -5,15 +5,15 @@ import isAdmin from "../middlewares/admin-middleware";
 
 const itemsRouter = express.Router();
 
-itemsRouter
-  .route("/")
-  .post(isAdmin, itemsController.addItem)
-  .get(itemsController.getItems);
+// itemsRouter
+//   .route("/")
+//   .post(isAdmin, itemsController.createItem);
+// .get(itemsController.getItems);
 
-  itemsRouter
-  .route("/:categoryID")
+itemsRouter
+  .route("/:itemID")
   .get(itemsController.getItem)
-  .put(isAdmin, itemsController.editItem)
-  .delete(isAdmin, itemsController.deleteItem);
+  // .put(isAdmin, itemsController.updateItem)
+  // .delete(isAdmin, itemsController.deleteItem);
 
 export default itemsRouter;
