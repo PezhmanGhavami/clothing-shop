@@ -11,9 +11,10 @@ import Hamburger from "../hamburger/hamburger.component";
 import Overlay from "../overlay/overlay.component";
 
 const navLinks = {
-  liClasses: "h-1/12 w-full md:h-auto my-1 md:my-0 md:mx-2 lg:mx-4 2xl:mx-8 flex justify-center items-center",
+  liClasses:
+    "h-1/12 w-full md:h-auto my-1 md:my-0 md:mx-2 lg:mx-4 2xl:mx-8 flex justify-center items-center",
   linkClasses:
-    "block text-lg py-1 w-10/12 md:w-full md:min-w-max text-center border-b border-transparent hover:border-b-white ",
+    "block text-lg py-1 w-10/12 md:w-full md:min-w-max text-center border-b border-transparent hover:border-b-slate-100 ",
   links: [
     { name: "Home", to: "/" },
     {
@@ -57,7 +58,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="bg-slate-900 flex justify-items-center items-center sticky text-white h-20 py-1 border-b border-slate-700">
+      <div className="flex justify-items-center items-center sticky h-20 py-1">
         {openModal && <Overlay handleClick={toggleModal} />}
         <Hamburger
           openModal={openModal}
@@ -83,7 +84,7 @@ const Navbar = () => {
                   to={link.to}
                   className={`${navLinks.linkClasses}${
                     pathMatchRoute(link.to)
-                      ? "border-b-white"
+                      ? "border-b-slate-100"
                       : ""
                   }`}
                 >

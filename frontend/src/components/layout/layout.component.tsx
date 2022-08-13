@@ -1,19 +1,17 @@
 import { Outlet } from "react-router-dom";
 
-import "./layout.styles.css";
-
 import Navbar from "../navbar/navbar.component";
 import Footer from "../footer/footer.component";
 
 const Layout = () => {
   return (
-    <>
+    <div className="h-screen bg-slate-900  text-slate-100">
       <Navbar />
-      <main className="container">
+      <main className="border-y border-y-slate-700 h-3/4">
         <Outlet />
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

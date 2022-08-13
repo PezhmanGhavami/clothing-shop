@@ -3,6 +3,9 @@ interface IHamburger {
   handleClick: () => void;
 }
 
+const lineClasses =
+  "bg-slate-100 h-[2px] w-7 transform transition-transform duration-500";
+
 function Hamburger({ openModal, handleClick }: IHamburger) {
   return (
     <button
@@ -21,13 +24,13 @@ function Hamburger({ openModal, handleClick }: IHamburger) {
           }`}
         >
           <div
-            className={`bg-white h-[2px] w-7 transform transition-all duration-500${
+            className={`${lineClasses}${
               openModal && " -rotate-45 -translate-x-1"
             }`}
           ></div>
-          <div className="bg-white h-[2px] w-7 rounded transform transition-all duration-500 "></div>
+          <div className={lineClasses}></div>
           <div
-            className={`bg-white h-[2px] w-7 transform transition-all duration-500${
+            className={`${lineClasses}${
               openModal && " rotate-45 -translate-x-1"
             }`}
           ></div>
