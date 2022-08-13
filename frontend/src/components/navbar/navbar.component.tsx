@@ -7,7 +7,37 @@ import {
   FaShoppingCart,
 } from "react-icons/fa";
 
-import "./navbar.styles.css";
+import Hamburger from "../hamburger/hamburger.component";
+import Overlay from "../overlay/overlay.component";
+
+const navLinks = {
+  liClasses: "h-1/12 w-full md:h-auto my-1 md:my-0 md:mx-2 lg:mx-4 2xl:mx-8 flex justify-center items-center",
+  linkClasses:
+    "block text-lg py-1 w-10/12 md:w-full md:min-w-max text-center border-b border-transparent hover:border-b-white ",
+  links: [
+    { name: "Home", to: "/" },
+    {
+      name: "Men",
+      to: "/categories/men",
+    },
+    {
+      name: "Women",
+      to: "/categories/women",
+    },
+    {
+      name: "Categories",
+      to: "/categories",
+    },
+    {
+      name: "Special Offers",
+      to: "/offers",
+    },
+    {
+      name: "Contact Us",
+      to: "/contact-us",
+    },
+  ],
+};
 
 const Navbar = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -27,117 +57,65 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="navbar">
-        {openModal && (
-          <div
-            className="navigation-overlay"
-            onClick={toggleModal}
-          />
-        )}
-        <div
-          onClick={toggleModal}
-          className={`${
-            openModal ? "burger-close " : ""
-          }burger`}
-        >
-          <div id="burger-top"></div>
-          <div id="burger-middle"></div>
-          <div id="burger-bottom"></div>
-        </div>
-        <nav className="navbar-nav">
-          <div className="navbar-logo-container">
+      <div className="bg-slate-900 flex justify-items-center items-center sticky text-white h-20 py-1 border-b border-slate-700">
+        {openModal && <Overlay handleClick={toggleModal} />}
+        <Hamburger
+          openModal={openModal}
+          handleClick={toggleModal}
+        />
+        <nav className="w-full h-full flex justify-between items-center">
+          {/* Navbar logo container */}
+          <div className="uppercase text-lg tracking-wide font-medium p-2 lg:p-4">
             <Link to={"/"}>Clothing Shop</Link>
           </div>
+          {/* Links */}
           <ul
-            className={`${
-              openModal ? "active-links-container " : ""
-            }navbar-links-container`}
+            className={`fixed md:static top-0 right-0 z-20 md:z-auto h-screen w-2/4 md:h-auto md:w-auto flex flex-col md:flex-row justify-center items-center bg-slate-700 md:bg-inherit translate-x-full md:translate-x-0 transition-transform md:transition-none ease-in-out duration-500 ${
+              openModal ? "translate-x-0" : ""
+            }`}
           >
-            <li>
-              <Link
-                to={"/"}
-                className={`${
-                  pathMatchRoute("/") ? "active-link " : ""
-                }navbar-link`}
+            {navLinks.links.map((link, index) => (
+              <li
+                key={index}
+                className={navLinks.liClasses}
               >
-                Home
-              </Link>
-            </li>
-            <li>
-              {" "}
-              <Link
-                className={`${
-                  pathMatchRoute("/categories/men")
-                    ? "active-link "
-                    : ""
-                }navbar-link`}
-                to={"/categories/men"}
-              >
-                Men
-              </Link>
-            </li>
-            <li>
-              {" "}
-              <Link
-                className={`${
-                  pathMatchRoute("/categories/women")
-                    ? "active-link "
-                    : ""
-                }navbar-link`}
-                to={"/categories/women"}
-              >
-                Women
-              </Link>
-            </li>
-            <li>
-              {" "}
-              <Link
-                className={`${
-                  pathMatchRoute("/categories")
-                    ? "active-link "
-                    : ""
-                }navbar-link`}
-                to={"/categories"}
-              >
-                Categories
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={`${
-                  pathMatchRoute("/offers")
-                    ? "active-link "
-                    : ""
-                }navbar-link`}
-                to={"/offers"}
-              >
-                Special Offers
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={`${
-                  pathMatchRoute("/contact-us")
-                    ? "active-link "
-                    : ""
-                }navbar-link`}
-                to={"/contact-us"}
-              >
-                Contact Us
-              </Link>
-            </li>
+                <Link
+                  to={link.to}
+                  className={`${navLinks.linkClasses}${
+                    pathMatchRoute(link.to)
+                      ? "border-b-white"
+                      : ""
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
           </ul>
-          <div className="navbar-icon-links-container">
-            <Link to={"/search"} className="icon-link">
+          {/* Icons Search Wishlist Cart Profile */}
+          <div className="flex">
+            <Link
+              to={"/search"}
+              className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg"
+            >
               <FaSearch title="Search" />
             </Link>
-            <Link to={"/wishlist"} className="icon-link">
+            <Link
+              to={"/wishlist"}
+              className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg"
+            >
               <FaHeart title="Wishlist" />
             </Link>
-            <Link to={"/cart"} className="icon-link">
+            <Link
+              to={"/cart"}
+              className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg"
+            >
               <FaShoppingCart title="Cart" />
             </Link>
-            <Link to={"/profile"} className="icon-link">
+            <Link
+              to={"/profile"}
+              className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg"
+            >
               <FaUser title="Profile" />
             </Link>
           </div>

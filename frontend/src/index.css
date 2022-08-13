@@ -1,4 +1,4 @@
-* {
+/* * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -10,8 +10,7 @@
   --accent: #1fb2a6;
   --neutral: #191d24;
   --base-100: #2a303c;
-  /* --text-color: #e2e8f0; */
-  --text-color: #c2d0ea;
+  --text-color: #eeee;
   --info: #3abff8;
   --success: #36d399;
   --warning: #fbbd23;
@@ -29,4 +28,8 @@ body {
 a {
   text-decoration: none;
   color: var(--text-color);
-}
+} */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
