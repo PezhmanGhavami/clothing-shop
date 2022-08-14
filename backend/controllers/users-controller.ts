@@ -115,12 +115,17 @@ const loginUser: IExpressEndpointHandler = (
       throw new Error("Wrong email or password.");
     })
     .then((user) => {
-      return res.status(202).json({
-        id: user.id,
-        name: user.displayName,
-        email: user.email,
-        token: user.activeJWTs[user.activeJWTs.length - 1],
-      });
+      return res
+        .status(202)
+        .append(
+          "L-Auth",
+          user.activeJWTs[user.activeJWTs.length - 1]
+        )
+        .json({
+          id: user.id,
+          name: user.displayName,
+          email: user.email,
+        });
     })
     .catch((error) => {
       if (res.statusCode) {
