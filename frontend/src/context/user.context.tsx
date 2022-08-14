@@ -13,15 +13,7 @@ interface IUser {
 }
 interface IUserState {
   currentUser: IUser | null;
-  isError: boolean;
-  isSuccess: boolean;
-  isLoading: boolean;
-  message: string;
 }
-// export interface IUserLogin {
-//   email: string;
-//   password: string;
-// }
 // export interface IUserRegister extends IUserLogin {
 //   displayName: string;
 //   confirmPassword: string;
@@ -32,10 +24,6 @@ const parsedUser = user ? JSON.parse(user) : null;
 
 const INITIAL_STATE: IUserState = {
   currentUser: parsedUser,
-  isError: false,
-  isLoading: false,
-  isSuccess: false,
-  message: "",
 };
 
 interface IUserContext {
