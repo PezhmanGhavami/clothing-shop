@@ -19,8 +19,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<SignUp />} />
         <Route path="shop/*" element={<div>shop</div>} />
         <Route
           path="checkout"
@@ -28,6 +26,8 @@ function App() {
         />
         <Route path="*" element={<NotFound />} />
       </Route>
+      <Route path="login" element={<Login />} />
+      <Route path="signup" element={<SignUp />} />
     </Routes>
   );
 }

@@ -14,7 +14,7 @@ import {
 import { UserContext } from "../../context/user.context";
 
 import Loading from "../../components/loading/loading.component";
-import FormInput from "../../components/form-input/form-input";
+import Logo from "../../components/logo/logo.component";
 
 interface IUserLoginFrom {
   email: string;
@@ -26,22 +26,10 @@ const defaultFormFields = {
   password: "",
 };
 
-const formFieldInputs = [
-  {
-    label: "Email",
-    type: "email",
-    name: "email",
-    id: "sign-in-email",
-    required: true,
-  },
-  {
-    label: "Password",
-    type: "password",
-    name: "password",
-    id: "sign-in-password",
-    required: true,
-  },
-];
+const inputContainerClasses = "mb-4";
+const labelClasses = "block pb-1";
+const inputClasses =
+  "w-full h-9 rounded-md px-2 bg-slate-900 border border-slate-600 focus:outline-none focus:ring focus:ring-blue-400 focus:bg-neutral-900";
 
 function Login() {
   const { userState, setActiveUser } =
@@ -49,7 +37,6 @@ function Login() {
 
   const [formFields, setFormFields] =
     useState<IUserLoginFrom>(defaultFormFields);
-  const [rememberLogin, setRememberLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
@@ -62,9 +49,6 @@ function Login() {
   const handleChange = (
     event: ChangeEvent<HTMLInputElement>
   ) => {
-    if (event.target.name === "rememberLogin") {
-      return setRememberLogin((prev) => !prev);
-    }
     setFormFields((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -115,55 +99,67 @@ function Login() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center h-full">
+    <div className="flex flex-col justify-start items-center h-screen bg-slate-900 text-slate-100">
+      <Logo />
+      <p className="pb-4 text-lg">
+        Sign in to Clothing Shop
+      </p>
       <form
         onSubmit={handleSubmit}
-        className="border border-slate-600 rounded-xl flex flex-col justify-around px-4 h-3/5 w-3/4"
+        className="border border-slate-600 rounded-xl flex flex-col justify-around p-4 w-3/4"
       >
+        {/* inputs container */}
         <div>
-          {formFieldInputs.map((input) => (
-            <FormInput
-              key={input.id}
-              allInputOptions={{
-                ...input,
-                value:
-                  formFields[input.name as FormFieldsKey],
-                onChange: handleChange,
-              }}
-            />
-          ))}
-          {/* remember me */}
-          <div>
-            <input
-              type="checkbox"
-              name="rememberLogin"
-              id="sign-in-remember"
-              checked={rememberLogin}
-              onChange={handleChange}
-            />
+          {/* Email container */}
+          <div className={inputContainerClasses}>
             <label
-              className="pl-2 "
-              htmlFor="sign-in-remember"
+              className={labelClasses}
+              htmlFor={"sign-in-email"}
             >
-              Remember Me
+              Email
             </label>
+            <input
+              className={inputClasses}
+              type="email"
+              name="email"
+              id="sign-in-email"
+              value={email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          {/* Password container */}
+          <div className={inputContainerClasses}>
+            <label
+              className={labelClasses}
+              htmlFor={"sign-in-password"}
+            >
+              Password{" "}
+              <Link
+                className="text-blue-400 float-right"
+                to="/forgot-password"
+              >
+                Forgot Password?
+              </Link>
+            </label>
+            <input
+              className={inputClasses}
+              type="password"
+              name="password"
+              id="sign-in-password"
+              value={password}
+              onChange={handleChange}
+              required
+            />
           </div>
         </div>
-        {/* Login button and forgot password */}
-        <div>
-          <Link
-            className="block pb-4 text-blue-400"
-            to={"/forgot-password"}
-          >
-            Forgot Password?
-          </Link>
-          <button
-            type="submit"
-            className="bg-slate-700 hover:bg-slate-800 rounded-md h-10 font-bold w-full"
-          >
-            Login
-          </button>
-        </div>
+        {/* Login button */}
+        <button
+          type="submit"
+          className="bg-green-700 hover:bg-green-800 rounded-md h-9 font-bold w-full"
+        >
+          Login
+        </button>
       </form>
       {/* Link to sign up */}
       <div className="border border-slate-600 rounded-xl flex items-center justify-around px-4 mt-4 w-3/4 h-12">
