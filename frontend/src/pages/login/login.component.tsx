@@ -176,7 +176,7 @@ function Login() {
         {/* Login button */}
         <button
           type="submit"
-          className="bg-green-700 hover:bg-green-800 rounded-md h-9 font-bold w-full"
+          className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-bold w-full"
         >
           Login
         </button>
