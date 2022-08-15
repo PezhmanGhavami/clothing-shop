@@ -2,7 +2,6 @@
   "name": "frontend",
   "private": true,
   "version": "0.0.1",
-  "proxy": "http://127.0.0.1:5000/api",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

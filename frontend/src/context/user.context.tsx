@@ -56,7 +56,7 @@ export const UserProvider = ({
   }, []);
 
   function setActiveUser(newUser: IUser) {
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(newUser));
     setUserState((prev) => ({
       ...prev,
       currentUser: { ...newUser },

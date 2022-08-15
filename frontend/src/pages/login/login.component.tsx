@@ -5,9 +5,8 @@ import {
   FormEvent,
 } from "react";
 import {
-  Navigate,
   useNavigate,
-  useLocation,
+  // useLocation,
   Link,
 } from "react-router-dom";
 import { BiShow, BiHide } from "react-icons/bi";
@@ -41,7 +40,8 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const location = useLocation();
+  //FIXME - location.state causes type error fix it and use the commented codes to do the redirect
+  // const location = useLocation();
   const navigate = useNavigate();
 
   const { email, password } = formFields;
@@ -77,10 +77,11 @@ function Login() {
     return everyThingIsFine;
   };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
+    setIsLoading(true);
 
     if (!validateForm()) {
       return;
@@ -91,11 +92,36 @@ function Login() {
       password,
     };
 
-    // fetch()
+    const headers = new Headers({
+      "Content-Type": "application/json",
+    });
+    try {
+      const loginRes = await fetch("/api/users/login", {
+        method: "POST",
+        headers,
+        body: JSON.stringify(userData),
+      });
+      if (loginRes.ok) {
+        const loggedInUser = await loginRes.json();
+        setActiveUser({
+          ...loggedInUser,
+          token: loginRes.headers.get("L-Auth"),
+        });
+      }
+      throw new Error(loginRes.statusText);
+    } catch (err) {
+      if (typeof err === "string") {
+        console.log(err);
+      } else if (err instanceof Error) {
+        console.log(err.message);
+      }
+    }
+    setIsLoading(false);
   };
 
   if (userState.currentUser) {
-    return <Navigate to={"/"} />;
+    // let from = location.state?.from?.pathname || "/";
+    navigate("/", { replace: true });
   }
 
   return (
@@ -112,6 +138,7 @@ function Login() {
         {/* inputs container */}
         <div>
           {/* Email container */}
+          {/* NOTE - Made the autocomplete off because of input bg color change whenver an autocomplete value is used; TODO - Figure out how to solve the bg change and remove autoComplete=off */}
           <div className={inputContainerClasses}>
             <label
               className={labelClasses}
@@ -126,6 +153,7 @@ function Login() {
               id="sign-in-email"
               value={email}
               onChange={handleChange}
+              autoComplete={"off"}
               required
             />
           </div>
@@ -186,7 +214,7 @@ function Login() {
           >
             Create an account
           </Link>
-          {" ."}
+          {"."}
         </p>
       </div>
     </div>
