@@ -44,8 +44,6 @@ function Login() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  type FormFieldsKey = keyof typeof formFields;
-
   const { email, password } = formFields;
 
   const handleChange = (
@@ -100,13 +98,10 @@ function Login() {
     return <Navigate to={"/"} />;
   }
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <div className="flex flex-col justify-start items-center h-screen bg-slate-900 text-slate-100">
       <Logo />
+      {/* Page title */}
       <p className="pb-4 text-lg">
         Sign in to Clothing Shop
       </p>
@@ -178,7 +173,7 @@ function Login() {
           type="submit"
           className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-bold w-full"
         >
-          Login
+          {isLoading ? <Loading /> : "Login"}
         </button>
       </form>
       {/* Link to sign up */}
