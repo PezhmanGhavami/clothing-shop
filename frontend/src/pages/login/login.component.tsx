@@ -10,6 +10,7 @@ import {
   useLocation,
   Link,
 } from "react-router-dom";
+import { BiShow, BiHide } from "react-icons/bi";
 
 import { UserContext } from "../../context/user.context";
 
@@ -26,7 +27,7 @@ const defaultFormFields = {
   password: "",
 };
 
-const inputContainerClasses = "mb-4";
+const inputContainerClasses = "mb-4 relative";
 const labelClasses = "block pb-1";
 const inputClasses =
   "w-full h-9 rounded-md px-2 bg-slate-900 border border-slate-600 focus:outline-none focus:ring focus:ring-blue-400 focus:bg-neutral-900";
@@ -37,6 +38,7 @@ function Login() {
 
   const [formFields, setFormFields] =
     useState<IUserLoginFrom>(defaultFormFields);
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
@@ -53,6 +55,10 @@ function Login() {
       ...prev,
       [event.target.name]: event.target.value,
     }));
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
   };
 
   const validateForm = () => {
@@ -143,14 +149,28 @@ function Login() {
               </Link>
             </label>
             <input
-              className={inputClasses}
-              type="password"
+              className={inputClasses + " pr-8"}
+              type={`${showPassword ? "text" : "password"}`}
               name="password"
               id="sign-in-password"
               value={password}
               onChange={handleChange}
               required
             />
+            {/* Show password button */}
+            <span
+              className="absolute cursor-pointer top-8 right-1 p-1"
+              onClick={toggleShowPassword}
+              title={`Click to ${
+                showPassword ? "Hide" : "Show"
+              } Password`}
+            >
+              {showPassword ? (
+                <BiShow className="text-lg" />
+              ) : (
+                <BiHide className="text-lg" />
+              )}
+            </span>
           </div>
         </div>
         {/* Login button */}
