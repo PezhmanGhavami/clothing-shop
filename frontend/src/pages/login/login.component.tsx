@@ -3,6 +3,7 @@ import {
   useState,
   ChangeEvent,
   FormEvent,
+  useEffect,
 } from "react";
 import {
   useNavigate,
@@ -107,8 +108,11 @@ function Login() {
           ...loggedInUser,
           token: loginRes.headers.get("L-Auth"),
         });
+        return;
       }
-      throw new Error(loginRes.statusText);
+      alert(loginRes.statusText);
+      // TODO - Add toastify for these kind of messages
+      // throw new Error(loginRes.statusText);
     } catch (err) {
       if (typeof err === "string") {
         console.log(err);
@@ -119,10 +123,12 @@ function Login() {
     setIsLoading(false);
   };
 
-  if (userState.currentUser) {
-    // let from = location.state?.from?.pathname || "/";
-    navigate("/", { replace: true });
-  }
+  useEffect(() => {
+    if (userState.currentUser) {
+      // let from = location.state?.from?.pathname || "/";
+      navigate("/", { replace: true });
+    }
+  }, [userState.currentUser]);
 
   return (
     <div className="flex flex-col justify-start items-center h-screen bg-slate-900 text-slate-100">
@@ -154,6 +160,7 @@ function Login() {
               value={email}
               onChange={handleChange}
               autoComplete={"off"}
+              tabIndex={1}
               required
             />
           </div>
@@ -165,6 +172,7 @@ function Login() {
             >
               Password{" "}
               <Link
+                tabIndex={5}
                 className="text-blue-400 float-right"
                 to="/forgot-password"
               >
@@ -178,10 +186,12 @@ function Login() {
               id="sign-in-password"
               value={password}
               onChange={handleChange}
+              tabIndex={2}
               required
             />
             {/* Show password button */}
             <span
+              tabIndex={3}
               className="absolute cursor-pointer top-8 right-1 p-1"
               onClick={toggleShowPassword}
               title={`Click to ${
@@ -198,6 +208,7 @@ function Login() {
         </div>
         {/* Login button */}
         <button
+          tabIndex={4}
           type="submit"
           className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-bold w-full"
         >
@@ -210,6 +221,7 @@ function Login() {
           {"New here? "}
           <Link
             className=" text-blue-400"
+            tabIndex={6}
             to={"/forgot-password"}
           >
             Create an account
