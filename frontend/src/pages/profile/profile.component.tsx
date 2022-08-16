@@ -65,7 +65,7 @@ function Profile() {
       <button
         type="button"
         onClick={handleSignOut}
-        className="bg-rose-600 hover:bg-rose-700 active:bg-rose-800 rounded-md h-8 font-bold w-full"
+        className="bg-rose-700 hover:bg-rose-800 active:bg-rose-900 rounded-md h-8 font-bold w-full"
       >
         {isLoading ? <Loading /> : "Logout"}
       </button>

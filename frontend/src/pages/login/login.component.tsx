@@ -33,6 +33,13 @@ const inputContainerClasses = "mb-4 relative";
 const labelClasses = "block pb-1";
 const inputClasses =
   "w-full h-9 rounded-md px-2 bg-slate-900 border border-slate-600 focus:outline-none focus:ring focus:ring-blue-400 focus:bg-neutral-900";
+//TODO - Couldn't get the invalid pseudo class work correctly (always active), fix this later
+
+enum inputStatus {
+  EMPTY,
+  VALID,
+  INVALID,
+}
 
 function Login() {
   const { userState, setActiveUser } =
@@ -49,6 +56,13 @@ function Login() {
 
   const { email, password } = formFields;
 
+  useEffect(() => {
+    if (userState.currentUser) {
+      // let from = location.state?.from?.pathname || "/";
+      navigate("/", { replace: true });
+    }
+  }, [userState.currentUser]);
+
   const handleChange = (
     event: ChangeEvent<HTMLInputElement>
   ) => {
@@ -62,33 +76,46 @@ function Login() {
     setShowPassword((prev) => !prev);
   };
 
-  const validateForm = () => {
-    let everyThingIsFine = true;
+  const validateForm = (onSubmit: boolean = false) => {
+    let formIsValid = true;
+    let emailStatus = inputStatus.VALID;
+    let passwordStatus = inputStatus.VALID;
     const emailRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (email === "" || !email || !emailRegex.test(email)) {
-      alert("Invalid email address.");
-      everyThingIsFine = false;
+      formIsValid = false;
+      emailStatus =
+        email === "" || !email
+          ? inputStatus.EMPTY
+          : inputStatus.INVALID;
+      onSubmit &&
+        alert(
+          emailStatus === inputStatus.EMPTY
+            ? "You should provide an email address."
+            : "Invalid email address."
+        );
     }
 
     if (password === "" || !password) {
-      alert("You should provide a password.");
-      everyThingIsFine = false;
+      onSubmit && alert("You should provide a password.");
+      formIsValid = false;
+      passwordStatus = inputStatus.EMPTY;
     }
 
-    return everyThingIsFine;
+    return { formIsValid, emailStatus, passwordStatus };
   };
 
   const handleSubmit = async (
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-    setIsLoading(true);
 
-    if (!validateForm()) {
+    if (!validateForm(true).formIsValid) {
       return;
     }
+    
+    setIsLoading(true);
 
     const userData = {
       email,
@@ -125,13 +152,6 @@ function Login() {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    if (userState.currentUser) {
-      // let from = location.state?.from?.pathname || "/";
-      navigate("/", { replace: true });
-    }
-  }, [userState.currentUser]);
-
   return (
     <div className="flex flex-col justify-start items-center h-screen bg-slate-900 text-slate-100">
       <Logo />
@@ -141,6 +161,7 @@ function Login() {
       </p>
       <form
         onSubmit={handleSubmit}
+        noValidate
         className={`${container} flex-col`}
       >
         {/* inputs container */}
@@ -163,8 +184,15 @@ function Login() {
               onChange={handleChange}
               autoComplete={"off"}
               tabIndex={1}
+              autoFocus
               required
             />
+            {validateForm().emailStatus ===
+              inputStatus.INVALID && (
+              <span className="text-sm text-red-500">
+                *Please enter a correct email address
+              </span>
+            )}
           </div>
           {/* Password container */}
           <div className={inputContainerClasses}>
