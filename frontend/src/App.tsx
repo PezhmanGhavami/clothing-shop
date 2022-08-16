@@ -11,7 +11,14 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<div>Home</div>} />
+        <Route
+          index
+          element={
+            <div>
+              <p>Home</p>
+            </div>
+          }
+        />
         <Route
           path="profile"
           element={

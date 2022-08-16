@@ -58,7 +58,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex justify-items-center items-center sticky h-20 py-1">
+      <header className="flex justify-items-center items-center sticky h-20 py-1">
         {openModal && <Overlay handleClick={toggleModal} />}
         <Hamburger
           openModal={openModal}
@@ -121,7 +121,7 @@ const Navbar = () => {
             </Link>
           </div>
         </nav>
-      </div>
+      </header>
     </>
   );
 };
