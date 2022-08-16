@@ -25,11 +25,17 @@ const registerUser: IExpressEndpointHandler = (
   res,
   next
 ) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, confirmPassword } =
+    req.body;
 
   if (!name || !email || !password) {
     res.status(400);
     throw new Error("All feilds are required.");
+  }
+
+  if (password !== confirmPassword) {
+    res.status(400);
+    throw new Error("Passwords should match.");
   }
 
   prisma.user
@@ -52,12 +58,29 @@ const registerUser: IExpressEndpointHandler = (
       });
     })
     .then((user) => {
-      res.status(201).json({
-        id: user.id,
-        name: user.displayName,
-        email: user.email,
-        token: generateToken(user.id),
+      return prisma.user.update({
+        data: {
+          activeJWTs: {
+            push: generateToken(user.id),
+          },
+        },
+        where: {
+          id: user.id,
+        },
       });
+    })
+    .then((user) => {
+      res
+        .status(202)
+        .append(
+          "L-Auth",
+          user.activeJWTs[user.activeJWTs.length - 1]
+        )
+        .json({
+          id: user.id,
+          name: user.displayName,
+          email: user.email,
+        });
     })
     .catch((error) => {
       if (res.statusCode) {
