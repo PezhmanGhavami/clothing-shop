@@ -64,23 +64,11 @@ export const UserProvider = ({
   }
 
   function signOutUser() {
-    if (currentUser) {
-      if (window.confirm("Are sure you want to log out?")) {
-        const headers = new Headers({
-          Authorization: `Bearer ${currentUser.token}`,
-        });
-        fetch("/users/logout", { method: "POST", headers })
-          .then(() => {
-            localStorage.removeItem("user");
-            return setUserState((prev) => ({
-              ...prev,
-              currentUser: null,
-            }));
-          })
-          .catch((err) => console.log(err.message));
-        //TODO - Handle error and notify user (probably with toastify)
-      }
-    }
+    localStorage.removeItem("user");
+    return setUserState((prev) => ({
+      ...prev,
+      currentUser: null,
+    }));
   }
 
   const value = { userState, setActiveUser, signOutUser };

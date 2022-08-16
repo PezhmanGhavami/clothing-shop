@@ -1,10 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 
 import Layout from "./components/layout/layout.component";
+import ProtectedRoute from "./components/protected-route/protected-route";
 import NotFound from "./pages/not-found/not-found";
 import Login from "./pages/login/login.component";
 import SignUp from "./pages/signup/signup.component";
-import ProtectedRoute from "./components/protected-route/protected-route";
+import Profile from "./pages/profile/profile.component";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
           path="profile"
           element={
             <ProtectedRoute>
-              <h1>Profile</h1>
+              <Profile />
             </ProtectedRoute>
           }
         />
