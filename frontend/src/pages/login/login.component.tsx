@@ -27,6 +27,8 @@ const defaultFormFields = {
   password: "",
 };
 
+const container =
+  "border border-slate-600 rounded-xl flex justify-around p-4 w-3/4 md:w-80";
 const inputContainerClasses = "mb-4 relative";
 const labelClasses = "block pb-1";
 const inputClasses =
@@ -139,7 +141,7 @@ function Login() {
       </p>
       <form
         onSubmit={handleSubmit}
-        className="border border-slate-600 rounded-xl flex flex-col justify-around p-4 w-3/4"
+        className={`${container} flex-col`}
       >
         {/* inputs container */}
         <div>
@@ -216,13 +218,15 @@ function Login() {
         </button>
       </form>
       {/* Link to sign up */}
-      <div className="border border-slate-600 rounded-xl flex items-center justify-around px-4 mt-4 w-3/4 h-12">
+      <div
+        className={`${container} h-12 mt-4 items-center`}
+      >
         <p>
           {"New here? "}
           <Link
             className=" text-blue-400"
             tabIndex={6}
-            to={"/forgot-password"}
+            to={"/signup"}
           >
             Create an account
           </Link>
