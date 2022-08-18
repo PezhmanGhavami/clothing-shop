@@ -58,7 +58,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="flex justify-items-center items-center sticky h-20 py-1">
+      <header className="flex justify-items-center items-center h-20 py-1">
         {openModal && <Overlay handleClick={toggleModal} />}
         <Hamburger
           openModal={openModal}

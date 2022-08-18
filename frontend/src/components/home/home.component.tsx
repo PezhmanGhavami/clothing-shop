@@ -1,8 +1,13 @@
+import Slider from "../slider/slider.component";
+
 function Home() {
   return (
-    <div>
-      <p>Home</p>
-    </div>
+    <>
+      <Slider />
+      <div>
+        <p>Other Content</p>
+      </div>
+    </>
   );
 }
 
