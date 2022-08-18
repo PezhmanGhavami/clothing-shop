@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Layout from "./components/layout/layout.component";
 import ProtectedRoute from "./components/protected-route/protected-route";
+import Home from "./components/home/home.component";
 import NotFound from "./pages/not-found/not-found";
 import Login from "./pages/login/login.component";
 import SignUp from "./pages/signup/signup.component";
@@ -11,14 +12,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route
-          index
-          element={
-            <div>
-              <p>Home</p>
-            </div>
-          }
-        />
+        <Route index element={<Home />} />
         <Route
           path="profile"
           element={
