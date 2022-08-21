@@ -67,6 +67,9 @@ model Item {
   id               String     @id @default(cuid())
   name             String     @unique
   price            Float
+  dsicountedPrice  Float?
+  offer            Boolean    @default(false)
+  featured         Boolean    @default(false) //TODO - later on make another model for featured items; these items will be shown on image sliders or item card sliders
   sold             Int        @default(0)
   viewed           Int        @default(0)
   images           String[]
