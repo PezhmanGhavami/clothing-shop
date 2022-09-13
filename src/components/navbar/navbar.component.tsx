@@ -83,15 +83,16 @@ const Navbar = () => {
                 key={index}
                 className={navLinks.liClasses}
               >
-                <Link
-                  href={link.to}
-                  className={`${navLinks.linkClasses}${
-                    pathMatchRoute(link.to)
-                      ? "border-b-slate-100"
-                      : ""
-                  }`}
-                >
-                  {link.name}
+                <Link href={link.to}>
+                  <a
+                    className={`${navLinks.linkClasses}${
+                      pathMatchRoute(link.to)
+                        ? "border-b-slate-100"
+                        : ""
+                    }`}
+                  >
+                    {link.name}
+                  </a>
                 </Link>
               </li>
             ))}
