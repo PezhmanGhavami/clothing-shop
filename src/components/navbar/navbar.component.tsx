@@ -50,15 +50,6 @@ const Navbar = () => {
     setOpenModal((prev) => !prev);
   };
 
-  const pathMatchRoute = (route: string) => {
-    console.log(location);
-    if (route === location) {
-      console.log("matched");
-      return true;
-    }
-    return false;
-  };
-
   return (
     <>
       <header className="flex justify-items-center items-center h-20 py-1">
@@ -86,7 +77,7 @@ const Navbar = () => {
                 <Link href={link.to}>
                   <a
                     className={`${navLinks.linkClasses}${
-                      pathMatchRoute(link.to)
+                      link.to === location
                         ? "border-b-slate-100"
                         : ""
                     }`}
