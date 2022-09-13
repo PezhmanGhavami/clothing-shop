@@ -53,7 +53,7 @@ const Navbar = () => {
   const pathMatchRoute = (route: string) => {
     console.log(location);
     if (route === location) {
-      console.log("matchde");
+      console.log("matched");
       return true;
     }
     return false;
@@ -98,29 +98,25 @@ const Navbar = () => {
           </ul>
           {/* Icons Search Wishlist Cart Profile */}
           <div className="flex">
-            <Link
-              href={"/search"}
-              className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg"
-            >
-              <FaSearch title="Search" />
+            <Link href={"/search"}>
+              <a className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
+                <FaSearch title="Search" />
+              </a>
             </Link>
-            <Link
-              href={"/wishlist"}
-              className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg"
-            >
-              <FaHeart title="Wishlist" />
+            <Link href={"/wishlist"}>
+              <a className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
+                <FaHeart title="Wishlist" />
+              </a>
             </Link>
-            <Link
-              href={"/cart"}
-              className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg"
-            >
-              <FaShoppingCart title="Cart" />
+            <Link href={"/cart"}>
+              <a className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
+                <FaShoppingCart title="Cart" />
+              </a>
             </Link>
-            <Link
-              href={"/profile"}
-              className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg"
-            >
-              <FaUser title="Profile" />
+            <Link href={"/profile"}>
+              <a className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
+                <FaUser title="Profile" />
+              </a>
             </Link>
           </div>
         </nav>
