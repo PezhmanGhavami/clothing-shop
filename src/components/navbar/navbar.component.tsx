@@ -11,6 +11,9 @@ import {
 import Hamburger from "../hamburger/hamburger.component";
 import Overlay from "../overlay/overlay.component";
 
+import useUser from "../../utils/useUser";
+import fetchJson from "../../utils/fetcher";
+
 const navLinks = {
   liClasses:
     "h-1/12 w-full md:h-auto my-1 md:my-0 md:mx-2 lg:mx-4 2xl:mx-8 flex justify-center items-center",
@@ -43,6 +46,7 @@ const navLinks = {
 
 const Navbar = () => {
   const [openModal, setOpenModal] = useState(false);
+  const { user, mutateUser } = useUser();
 
   const location = useRouter().pathname;
 
@@ -105,11 +109,18 @@ const Navbar = () => {
                 <FaShoppingCart title="Cart" />
               </a>
             </Link>
-            <Link href={"/profile"}>
-              <a className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
+            {/* TODO - Compelete this */}
+            {user?.isLoggedIn ? (
+              <div className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
                 <FaUser title="Profile" />
-              </a>
-            </Link>
+              </div>
+            ) : (
+              <Link href="/auth/signin">
+                <a className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
+                  <FaUser title="Login" />
+                </a>
+              </Link>
+            )}
           </div>
         </nav>
       </header>

@@ -6,6 +6,9 @@ import { BiShow, BiHide } from "react-icons/bi";
 import Loading from "../../components/loading/loading.component";
 import Logo from "../../components/logo/logo.component";
 
+import useUser from "../../utils/useUser";
+import fetcher from "../../utils/fetcher";
+
 interface IUserLoginFrom {
   email: string;
   password: string;
@@ -35,6 +38,8 @@ function Login() {
     useState<IUserLoginFrom>(defaultFormFields);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { mutateUser } = useUser();
 
   //FIXME - location.state causes type error fix it and use the commented codes to do the redirect
   // const location = useLocation();
@@ -105,29 +110,21 @@ function Login() {
       "Content-Type": "application/json",
     });
     try {
-      const loginRes = await fetch("/api/users/login", {
-        method: "POST",
-        headers,
-        body: JSON.stringify(userData),
-      });
-      if (loginRes.ok) {
-        const loggedInUser = await loginRes.json();
-        console.log(loggedInUser);
-        //FIXME
-        // setActiveUser({
-        //   ...loggedInUser,
-        //   token: loginRes.headers.get("L-Auth"),
-        // });
-        return;
-      }
-      alert(loginRes.statusText);
+      mutateUser(
+        await fetcher("/api/auth/login", {
+          method: "POST",
+          headers,
+          body: JSON.stringify(userData),
+        }),
+        false
+      );
+    } catch (error) {
       // TODO - Add toastify for these kind of messages
       // throw new Error(loginRes.statusText);
-    } catch (err) {
-      if (typeof err === "string") {
-        console.log(err);
-      } else if (err instanceof Error) {
-        console.log(err.message);
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("Something went wrong.");
       }
     }
     setIsLoading(false);
@@ -232,12 +229,11 @@ function Login() {
       >
         <p>
           {"New here? "}
-          <Link
-            className=" text-blue-400"
-            tabIndex={6}
-            href={"/signup"}
-          >
-            Create an account
+          <Link href={"/auth/signup"}>
+            <a className=" text-blue-400" tabIndex={6}>
+              {" "}
+              Create an account
+            </a>
           </Link>
           {"."}
         </p>

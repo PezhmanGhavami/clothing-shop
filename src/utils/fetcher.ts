@@ -1,48 +1,15 @@
-export default async function fetchJson<JSON = unknown>(
+const fetcher = async (
   input: RequestInfo,
-  init?: RequestInit
-): Promise<JSON> {
-  const response = await fetch(input, init);
+  init: RequestInit
+) => {
+  const res = await fetch(input, init);
 
-  const data = await response.json();
-
-  if (response.ok) {
-    return data;
+  if (!res.ok) {
+    const resBody = await res.json();
+    throw new Error(resBody.message);
   }
 
-  throw new FetchError({
-    message: response.statusText,
-    response,
-    data,
-  });
-}
+  return res.json();
+};
 
-export class FetchError extends Error {
-  response: Response;
-  data: {
-    message: string;
-  };
-  constructor({
-    message,
-    response,
-    data,
-  }: {
-    message: string;
-    response: Response;
-    data: {
-      message: string;
-    };
-  }) {
-    // Pass remaining arguments (including vendor specific ones) to parent constructor
-    super(message);
-
-    // Maintains proper stack trace for where our error was thrown (only available on V8)
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, FetchError);
-    }
-
-    this.name = "FetchError";
-    this.response = response;
-    this.data = data ?? { message: message };
-  }
-}
+export default fetcher;
