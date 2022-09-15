@@ -7,6 +7,7 @@ function Footer() {
           href="http://127.0.0.1:5173/"
           target="_blank"
           className="hover:underline"
+          rel="noreferrer"
         >
           Clothing Shop™
         </a>
