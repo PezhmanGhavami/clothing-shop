@@ -5,14 +5,12 @@ import Slider from "../components/slider/slider.component";
 
 const Home: NextPage = () => {
   return (
-    <Layout>
-      <>
-        {/* <Slider /> */}
-        <div>
-          <p>Other Content</p>
-        </div>
-      </>
-    </Layout>
+    <>
+      {/* <Slider /> */}
+      <div>
+        <p>Other Content</p>
+      </div>
+    </>
   );
 };
 

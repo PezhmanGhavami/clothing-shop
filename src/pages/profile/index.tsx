@@ -1,18 +1,17 @@
 import { useState } from "react";
-import { useRouter } from "next/router";
 
 import Loading from "../../components/loading/loading.component";
+
+import useUser from "../../hooks/useUser";
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter();
+  const { user } = useUser();
 
-  const handleSignOut = async () => {
-    setIsLoading(true);
-    console.log("signout?");
-    setIsLoading(false);
-  };
+  if (!user) {
+    return <Loading />;
+  }
 
   return (
     <div className="p-2">
@@ -28,13 +27,6 @@ function Profile() {
           Authentication (Change Password, Email, Phone)
         </p>
       </div>
-      <button
-        type="button"
-        onClick={handleSignOut}
-        className="bg-rose-700 hover:bg-rose-800 active:bg-rose-900 rounded-md h-8 font-bold w-full"
-      >
-        {isLoading ? <Loading /> : "Logout"}
-      </button>
     </div>
   );
 }

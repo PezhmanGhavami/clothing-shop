@@ -1,9 +1,8 @@
 import type { IronSessionOptions } from "iron-session";
-import type { IUser } from "../pages/api/auth/user";
 
 export const sessionOptions: IronSessionOptions = {
   password: process.env.SECRET_COOKIE_PASSWORD as string,
-  cookieName: "iron-session/examples/next.js",
+  cookieName: "seal",
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",
   },
@@ -11,6 +10,10 @@ export const sessionOptions: IronSessionOptions = {
 
 declare module "iron-session" {
   interface IronSessionData {
-    user?: IUser;
+    user?: {
+      userID: string;
+      cartID: string;
+      dateCreated: number;
+    };
   }
 }

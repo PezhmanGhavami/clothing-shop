@@ -11,8 +11,8 @@ import {
 import Hamburger from "../hamburger/hamburger.component";
 import Overlay from "../overlay/overlay.component";
 
-import useUser from "../../utils/useUser";
-import fetchJson from "../../utils/fetcher";
+import useUser from "../../hooks/useUser";
+import fetcher from "../../utils/fetcher";
 
 const navLinks = {
   liClasses:
@@ -48,7 +48,7 @@ const Navbar = () => {
   const [openModal, setOpenModal] = useState(false);
   const { user, mutateUser } = useUser();
 
-  const location = useRouter().pathname;
+  const router = useRouter();
 
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
@@ -81,7 +81,7 @@ const Navbar = () => {
                 <Link href={link.to}>
                   <a
                     className={`${navLinks.linkClasses}${
-                      link.to === location
+                      link.to === router.pathname
                         ? "border-b-slate-100"
                         : ""
                     }`}
@@ -110,17 +110,38 @@ const Navbar = () => {
               </a>
             </Link>
             {/* TODO - Compelete this */}
-            {user?.isLoggedIn ? (
+            <div>
               <div className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
-                <FaUser title="Profile" />
+                <FaUser title="User" />
               </div>
-            ) : (
-              <Link href="/auth/signin">
-                <a className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
-                  <FaUser title="Login" />
-                </a>
-              </Link>
-            )}
+              {user?.isLoggedIn ? (
+                <>
+                  <Link href={"/profile"}>Profile</Link>
+                  <a
+                    href="/api/auth/logout"
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      mutateUser(
+                        await fetcher("/api/auth/logout", {
+                          method: "POST",
+                        }),
+                        false
+                      );
+                      router.push("/auth/signin");
+                    }}
+                  >
+                    Logout
+                  </a>
+                </>
+              ) : (
+                <>
+                  <Link href={"/auth/signin"}>Login</Link>
+                  <Link href={"/auth/signup"}>
+                    Register
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
         </nav>
       </header>

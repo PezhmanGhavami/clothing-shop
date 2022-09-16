@@ -1,11 +1,10 @@
-import { withIronSessionApiRoute } from "iron-session/next";
-import { sessionOptions } from "../../../utils/session";
 import { NextApiRequest, NextApiResponse } from "next";
+import { withIronSessionApiRoute } from "iron-session/next";
 
+import { sessionOptions } from "../../../utils/session";
+import { IApiError } from "./login";
 export interface IUser {
   isLoggedIn: boolean;
-  userId: string;
-  cartId: string;
 }
 
 export default withIronSessionApiRoute(
@@ -15,19 +14,31 @@ export default withIronSessionApiRoute(
 
 async function userRoute(
   req: NextApiRequest,
-  res: NextApiResponse<IUser>
+  res: NextApiResponse<IUser | IApiError>
 ) {
-  if (req.session.user) {
-    console.log(req.session.user);
-    res.json({
-      ...req.session.user,
-      isLoggedIn: true,
-    });
-  } else {
-    res.json({
+  if (req.method === "GET") {
+    const user = req.session.user;
+    if (user) {
+      if (
+        Date.now() - user.dateCreated >
+        1000 * 60 * 60 * 24
+      ) {
+        const newUser = {
+          ...user,
+          dateCreated: Date.now(),
+        };
+        req.session.user = newUser;
+        await req.session.save();
+      }
+      return res.json({
+        isLoggedIn: true,
+      });
+    }
+    return res.json({
       isLoggedIn: false,
-      userId: "",
-      cartId: "",
     });
   }
+  return res
+    .status(400)
+    .json({ status: "ERROR", message: "Bad Request." });
 }

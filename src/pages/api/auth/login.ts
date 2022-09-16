@@ -50,19 +50,23 @@ async function loginRoute(
       }
 
       const user = {
-        isLoggedIn: true,
-        userId: userExists.id,
-        cartId:
+        userID: userExists.id,
+        cartID:
           "Some cart ID that belongs to " + userExists.id,
-      } as IUser;
+        dateCreated: Date.now(),
+      };
       req.session.user = user;
       await req.session.save();
-      res.json(user);
+
+      return res.json({ isLoggedIn: true });
     } catch (error) {
-      res.json({
+      return res.json({
         status: "ERROR",
         message: (error as Error).message,
       });
     }
   }
+  return res
+    .status(400)
+    .json({ status: "ERROR", message: "Bad Request." });
 }

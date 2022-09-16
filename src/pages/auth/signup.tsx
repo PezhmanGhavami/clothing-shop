@@ -1,11 +1,10 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 import Loading from "../../components/loading/loading.component";
 import Logo from "../../components/logo/logo.component";
 
-import useUser from "../../utils/useUser";
+import useUser from "../../hooks/useUser";
 import fetcher from "../../utils/fetcher";
 
 interface IUserRegisterFrom {
@@ -40,11 +39,11 @@ function SignUp() {
   const [formFields, setFormFields] =
     useState<IUserRegisterFrom>(defaultFormFields);
   const [isLoading, setIsLoading] = useState(false);
-  const { mutateUser } = useUser();
+
+  const { user, mutateUser } = useUser();
 
   //FIXME - location.state causes type error fix it and use the commented codes to do the redirect
   // const location = useLocation();
-  const router = useRouter();
 
   const { displayName, email, password, confirmPassword } =
     formFields;
@@ -146,17 +145,23 @@ function SignUp() {
         }),
         false
       );
+      //TODO - maybe add a prop to redirect to the corrct page after login
     } catch (error) {
       // TODO - Add toastify for these kind of messages
       // throw new Error(loginRes.statusText);
       if (error instanceof Error) {
-        console.error(error.message);
+        alert(error.message);
       } else {
-        console.error("Something went wrong.");
+        alert("Something went wrong.");
       }
     }
     setIsLoading(false);
   };
+
+  if (!user || user.isLoggedIn) {
+    //TODO - Make this full screen
+    return <Loading />;
+  }
 
   return (
     <div className="flex flex-col justify-start items-center h-screen bg-slate-900 text-slate-100">
