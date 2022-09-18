@@ -8,9 +8,9 @@ interface ILayout {
 
 const Layout = ({ children }: ILayout) => {
   return (
-    <div className="min-h-screen bg-slate-900  text-slate-100">
+    <div className="min-h-screen">
       <Navbar />
-      <main className="border-y border-y-slate-700 min-h-[85vh]">
+      <main className="border-y dark:border-y-slate-700 min-h-[85vh]">
         {children}
       </main>
       <Footer />

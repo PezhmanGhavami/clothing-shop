@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <footer className="flex justify-center items-center h-10">
-      <span className="block text-sm text-slate-400">
+      <span className="block text-sm text-neutral-600 dark:text-slate-400">
         © {new Date().getFullYear() + " "}
         <a
           href="http://127.0.0.1:5173/"

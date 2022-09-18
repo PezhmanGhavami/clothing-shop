@@ -18,7 +18,7 @@ const navLinks = {
   liClasses:
     "h-1/12 w-full md:h-auto my-1 md:my-0 md:mx-2 lg:mx-4 2xl:mx-8 flex justify-center items-center",
   linkClasses:
-    "block text-lg py-1 w-10/12 md:w-full md:min-w-max text-center border-b border-transparent hover:border-b-slate-100 ",
+    "block text-lg py-1 w-10/12 md:w-full md:min-w-max text-center border-b border-transparent hover:border-b-neutral-800 dark:hover:border-b-slate-100 ",
   links: [
     { name: "Home", to: "/" },
     {
@@ -69,7 +69,7 @@ const Navbar = () => {
           </div>
           {/* Links */}
           <ul
-            className={`fixed md:static top-0 right-0 z-20 md:z-auto h-screen w-2/4 md:h-auto md:w-auto flex flex-col md:flex-row justify-center items-center bg-slate-700 md:bg-inherit translate-x-full md:translate-x-0 transition-transform md:transition-none ease-in-out duration-500 ${
+            className={`fixed md:static top-0 right-0 z-20 md:z-auto h-screen w-2/4 md:h-auto md:w-auto flex flex-col md:flex-row justify-center items-center bg-neutral-300 dark:bg-slate-700 md:bg-inherit translate-x-full md:translate-x-0 transition-transform md:transition-none ease-in-out duration-500 ${
               openModal ? "translate-x-0" : ""
             }`}
           >
@@ -82,7 +82,7 @@ const Navbar = () => {
                   <a
                     className={`${navLinks.linkClasses}${
                       link.to === router.pathname
-                        ? "border-b-slate-100"
+                        ? "border-b-neutral-800 dark:border-b-slate-100"
                         : ""
                     }`}
                   >
