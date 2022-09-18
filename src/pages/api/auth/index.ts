@@ -5,19 +5,42 @@ import bcrypt from "bcryptjs";
 import { sessionOptions } from "../../../utils/session";
 import { prisma } from "../../../utils/prisma-client";
 
-import type { IUser } from "./user";
-import type { IApiError } from "./login";
+import { IApiError } from "./login";
+export interface IUser {
+  isLoggedIn: boolean;
+}
 
 export default withIronSessionApiRoute(
-  loginRoute,
+  userRoute,
   sessionOptions
 );
 
-async function loginRoute(
+async function userRoute(
   req: NextApiRequest,
   res: NextApiResponse<IUser | IApiError>
 ) {
-  if (req.method === "POST") {
+  if (req.method === "GET") {
+    const user = req.session.user;
+    if (user) {
+      if (
+        Date.now() - user.dateCreated >
+        1000 * 60 * 60 * 24
+      ) {
+        const newUser = {
+          ...user,
+          dateCreated: Date.now(),
+        };
+        req.session.user = newUser;
+        await req.session.save();
+      }
+      return res.json({
+        isLoggedIn: true,
+      });
+    }
+    return res.json({
+      isLoggedIn: false,
+    });
+  } else if (req.method === "POST") {
     try {
       const {
         email,

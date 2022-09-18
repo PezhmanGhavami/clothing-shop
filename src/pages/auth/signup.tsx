@@ -144,7 +144,7 @@ const SignUp: NextPageWithLayout = () => {
     });
     try {
       mutateUser(
-        await fetcher("/api/auth/register", {
+        await fetcher("/api/auth", {
           method: "POST",
           headers,
           body: JSON.stringify(userData),
