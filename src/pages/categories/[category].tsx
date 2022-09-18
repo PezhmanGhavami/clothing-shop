@@ -3,7 +3,7 @@ import { NextPageWithLayout } from "../_app";
 
 import Layout from "../../components/layout/layout.component";
 
-const Category = () => {
+const Category: NextPageWithLayout = () => {
   return <div>Category</div>;
 };
 

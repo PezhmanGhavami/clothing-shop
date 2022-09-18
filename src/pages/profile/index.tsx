@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, ReactElement } from "react";
+import { NextPageWithLayout } from "../_app";
 
+import Layout from "../../components/layout/layout.component";
 import Loading from "../../components/loading/loading.component";
 
 import useUser from "../../hooks/useUser";
 
-function Profile() {
+const Profile: NextPageWithLayout = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { user } = useUser();
@@ -29,6 +31,10 @@ function Profile() {
       </div>
     </div>
   );
-}
+};
+
+Profile.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
 
 export default Profile;
