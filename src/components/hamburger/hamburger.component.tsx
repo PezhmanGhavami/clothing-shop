@@ -4,7 +4,7 @@ interface IHamburger {
 }
 
 const lineClasses =
-  "bg-neutral-800 dark:bg-slate-100 h-[2px] w-7 transform transition-transform duration-500";
+  "bg-slate-900 dark:bg-white h-[2px] w-7 transform transition-transform duration-500";
 
 function Hamburger({ openModal, handleClick }: IHamburger) {
   return (
@@ -13,9 +13,9 @@ function Hamburger({ openModal, handleClick }: IHamburger) {
       className="z-30 fixed bottom-32 right-10 md:hidden"
     >
       <div
-        className={`flex overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-neutral-300 dark:bg-slate-700 ring-0 ring-neutral-900 dark:ring-gray-300 ${
+        className={`flex overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-neutral-200 dark:bg-slate-700 ring-0 ring-slate-900 dark:ring-white shadow-2xl ${
           openModal &&
-          "ring-4 ring-opacity-30 duration-200 shadow-md"
+          "ring-4 ring-opacity-60 duration-200 shadow-md"
         }`}
       >
         <div
