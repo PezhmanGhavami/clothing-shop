@@ -12,7 +12,6 @@ import Hamburger from "../hamburger/hamburger.component";
 import Overlay from "../overlay/overlay.component";
 
 import useUser from "../../hooks/useUser";
-import fetcher from "../../utils/fetcher";
 
 const navLinks = {
   liClasses:
@@ -37,18 +36,15 @@ const navLinks = {
       name: "Special Offers",
       to: "/offers",
     },
-    {
-      name: "Contact Us",
-      to: "/contact-us",
-    },
   ],
 };
 
 const Navbar = () => {
   const [openModal, setOpenModal] = useState(false);
-  const { user, mutateUser } = useUser();
+  const { user } = useUser();
 
   const router = useRouter();
+  // NOTE - I'm using router.asPath which might not work because it won't be availble unitle router.isReady
 
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
@@ -81,7 +77,7 @@ const Navbar = () => {
                 <Link href={link.to}>
                   <a
                     className={`${navLinks.linkClasses}${
-                      link.to === router.pathname
+                      router.asPath === link.to
                         ? "border-b-slate-900 dark:border-b-white"
                         : ""
                     }`}
