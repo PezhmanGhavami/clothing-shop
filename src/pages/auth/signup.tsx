@@ -13,6 +13,8 @@ import AuthLayout from "../../components/auth-layout/auth-layout";
 import useUser from "../../hooks/useUser";
 import fetcher from "../../utils/fetcher";
 
+import { formInputStyles } from "./signin";
+
 interface IUserRegisterFrom {
   email: string;
   password: string;
@@ -26,14 +28,6 @@ const defaultFormFields = {
   password: "",
   confirmPassword: "",
 };
-
-const container =
-  "border border-slate-600 rounded-xl flex justify-around p-4 w-3/4 md:w-80";
-const inputContainerClasses = "mb-4 relative";
-const labelClasses = "block pb-1";
-const inputClasses =
-  "w-full h-9 rounded-md px-2 bg-slate-900 border border-slate-600 focus:outline-none focus:ring focus:ring-blue-400 focus:bg-neutral-900";
-//TODO - Couldn't get the invalid pseudo class work correctly (always active), fix this later
 
 enum inputStatus {
   EMPTY,
@@ -178,20 +172,24 @@ const SignUp: NextPageWithLayout = () => {
       <form
         onSubmit={handleSubmit}
         noValidate
-        className={`${container} flex-col`}
+        className={`${formInputStyles.container} flex-col`}
       >
         {/* inputs container */}
         <div>
           {/* Name container */}
-          <div className={inputContainerClasses}>
+          <div
+            className={
+              formInputStyles.inputContainerClasses
+            }
+          >
             <label
-              className={labelClasses}
+              className={formInputStyles.labelClasses}
               htmlFor={"sign-up-name"}
             >
               Name
             </label>
             <input
-              className={inputClasses}
+              className={formInputStyles.inputClasses}
               type="text"
               name="displayName"
               id="sign-up-name"
@@ -205,15 +203,19 @@ const SignUp: NextPageWithLayout = () => {
           </div>
           {/* Email container */}
           {/* NOTE - Made the autocomplete off because of input bg color change whenver an autocomplete value is used; TODO - Figure out how to solve the bg change and remove autoComplete=off */}
-          <div className={inputContainerClasses}>
+          <div
+            className={
+              formInputStyles.inputContainerClasses
+            }
+          >
             <label
-              className={labelClasses}
+              className={formInputStyles.labelClasses}
               htmlFor={"sign-up-email"}
             >
               Email
             </label>
             <input
-              className={inputClasses}
+              className={formInputStyles.inputClasses}
               type="email"
               name="email"
               id="sign-up-email"
@@ -225,21 +227,27 @@ const SignUp: NextPageWithLayout = () => {
             />
             {validateForm().emailStatus ===
               inputStatus.INVALID && (
-              <span className="text-sm text-red-500">
+              <span
+                className={formInputStyles.inputWarnClasses}
+              >
                 *Please enter a correct email address
               </span>
             )}
           </div>
           {/* Password container */}
-          <div className={inputContainerClasses}>
+          <div
+            className={
+              formInputStyles.inputContainerClasses
+            }
+          >
             <label
-              className={labelClasses}
+              className={formInputStyles.labelClasses}
               htmlFor={"sign-up-password"}
             >
               Password
             </label>
             <input
-              className={inputClasses}
+              className={formInputStyles.inputClasses}
               type="password"
               name="password"
               id="sign-up-password"
@@ -250,15 +258,19 @@ const SignUp: NextPageWithLayout = () => {
             />
           </div>
           {/*Confirm password container */}
-          <div className={inputContainerClasses}>
+          <div
+            className={
+              formInputStyles.inputContainerClasses
+            }
+          >
             <label
-              className={labelClasses}
+              className={formInputStyles.labelClasses}
               htmlFor={"sign-up-confirm-password"}
             >
               Confirm Password
             </label>
             <input
-              className={inputClasses}
+              className={formInputStyles.inputClasses}
               type="password"
               name="confirmPassword"
               id="sign-up-confirm-password"
@@ -270,7 +282,11 @@ const SignUp: NextPageWithLayout = () => {
             {confirmPassword !== "" &&
               password !== "" &&
               confirmPassword !== password && (
-                <span className="text-sm text-red-500">
+                <span
+                  className={
+                    formInputStyles.inputWarnClasses
+                  }
+                >
                   *Your passwords should match.
                 </span>
               )}
@@ -280,19 +296,22 @@ const SignUp: NextPageWithLayout = () => {
         <button
           tabIndex={5}
           type="submit"
-          className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-bold w-full"
+          className={formInputStyles.successButtonClasses}
         >
           {isLoading ? <Loading /> : "Register"}
         </button>
       </form>
       {/* Link to login */}
       <div
-        className={`${container} h-12 mt-4 items-center`}
+        className={`${formInputStyles.container} h-12 mt-4 items-center`}
       >
         <p>
           {"Already have an account? "}
           <Link href={"/auth/signin"}>
-            <a className=" text-blue-400" tabIndex={6}>
+            <a
+              className={formInputStyles.aTagClasses}
+              tabIndex={6}
+            >
               Login
             </a>
           </Link>

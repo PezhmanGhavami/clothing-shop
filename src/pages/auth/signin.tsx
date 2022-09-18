@@ -24,12 +24,21 @@ const defaultFormFields = {
   password: "",
 };
 
-const container =
-  "border border-slate-600 rounded-xl flex justify-around p-4 w-3/4 md:w-80";
-const inputContainerClasses = "mb-4 relative";
-const labelClasses = "block pb-1";
-const inputClasses =
-  "w-full h-9 rounded-md px-2 bg-slate-900 border border-slate-600 focus:outline-none focus:ring focus:ring-blue-400 focus:bg-neutral-900";
+export const formInputStyles = {
+  container:
+    "border bg-slate-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl flex justify-around p-4 w-3/4 md:w-80 ",
+  inputContainerClasses: "mb-4 relative ",
+  labelClasses: "block pb-1 ",
+  inputClasses:
+    "w-full h-9 rounded-md px-2 dark:bg-slate-900 border dark:border-slate-600 focus:outline-none focus:ring focus:ring-blue-400 ",
+  inputWarnClasses:
+    "text-sm text-red-700 dark:text-red-400",
+  aTagClasses:
+    "text-blue-700 dark:text-blue-400 hover:underline ",
+  successButtonClasses:
+    "bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-bold w-full text-white ",
+};
+
 //TODO - Couldn't get the invalid pseudo class work correctly (always active), fix this later
 
 enum inputStatus {
@@ -149,21 +158,25 @@ const Login: NextPageWithLayout = () => {
       <form
         onSubmit={handleSubmit}
         noValidate
-        className={`${container} flex-col`}
+        className={`${formInputStyles.container} flex-col`}
       >
         {/* inputs container */}
         <div>
           {/* Email container */}
           {/* NOTE - Made the autocomplete off because of input bg color change whenver an autocomplete value is used; TODO - Figure out how to solve the bg change and remove autoComplete=off */}
-          <div className={inputContainerClasses}>
+          <div
+            className={
+              formInputStyles.inputContainerClasses
+            }
+          >
             <label
-              className={labelClasses}
+              className={formInputStyles.labelClasses}
               htmlFor={"sign-in-email"}
             >
               Email
             </label>
             <input
-              className={inputClasses}
+              className={formInputStyles.inputClasses}
               type="email"
               name="email"
               id="sign-in-email"
@@ -176,28 +189,40 @@ const Login: NextPageWithLayout = () => {
             />
             {validateForm().emailStatus ===
               inputStatus.INVALID && (
-              <span className="text-sm text-red-500">
+              <span
+                className={formInputStyles.inputWarnClasses}
+              >
                 *Please enter a correct email address
               </span>
             )}
           </div>
           {/* Password container */}
-          <div className={inputContainerClasses}>
+          <div
+            className={
+              formInputStyles.inputContainerClasses
+            }
+          >
             <label
-              className={labelClasses}
+              className={formInputStyles.labelClasses}
               htmlFor={"sign-in-password"}
             >
               Password{" "}
-              <Link
-                tabIndex={5}
-                className="text-blue-400 float-right"
-                href="/forgot-password"
-              >
-                Forgot Password?
+              <Link href="/forgot-password">
+                <a
+                  tabIndex={5}
+                  className={
+                    formInputStyles.aTagClasses +
+                    "float-right"
+                  }
+                >
+                  Forgot Password?
+                </a>
               </Link>
             </label>
             <input
-              className={inputClasses + " pr-8"}
+              className={
+                formInputStyles.inputClasses + " pr-8"
+              }
               type={`${showPassword ? "text" : "password"}`}
               name="password"
               id="sign-in-password"
@@ -227,19 +252,22 @@ const Login: NextPageWithLayout = () => {
         <button
           tabIndex={4}
           type="submit"
-          className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-bold w-full"
+          className={formInputStyles.successButtonClasses}
         >
           {isLoading ? <Loading /> : "Login"}
         </button>
       </form>
       {/* Link to sign up */}
       <div
-        className={`${container} h-12 mt-4 items-center`}
+        className={`${formInputStyles.container} h-12 mt-4 items-center`}
       >
         <p>
           {"New here? "}
           <Link href={"/auth/signup"}>
-            <a className=" text-blue-400" tabIndex={6}>
+            <a
+              className={formInputStyles.aTagClasses}
+              tabIndex={6}
+            >
               {" "}
               Create an account
             </a>
