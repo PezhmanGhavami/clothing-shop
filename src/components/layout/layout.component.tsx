@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import Navbar from "../navbar/navbar.component";
 import Footer from "../footer/footer.component";
 

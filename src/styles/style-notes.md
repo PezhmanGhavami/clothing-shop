@@ -16,10 +16,14 @@
           "ring-4 ring-opacity-60 duration-200 shadow-md"
         }`}
 
->NavLinks Container
+> NavLinks Container
 >
 > > bg-neutral-200 dark:bg-slate-700 md:bg-inherit shadow-2xl md:shadow-none
 
 > NavLinks
 >
 > > hover:border-b-slate-900 dark:hover:border-b-white
+
+> Overlay
+>
+> > bg-black/10 dark:bg-black/50

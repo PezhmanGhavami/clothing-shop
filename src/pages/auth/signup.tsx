@@ -1,8 +1,14 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import {
+  useState,
+  ChangeEvent,
+  FormEvent,
+  ReactElement,
+} from "react";
 import Link from "next/link";
+import { NextPageWithLayout } from "../_app";
 
 import Loading from "../../components/loading/loading.component";
-import Logo from "../../components/logo/logo.component";
+import AuthLayout from "../../components/auth-layout/auth-layout";
 
 import useUser from "../../hooks/useUser";
 import fetcher from "../../utils/fetcher";
@@ -35,7 +41,7 @@ enum inputStatus {
   INVALID,
 }
 
-function SignUp() {
+const SignUp: NextPageWithLayout = () => {
   const [formFields, setFormFields] =
     useState<IUserRegisterFrom>(defaultFormFields);
   const [isLoading, setIsLoading] = useState(false);
@@ -164,8 +170,7 @@ function SignUp() {
   }
 
   return (
-    <div className="flex flex-col justify-start items-center h-screen bg-slate-900 text-slate-100">
-      <Logo />
+    <>
       {/* Page title */}
       <p className="pb-4 text-lg">
         Sign up to Clothing Shop
@@ -294,8 +299,12 @@ function SignUp() {
           {"."}
         </p>
       </div>
-    </div>
+    </>
   );
-}
+};
+
+SignUp.getLayout = function getLayout(page: ReactElement) {
+  return <AuthLayout>{page}</AuthLayout>;
+};
 
 export default SignUp;

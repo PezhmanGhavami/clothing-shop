@@ -1,5 +1,9 @@
 function Categories() {
-  return <div>Categories Index</div>;
+  return (
+    <div>
+      <p>Categories Index</p>
+    </div>
+  );
 }
 
 export default Categories;
