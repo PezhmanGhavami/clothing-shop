@@ -3,18 +3,14 @@ import { NextPageWithLayout } from "../_app";
 
 import Layout from "../../components/layout/layout.component";
 
-const Categories: NextPageWithLayout = () => {
-  return (
-    <div>
-      <p>Categories Index</p>
-    </div>
-  );
+const Category = () => {
+  return <div>Category</div>;
 };
 
-Categories.getLayout = function getLayout(
+Category.getLayout = function getLayout(
   page: ReactElement
 ) {
   return <Layout>{page}</Layout>;
 };
 
-export default Categories;
+export default Category;

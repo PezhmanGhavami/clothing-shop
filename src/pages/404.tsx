@@ -1,6 +1,10 @@
 import Link from "next/link";
+import { ReactElement } from "react";
+import { NextPageWithLayout } from "./_app";
 
-function NotFound() {
+import Layout from "../components/layout/layout.component";
+
+const NotFound: NextPageWithLayout = () => {
   return (
     <div className="h-[85vh] flex flex-col justify-center items-center">
       <p className="text-4xl pb-4">
@@ -13,5 +17,12 @@ function NotFound() {
       </Link>
     </div>
   );
-}
+};
+
+NotFound.getLayout = function getLayout(
+  page: ReactElement
+) {
+  return <Layout>{page}</Layout>;
+};
+
 export default NotFound;
