@@ -110,38 +110,17 @@ const Navbar = () => {
               </a>
             </Link>
             {/* TODO - Compelete this */}
-            <div>
-              <div className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
+            <Link
+              href={
+                user?.isLoggedIn
+                  ? "/profile"
+                  : "/auth/signin"
+              }
+            >
+              <a className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
                 <FaUser title="User" />
-              </div>
-              {user?.isLoggedIn ? (
-                <>
-                  <Link href={"/profile"}>Profile</Link>
-                  <a
-                    href="/api/auth/logout"
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      mutateUser(
-                        await fetcher("/api/auth/logout", {
-                          method: "POST",
-                        }),
-                        false
-                      );
-                      router.push("/auth/signin");
-                    }}
-                  >
-                    Logout
-                  </a>
-                </>
-              ) : (
-                <>
-                  <Link href={"/auth/signin"}>Login</Link>
-                  <Link href={"/auth/signup"}>
-                    Register
-                  </Link>
-                </>
-              )}
-            </div>
+              </a>
+            </Link>
           </div>
         </nav>
       </header>
