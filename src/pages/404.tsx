@@ -12,7 +12,7 @@ const NotFound: NextPageWithLayout = () => {
       </p>
       <Link href={"/"}>
         <a className="pt-4 text-slate-600 dark:text-slate-400 hover:underline hover:text-slate-900 dark:hover:text-white">
-          Go Back Home
+          Go Back Home <span aria-hidden="true">→</span>
         </a>
       </Link>
     </div>

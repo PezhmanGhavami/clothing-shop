@@ -5,7 +5,7 @@ const footerATags =
 
 function Footer() {
   return (
-    <footer className="flex justify-between items-end h-14">
+    <footer className="flex justify-between items-end h-14 mb-4">
       <span className="block text-sm text-slate-600 dark:text-slate-400 px-2">
         © {new Date().getFullYear() + " "}
         <a
