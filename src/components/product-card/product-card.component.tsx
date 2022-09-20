@@ -46,7 +46,7 @@ const ProductCard = ({ product }: IProductCard) => {
           </div>
         </a>
       </Link>
-      <button className="mt-6 bg-slate-100 hover:bg-slate-200 text-sm font-medium tracking-tight h-9 w-full rounded-md">
+      <button className="mt-6 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium tracking-tight h-9 w-full rounded-md">
         Add to cart
       </button>
     </div>
