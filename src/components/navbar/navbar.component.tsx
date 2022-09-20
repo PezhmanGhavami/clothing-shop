@@ -22,11 +22,11 @@ const navLinks = {
     { name: "Home", to: "/" },
     {
       name: "Men",
-      to: "/categories/men",
+      to: "/categories/mens",
     },
     {
       name: "Women",
-      to: "/categories/women",
+      to: "/categories/womens",
     },
     {
       name: "Categories",
