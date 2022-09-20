@@ -11,7 +11,7 @@ const NotFound: NextPageWithLayout = () => {
         There&apos;s nothing here!
       </p>
       <Link href={"/"}>
-        <a className="pt-4 text-slate-600 dark:text-slate-400 hover:underline hover:text-slate-900 dark:hover:text-white">
+        <a className="pt-4 text-blue-700 dark:text-blue-400 hover:underline">
           Go Back Home <span aria-hidden="true">→</span>
         </a>
       </Link>
