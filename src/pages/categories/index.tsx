@@ -46,6 +46,7 @@ const Categories: NextPageWithLayout<ICategories> = ({
       {categories.map((category) => (
         <ProductCardContainer
           key={category.id}
+          isPreview={true}
           category={category}
         />
       ))}

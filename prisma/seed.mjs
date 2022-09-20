@@ -262,16 +262,16 @@ const SHOP_DATA = [
 ];
 const BRANDS = [
   {
-    name: "Brand A",
+    name: "brand a",
   },
   {
-    name: "Brand B",
+    name: "brand b",
   },
   {
-    name: "Brand C",
+    name: "brand c",
   },
   {
-    name: "Brand D",
+    name: "brand d",
   },
 ];
 
@@ -294,7 +294,7 @@ async function seedDB() {
   for (const category of SHOP_DATA) {
     await prisma.category.create({
       data: {
-        name: category.title,
+        name: category.title.toLowerCase(),
       },
     });
 
@@ -324,10 +324,10 @@ async function seedDB() {
               },
               {
                 create: {
-                  name: category.title,
+                  name: category.title.toLowerCase(),
                 },
                 where: {
-                  name: category.title,
+                  name: category.title.toLowerCase(),
                 },
               },
             ],
