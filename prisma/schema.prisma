@@ -73,13 +73,13 @@ model Item {
   sold             Int        @default(0)
   viewed           Int        @default(0)
   images           String[]
+  colors           String[]
   currentInventory Int        @default(0)
   description      String
   published        Boolean    @default(false)
   brand            Brand      @relation(fields: [brandId], references: [id])
   brandId          String
   categories       Category[]
-  orders           Order[]
   reviews          Review[]
   specifications   Json?
   reviewsScore     Float      @default(0.0)
@@ -110,7 +110,7 @@ model Invoice {
 model Order {
   id           String      @id @default(cuid())
   status       OrderStatus @default(CREATED)
-  items        Item[]
+  cart         Json[]
   total        Float
   specialNotes String?
   invoice      Invoice?
@@ -122,15 +122,16 @@ model Order {
 }
 
 model User {
-  id           String    @id @default(cuid())
-  displayName  String?
-  email        String    @unique
-  phoneNumber  Int?
-  password     String
-  role         Role      @default(CUSTOMER)
-  orders       Order[]
-  addresses    Address[]
-  reviews      Review[]
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id          String    @id @default(cuid())
+  displayName String?
+  email       String    @unique
+  phoneNumber Int?
+  password    String
+  role        Role      @default(CUSTOMER)
+  orders      Order[]
+  addresses   Address[]
+  reviews     Review[]
+  cart        Json[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
