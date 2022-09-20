@@ -1,15 +1,15 @@
 import { ReactElement } from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { AiFillStar } from "react-icons/ai";
-import { NextPageWithLayout } from "../_app";
+import { NextPageWithLayout } from "../../_app";
 import { Item } from "@prisma/client";
 
-import { prisma } from "../../utils/prisma-client";
+import { prisma } from "../../../utils/prisma-client";
 
-import Layout from "../../components/layout/layout.component";
+import Layout from "../../../components/layout/layout.component";
 import ProductCardContainer, {
   IProductCardContainerData,
-} from "../../components/product-card-container/product-card-container.component";
+} from "../../../components/product-card-container/product-card-container.component";
 
 interface IProduct {
   product: Item;
@@ -57,7 +57,7 @@ export const getStaticProps: GetStaticProps = async ({
   });
 
   const relatedProducts: IProductCardContainerData = {
-    name: "Rlated Products",
+    name: "Related Products",
     items: [],
   };
 
@@ -85,7 +85,8 @@ const Product: NextPageWithLayout<IProduct> = ({
   return (
     <div>
       <ProductCardContainer
-        isPreview={false}
+        showName={true}
+        showLink={false}
         productGroup={relatedProducts}
       />
     </div>

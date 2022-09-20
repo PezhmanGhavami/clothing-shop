@@ -7,7 +7,7 @@ import { Category, Item } from "@prisma/client";
 import Layout from "../../components/layout/layout.component";
 import ProductCardContainer from "../../components/product-card-container/product-card-container.component";
 
-export interface ICategory extends Category {
+interface ICategory extends Category {
   items: Item[];
 }
 interface ICategories {
@@ -46,8 +46,9 @@ const Categories: NextPageWithLayout<ICategories> = ({
       {categories.map((category) => (
         <ProductCardContainer
           key={category.id}
-          isPreview={true}
-          category={category}
+          showName={true}
+          showLink={true}
+          productGroup={category}
         />
       ))}
     </>

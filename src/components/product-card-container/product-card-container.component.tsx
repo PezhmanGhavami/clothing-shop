@@ -9,23 +9,28 @@ export interface IProductCardContainerData {
 }
 interface IProductCardContainer {
   productGroup: IProductCardContainerData;
-  isPreview: boolean;
+  showName: boolean;
+  showLink: boolean;
 }
 
 const ProductCardContainer = ({
   productGroup,
-  isPreview,
+  showLink,
+  showName,
 }: IProductCardContainer) => {
   return (
     <div className="mx-auto max-w-2xl py-6 px-4 sm:pt-10 lg:max-w-7xl lg:px-8">
       <div className="flex justify-between items-center">
-        <h2 className="capitalize text-2xl font-bold tracking-tight">
-          {productGroup.name}
-        </h2>
-        {isPreview && (
+        {showName && (
+          <h2 className="capitalize text-2xl font-bold tracking-tight">
+            {productGroup.name}
+          </h2>
+        )}
+        {showLink && (
           <Link
             href={
-              "/categories/" + productGroup.name.toLowerCase()
+              "/categories/" +
+              productGroup.name.toLowerCase()
             }
           >
             <a className="text-blue-700 dark:text-blue-400 hover:underline">

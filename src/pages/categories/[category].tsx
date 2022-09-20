@@ -6,9 +6,9 @@ import { prisma } from "../../utils/prisma-client";
 import Layout from "../../components/layout/layout.component";
 import ProductCardContainer from "../../components/product-card-container/product-card-container.component";
 
-import { ICategory } from "./index";
+import { IProductCardContainerData } from "../../components/product-card-container/product-card-container.component";
 interface ICategoryComp {
-  category: ICategory;
+  category: IProductCardContainerData;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       category: JSON.parse(JSON.stringify(category)),
     },
-    revalidate: 60 * 5,
+    revalidate: 10,
   };
 };
 
@@ -61,10 +61,16 @@ const Category: NextPageWithLayout<ICategoryComp> = ({
   category,
 }) => {
   return (
-    <ProductCardContainer
-      isPreview={false}
-      category={category}
-    />
+    <>
+      <h2 className="capitalize text-4xl font-bold tracking-tight text-center">
+        {category.name}
+      </h2>
+      <ProductCardContainer
+        showName={false}
+        showLink={false}
+        productGroup={category}
+      />
+    </>
   );
 };
 
