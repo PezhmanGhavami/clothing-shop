@@ -1,12 +1,12 @@
 import { ReactElement } from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
-import { AiFillStar } from "react-icons/ai";
 import { NextPageWithLayout } from "../../_app";
 import { Item } from "@prisma/client";
 
 import { prisma } from "../../../utils/prisma-client";
 
 import Layout from "../../../components/layout/layout.component";
+import ProductOverview from "../../../components/product-overview/product-overview.component";
 import ProductCardContainer, {
   IProductCardContainerData,
 } from "../../../components/product-card-container/product-card-container.component";
@@ -84,6 +84,7 @@ const Product: NextPageWithLayout<IProduct> = ({
 }) => {
   return (
     <div>
+      <ProductOverview />
       <ProductCardContainer
         showName={true}
         showLink={false}
