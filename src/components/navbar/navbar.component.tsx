@@ -18,6 +18,8 @@ const navLinks = {
     "h-1/12 w-full md:h-auto my-1 md:my-0 md:mx-2 lg:mx-4 2xl:mx-8 flex justify-center items-center",
   linkClasses:
     "block text-lg py-1 w-10/12 md:w-full md:min-w-max text-center border-b border-transparent hover:border-b-slate-900 dark:hover:border-b-white ",
+  iconClasses:
+    "flex justify-center items-center cursor-pointer p-3 lg:p-4 text-lg",
   links: [
     { name: "Home", to: "/" },
     {
@@ -76,6 +78,7 @@ const Navbar = () => {
               >
                 <Link href={link.to}>
                   <a
+                    onClick={toggleModal}
                     className={`${navLinks.linkClasses}${
                       router.asPath === link.to
                         ? "border-b-slate-900 dark:border-b-white"
@@ -91,17 +94,17 @@ const Navbar = () => {
           {/* Icons Search Wishlist Cart Profile */}
           <div className="flex">
             <Link href={"/search"}>
-              <a className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
+              <a className={navLinks.iconClasses}>
                 <FaSearch title="Search" />
               </a>
             </Link>
-            <Link href={"/wishlist"}>
-              <a className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
+            {/* <Link href={"/wishlist"}>
+              <a className={navLinks.iconClasses}>
                 <FaHeart title="Wishlist" />
               </a>
-            </Link>
+            </Link> */}
             <Link href={"/cart"}>
-              <a className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
+              <a className={navLinks.iconClasses}>
                 <FaShoppingCart title="Cart" />
               </a>
             </Link>
@@ -113,7 +116,7 @@ const Navbar = () => {
                   : "/auth/signin"
               }
             >
-              <a className="flex justify-center items-center cursor-pointer p-2 lg:p-4 text-lg">
+              <a className={navLinks.iconClasses}>
                 <FaUser title="User" />
               </a>
             </Link>

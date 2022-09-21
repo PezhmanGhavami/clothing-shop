@@ -1,24 +1,27 @@
 import Link from "next/link";
 
 const footerATags =
-  "text-sm text-slate-600 dark:text-slate-400 hover:underline hover:text-slate-900 dark:hover:text-white px-2";
+  "text-sm text-slate-600 dark:text-slate-400 hover:underline hover:text-slate-900 dark:hover:text-white md:pl-4";
 
 function Footer() {
   return (
-    <footer className="flex justify-between items-end h-14 mb-4">
-      <span className="block text-sm text-slate-600 dark:text-slate-400 px-2">
-        © {new Date().getFullYear() + " "}
-        <a
-          href="http://127.0.0.1:5173/"
-          target="_blank"
-          className="hover:underline hover:text-slate-900 dark:hover:text-white"
-          rel="noreferrer"
-        >
-          Clothing Shop™
-        </a>
-        . All Rights Reserved.
-      </span>
-      <div>
+    <footer className="flex justify-between items-center min-h-14 py-4 px-2">
+      <div className="text-sm text-slate-600 dark:text-slate-400 md:flex">
+        <p>
+          © {new Date().getFullYear() + " "}
+          <a
+            href="http://127.0.0.1:5173/"
+            target="_blank"
+            className="hover:underline hover:text-slate-900 dark:hover:text-white"
+            rel="noreferrer"
+          >
+            Clothing Shop™
+          </a>
+          .&nbsp;
+        </p>
+        <p>All Rights Are Reserved.</p>
+      </div>
+      <div className="flex flex-col justify-center items-stat md:block">
         <Link href="contact-us">
           <a className={footerATags}>Contact Us</a>
         </Link>
