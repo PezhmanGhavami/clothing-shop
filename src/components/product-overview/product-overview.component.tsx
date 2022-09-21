@@ -8,10 +8,9 @@ const product = {
   price: "$35",
   rating: 3.9,
   reviewCount: 512,
-  href: "#",
-  breadcrumbs: [
-    { id: 1, name: "Women", href: "#" },
-    { id: 2, name: "Clothing", href: "#" },
+  href: "/product/cl89zae3n0069wcubrdpwjrg7",
+  tags: [
+    { id: 1, name: "Women", href: "/categories/womens" },
   ],
   images: [
     {
@@ -37,26 +36,6 @@ const product = {
       primary: false,
     },
   ],
-  colors: [
-    {
-      name: "Black",
-      bgColor: "bg-gray-900",
-      selectedColor: "ring-gray-900",
-    },
-    {
-      name: "Heather Grey",
-      bgColor: "bg-gray-400",
-      selectedColor: "ring-gray-400",
-    },
-  ],
-  sizes: [
-    { name: "XXS", inStock: true },
-    { name: "XS", inStock: true },
-    { name: "S", inStock: true },
-    { name: "M", inStock: true },
-    { name: "L", inStock: true },
-    { name: "XL", inStock: false },
-  ],
   description: `
     <p>The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit. They are hand cut and sewn locally, with a special dye technique that gives each tee it's own look.</p>
     <p>Looking to stock your closet? The Basic tee also comes in a 3-pack or 5-pack at a bundle discount.</p>
@@ -64,6 +43,7 @@ const product = {
   details: [
     "Only the best materials",
     "Ethically and locally made",
+    "100% cotton",
     "Pre-washed and pre-shrunk",
     "Machine wash cold with similar colors",
   ],
@@ -84,7 +64,7 @@ const policies = [
 
 const ProductOverview = () => {
   return (
-    <div className="bg-white">
+    <div>
       <div className="pt-6 pb-16 sm:pb-24">
         <nav
           aria-label="Breadcrumb"
@@ -94,12 +74,12 @@ const ProductOverview = () => {
             role="list"
             className="flex items-center space-x-4"
           >
-            {product.breadcrumbs.map((breadcrumb) => (
+            {product.tags.map((breadcrumb) => (
               <li key={breadcrumb.id}>
                 <div className="flex items-center">
                   <a
                     href={breadcrumb.href}
-                    className="mr-4 text-sm font-medium text-gray-900"
+                    className="mr-4 text-sm font-medium"
                   >
                     {breadcrumb.name}
                   </a>
