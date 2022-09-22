@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+import { faker } from "@faker-js/faker";
+import bcrypt from "bcryptjs";
 
 const SHOP_DATA = [
   {
@@ -260,30 +262,31 @@ const SHOP_DATA = [
     ],
   },
 ];
-const BRANDS = [
-  {
-    name: "brand a",
-  },
-  {
-    name: "brand b",
-  },
-  {
-    name: "brand c",
-  },
-  {
-    name: "brand d",
-  },
-];
+const BRANDS = new Array(5).fill(false).map(() => ({
+  name: faker.random.word(),
+}));
+
+const salt = await bcrypt.genSalt(10);
+const hashedPassword = await bcrypt.hash("123456", salt);
+const USERS = new Array(100).fill(false).map(() => ({
+  email: `${faker.random.word()}@mail.com`,
+  password: hashedPassword,
+  displayName: faker.name.fullName(),
+}));
 
 async function seedDB() {
   const deleteItems = prisma.item.deleteMany({});
   const deleteCategories = prisma.category.deleteMany({});
   const deleteBrands = prisma.brand.deleteMany({});
+  const deleteReviews = prisma.review.deleteMany({});
+  const deleteUsers = prisma.user.deleteMany({});
 
   await prisma.$transaction([
     deleteItems,
     deleteCategories,
     deleteBrands,
+    deleteReviews,
+    deleteUsers,
   ]);
 
   await prisma.brand.createMany({
@@ -291,18 +294,35 @@ async function seedDB() {
     skipDuplicates: true,
   });
 
-  for (const category of SHOP_DATA) {
-    await prisma.category.create({
-      data: {
-        name: category.title.toLowerCase(),
-      },
-    });
+  await prisma.user.createMany({
+    data: USERS,
+    skipDuplicates: true,
+  });
 
-    const brands = await prisma.brand.findMany({});
+  const brands = await prisma.brand.findMany({});
+  const users = await prisma.user.findMany({});
+
+  for (const category of SHOP_DATA) {
     for (const itemOfCategory of category.items) {
       const brandIndex = Math.floor(
-        Math.random() * BRANDS.length
+        Math.random() * brands.length
       );
+
+      const discountChance = Math.floor(Math.random() * 10);
+      const discount =
+        discountChance < 3
+          ? {
+              dsicountedPrice: itemOfCategory.price * 0.8,
+              offer: true,
+            }
+          : {};
+
+      const viewed = Math.floor(Math.random() * 10000);
+      let sold = Math.floor(Math.random() * 1000);
+      while (sold > viewed) {
+        sold = Math.floor(Math.random() * 1000);
+      }
+      let reviewsLength = Math.floor(Math.random() * sold);
 
       await prisma.item.create({
         data: {
@@ -311,7 +331,40 @@ async function seedDB() {
           images: [itemOfCategory.imageUrl],
           brand: { connect: { id: brands[brandIndex].id } },
           currentInventory: Math.floor(Math.random() * 20),
-          description: `test description for an item that is of brand ${brands[brandIndex].name}`,
+          viewed,
+          sold,
+          description: `Test description for ${itemOfCategory.name} that is of brand ${brands[brandIndex].name}`,
+
+          details: new Array(4)
+            .fill(false)
+            .map(() => faker.lorem.sentence()),
+
+          reviews: {
+            create: new Array(reviewsLength)
+              .fill(false)
+              .map(() => ({
+                title: faker.random.word(),
+                body: faker.lorem.paragraph(),
+                score: Math.floor(Math.random() * 5),
+                upVotes: Math.floor(
+                  (Math.random() * reviewsLength) / 2
+                ),
+                downVotes: Math.floor(
+                  (Math.random() * reviewsLength) / 2
+                ),
+                published: true,
+                user: {
+                  connect: {
+                    id: users[
+                      Math.floor(
+                        Math.random() * users.length
+                      )
+                    ].id,
+                  },
+                },
+              })),
+          },
+
           categories: {
             connectOrCreate: [
               {
@@ -332,6 +385,7 @@ async function seedDB() {
               },
             ],
           },
+          ...discount,
         },
       });
     }

@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { NextPageWithLayout } from "../../_app";
-import { Item } from "@prisma/client";
+import { Item, Review } from "@prisma/client";
 
 import { prisma } from "../../../utils/prisma-client";
 
@@ -11,8 +11,11 @@ import ProductCardContainer, {
   IProductCardContainerData,
 } from "../../../components/product-card-container/product-card-container.component";
 
+export interface IItemPopulatedWithReview extends Item {
+  reviews: Review[];
+}
 interface IProduct {
-  product: Item;
+  product: IItemPopulatedWithReview;
   relatedProducts: IProductCardContainerData;
 }
 
@@ -45,8 +48,18 @@ export const getStaticProps: GetStaticProps = async ({
       id: productID,
     },
     include: {
+      reviews: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
       categories: {
         take: 1,
+        where: {
+          NOT: {
+            name: "seed",
+          },
+        },
         include: {
           items: {
             take: 6,
@@ -84,7 +97,7 @@ const Product: NextPageWithLayout<IProduct> = ({
 }) => {
   return (
     <div>
-      <ProductOverview />
+      <ProductOverview product={product} />
       <ProductCardContainer
         showName={true}
         showLink={false}
