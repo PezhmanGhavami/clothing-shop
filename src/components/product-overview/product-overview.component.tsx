@@ -51,18 +51,20 @@ const ProductOverview = ({ product }: IProductOverview) => {
                     </span>
                   </p>
                   <div className="ml-1 flex items-center">
-                    {[0, 1, 2, 3, 4].map((rating) => (
-                      <AiFillStar
-                        key={rating}
-                        className={
-                          product.reviewsScore > rating
-                            ? "text-yellow-400"
-                            : "text-gray-200" +
-                              " h-5 w-5 flex-shrink-0"
-                        }
-                        aria-hidden="true"
-                      />
-                    ))}
+                    {[0, 1, 2, 3, 4].map(
+                      (rating, index) => (
+                        <AiFillStar
+                          key={index}
+                          className={
+                            product.reviewsScore > rating
+                              ? "text-yellow-400"
+                              : "text-gray-200" +
+                                " h-5 w-5 flex-shrink-0"
+                          }
+                          aria-hidden="true"
+                        />
+                      )
+                    )}
                   </div>
                   <div
                     aria-hidden="true"
@@ -122,8 +124,8 @@ const ProductOverview = ({ product }: IProductOverview) => {
 
                 <div className="mt-4 prose prose-sm text-gray-500">
                   <ul role="list">
-                    {product.details.map((item) => (
-                      <li key={item}>{item}</li>
+                    {product.details.map((item, index) => (
+                      <li key={index}>{item}</li>
                     ))}
                   </ul>
                 </div>
@@ -148,6 +150,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
                       className="bg-gray-50 border border-gray-200 rounded-lg p-6 text-center"
                     >
                       <p>{review.user.displayName}</p>
+                      <p>{review.votes}</p>
                       <p>{review.score}</p>
                       <dt>
                         <span className="mt-4 text-sm font-medium text-gray-900">

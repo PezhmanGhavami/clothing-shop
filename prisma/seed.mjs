@@ -348,12 +348,13 @@ async function seedDB() {
                 score: Math.floor(
                   Math.random() * (6 - 3) + 3
                 ),
-                upVotes: Math.floor(
-                  (Math.random() * reviewsLength) / 2
-                ),
-                downVotes: Math.floor(
-                  (Math.random() * reviewsLength) / 2
-                ),
+                votes:
+                  Math.floor(
+                    (Math.random() * reviewsLength) / 2
+                  ) -
+                  Math.floor(
+                    (Math.random() * reviewsLength) / 2
+                  ),
                 published: true,
                 user: {
                   connect: {

@@ -11,10 +11,12 @@ import ProductCardContainer, {
   IProductCardContainerData,
 } from "../../../components/product-card-container/product-card-container.component";
 
-export type reviewPopulatedWithUser = Review & { user: User };
+export type reviewPopulatedWithUser = Review & {
+  user: User;
+};
 export type IItemPopulatedWithReview = Item & {
   reviews: reviewPopulatedWithUser[];
-}
+};
 interface IProduct {
   product: IItemPopulatedWithReview;
   relatedProducts: IProductCardContainerData;
@@ -54,12 +56,13 @@ export const getStaticProps: GetStaticProps = async ({
           title: true,
           body: true,
           score: true,
+          votes: true,
           user: {
             select: { displayName: true },
           },
         },
         orderBy: {
-          upVotes: "desc",
+          votes: "desc",
         },
         take: 3,
       },
