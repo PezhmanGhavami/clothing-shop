@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { NextPageWithLayout } from "../../_app";
-import { Item, Review } from "@prisma/client";
+import { Item, Review, User } from "@prisma/client";
 
 import { prisma } from "../../../utils/prisma-client";
 
@@ -11,8 +11,9 @@ import ProductCardContainer, {
   IProductCardContainerData,
 } from "../../../components/product-card-container/product-card-container.component";
 
-export interface IItemPopulatedWithReview extends Item {
-  reviews: Review[];
+export type reviewPopulatedWithUser = Review & { user: User };
+export type IItemPopulatedWithReview = Item & {
+  reviews: reviewPopulatedWithUser[];
 }
 interface IProduct {
   product: IItemPopulatedWithReview;

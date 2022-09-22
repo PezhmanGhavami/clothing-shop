@@ -97,10 +97,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
             </div>
 
             <div className="mt-8 lg:col-span-5">
-              <button
-                type="submit"
-                className="mt-8 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
+              <button className="mt-6 bg-slate-100 shadow-md dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium tracking-tight h-11 w-full rounded-md">
                 Add to cart
               </button>
 
@@ -145,22 +142,20 @@ const ProductOverview = ({ product }: IProductOverview) => {
                 </h2>
 
                 <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-                  {policies.map((policy) => (
+                  {product.reviews.map((review) => (
                     <div
-                      key={policy.name}
+                      key={review.id}
                       className="bg-gray-50 border border-gray-200 rounded-lg p-6 text-center"
                     >
+                      <p>{review.user.displayName}</p>
+                      <p>{review.score}</p>
                       <dt>
-                        <policy.icon
-                          className="mx-auto h-6 w-6 flex-shrink-0 text-gray-400"
-                          aria-hidden="true"
-                        />
                         <span className="mt-4 text-sm font-medium text-gray-900">
-                          {policy.name}
+                          {review.title}
                         </span>
                       </dt>
                       <dd className="mt-1 text-sm text-gray-500">
-                        {policy.description}
+                        {review.body}
                       </dd>
                     </div>
                   ))}
