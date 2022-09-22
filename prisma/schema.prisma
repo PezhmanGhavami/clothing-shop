@@ -103,6 +103,7 @@ model Item {
   brandId          String
   categories       Category[]
   reviews          Review[]
+  reviewsCount     Int        @default(0)
   reviewsScore     Float      @default(0.0)
   // specifications   Json?
   details          String[]

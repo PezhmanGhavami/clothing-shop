@@ -50,10 +50,9 @@ export const getStaticProps: GetStaticProps = async ({
     include: {
       reviews: {
         orderBy: {
-          createdAt: "desc",
+          upVotes: "desc",
         },
         take: 3,
-        
       },
       categories: {
         take: 1,

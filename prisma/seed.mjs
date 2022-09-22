@@ -282,11 +282,11 @@ async function seedDB() {
   const deleteUsers = prisma.user.deleteMany({});
 
   await prisma.$transaction([
+    deleteReviews,
+    deleteUsers,
     deleteItems,
     deleteCategories,
     deleteBrands,
-    deleteReviews,
-    deleteUsers,
   ]);
 
   await prisma.brand.createMany({
@@ -345,7 +345,9 @@ async function seedDB() {
               .map(() => ({
                 title: faker.random.word(),
                 body: faker.lorem.paragraph(),
-                score: Math.floor(Math.random() * 5),
+                score: Math.floor(
+                  Math.random() * (6 - 3) + 3
+                ),
                 upVotes: Math.floor(
                   (Math.random() * reviewsLength) / 2
                 ),
@@ -389,6 +391,32 @@ async function seedDB() {
         },
       });
     }
+  }
+
+  const items = await prisma.item.findMany({
+    include: { reviews: true },
+  });
+
+  for (const item of items) {
+    await prisma.item.update({
+      where: {
+        id: item.id,
+      },
+      data: {
+        reviewsCount: item.reviews.length,
+        reviewsScore:
+          item.reviews.length > 0
+            ? parseFloat(
+                (
+                  item.reviews.reduce(
+                    (acc, { score }) => acc + score,
+                    0
+                  ) / item.reviews.length
+                ).toFixed(1)
+              )
+            : 0,
+      },
+    });
   }
 }
 
