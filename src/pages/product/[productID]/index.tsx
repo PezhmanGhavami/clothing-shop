@@ -52,6 +52,8 @@ export const getStaticProps: GetStaticProps = async ({
         orderBy: {
           createdAt: "desc",
         },
+        take: 3,
+        
       },
       categories: {
         take: 1,
