@@ -44,8 +44,19 @@ export const getStaticProps: GetStaticProps = async ({
     where: {
       name: categoryName,
     },
-    include: {
-      items: true,
+    select: {
+      name: true,
+      items: {
+        select: {
+          id: true,
+          images: true,
+          name: true,
+          price: true,
+          offer: true,
+          dsicountedPrice: true,
+          currentInventory: true,
+        },
+      },
     },
   });
 

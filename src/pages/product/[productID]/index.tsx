@@ -49,6 +49,14 @@ export const getStaticProps: GetStaticProps = async ({
     },
     include: {
       reviews: {
+        select: {
+          title: true,
+          body: true,
+          score: true,
+          user: {
+            select: { displayName: true },
+          },
+        },
         orderBy: {
           upVotes: "desc",
         },
@@ -61,9 +69,18 @@ export const getStaticProps: GetStaticProps = async ({
             name: "seed",
           },
         },
-        include: {
+        select: {
           items: {
             take: 6,
+            select: {
+              id: true,
+              images: true,
+              name: true,
+              price: true,
+              offer: true,
+              dsicountedPrice: true,
+              currentInventory: true,
+            },
           },
         },
       },

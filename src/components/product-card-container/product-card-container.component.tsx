@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { Item } from "@prisma/client";
 
-import ProductCard from "../product-card/product-card.component";
+import ProductCard, {
+  IProductCard,
+} from "../product-card/product-card.component";
 
 export interface IProductCardContainerData {
   name: string;
-  items: Item[];
+  items: IProductCard[];
 }
 interface IProductCardContainer {
   productGroup: IProductCardContainerData;

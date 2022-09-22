@@ -1,12 +1,23 @@
-import { Item } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
-interface IProductCard {
-  product: Item;
+export interface IProductCard {
+  id: string;
+  images: string[];
+  name: string;
+  price: number;
+  offer: boolean;
+  dsicountedPrice: number | null;
+  currentInventory: number;
 }
 
-const ProductCard = ({ product }: IProductCard) => {
+interface IProductCardComponent {
+  product: IProductCard;
+}
+
+const ProductCard = ({
+  product,
+}: IProductCardComponent) => {
   return (
     <div>
       <Link href={"/product/" + product.id}>

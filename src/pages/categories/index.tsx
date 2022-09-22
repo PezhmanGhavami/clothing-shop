@@ -21,9 +21,19 @@ export const getStaticProps: GetStaticProps = async () => {
         not: "seed",
       },
     },
-    include: {
+    select: {
+      name: true,
       items: {
         take: 6,
+        select: {
+          id: true,
+          images: true,
+          name: true,
+          price: true,
+          offer: true,
+          dsicountedPrice: true,
+          currentInventory: true,
+        },
       },
     },
   });
