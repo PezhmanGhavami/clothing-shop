@@ -22,6 +22,7 @@ export const getStaticProps: GetStaticProps = async () => {
       },
     },
     select: {
+      id: true,
       name: true,
       items: {
         take: 6,

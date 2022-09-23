@@ -1,170 +1,147 @@
 import Image from "next/image";
-import {
-  AiFillStar,
-  AiOutlineDollarCircle,
-  AiOutlineGlobal,
-} from "react-icons/ai";
+import Link from "next/link";
+import { AiFillStar, AiFillHeart } from "react-icons/ai";
 
-import { IItemPopulatedWithReview } from "../../pages/product/[productID]";
-
-const policies = [
-  {
-    name: "International delivery",
-    icon: AiOutlineGlobal,
-    description: "Get your order in 2 years",
-  },
-  {
-    name: "Loyalty rewards",
-    icon: AiOutlineDollarCircle,
-    description: "Don't look at other tees",
-  },
-];
+import { itemPopulatedWithReviewAndCategoryName } from "../../pages/product/[productID]";
 
 interface IProductOverview {
-  product: IItemPopulatedWithReview;
+  product: itemPopulatedWithReviewAndCategoryName;
 }
 
 const ProductOverview = ({ product }: IProductOverview) => {
   return (
-    <div>
-      <div className="pt-6 pb-16 sm:pb-24">
-        <div className="mt-8 max-w-2xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-          <div className="lg:grid lg:grid-cols-12 lg:auto-rows-min lg:gap-x-8">
-            <div className="lg:col-start-8 lg:col-span-5">
-              <div className="flex justify-between">
-                <h1 className="text-xl font-medium text-gray-900">
-                  {product.name}
-                </h1>
-                <p className="text-xl font-medium text-gray-900">
-                  {product.price}
-                </p>
-              </div>
-              {/* Reviews */}
-              <div className="mt-4">
-                <h2 className="sr-only">Reviews</h2>
-                <div className="flex items-center">
-                  <p className="text-sm text-gray-700">
-                    {product.reviewsScore}
-                    <span className="sr-only">
-                      {" "}
-                      out of 5 stars
-                    </span>
-                  </p>
-                  <div className="ml-1 flex items-center">
-                    {[0, 1, 2, 3, 4].map(
-                      (rating, index) => (
-                        <AiFillStar
-                          key={index}
-                          className={
-                            product.reviewsScore > rating
-                              ? "text-yellow-400"
-                              : "text-gray-200" +
-                                " h-5 w-5 flex-shrink-0"
-                          }
-                          aria-hidden="true"
-                        />
-                      )
-                    )}
-                  </div>
-                  <div
-                    aria-hidden="true"
-                    className="ml-4 text-sm text-gray-300"
-                  >
-                    ·
-                  </div>
-                  <div className="ml-4 flex">
-                    <a
-                      href="#"
-                      className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      See all {product.reviewsCount} reviews
-                    </a>
-                  </div>
-                </div>
-              </div>
+    <div className="flex flex-col border-b">
+      <div className="pb-4 sm:py-4 mx-auto w-11/12 text-sm capitalize order-last sm:order-none">
+        <Link
+          href={"/categories/" + product.categories[0].name}
+        >
+          <a className="text-slate-500 dark:text-slate-400 hover:underline hover:text-slate-900 dark:hover:text-white">
+            {product.categories[0].name + " "}
+          </a>
+        </Link>
+        / {product.name}
+      </div>
+      <div className="flex flex-col sm:flex-row sm:w-11/12 sm:mx-auto sm:h-[50vh] sm:pt-6">
+        <div className="relative sm:w-2/6 h-[55vh] sm:h-5/6 bg-gray-200">
+          <Image
+            src={product.images[0]}
+            alt={product.name}
+            layout="fill"
+            priority
+            quality={100}
+            className="object-cover object-center"
+          />
+        </div>
+        <div className="flex-auto p-4 sm:p-0 sm:pl-10">
+          <div className="flex flex-wrap">
+            <h1 className="flex-auto text-lg font-semibold text-slate-900">
+              {product.name}
+            </h1>
+            <div className="text-lg font-semibold text-slate-500">
+              <p>
+                <span
+                  className={
+                    product.offer ? "line-through" : ""
+                  }
+                >
+                  ${product.price}
+                </span>
+                {product.offer && (
+                  <span className="text-red-700 dark:text-red-400">
+                    {" "}
+                    ${product.dsicountedPrice}
+                  </span>
+                )}
+              </p>
             </div>
-
-            {/* Image gallery */}
-            <div className="mt-8 lg:mt-0">
-              <div className="relative h-[50vh] w-full overflow-hidden rounded-md bg-gray-200 hover:opacity-75">
-                <Image
-                  src={product.images[0]}
-                  alt={product.name}
-                  layout="fill"
-                  quality={100}
-                  priority
-                  className="object-cover object-center"
+            <div className="w-full flex-none text-sm font-medium text-slate-700 mt-2">
+              {product.currentInventory > 3 ? (
+                <span>In stock</span>
+              ) : product.currentInventory > 0 &&
+                product.currentInventory <= 3 ? (
+                <span>
+                  Last {product.currentInventory} in stock
+                </span>
+              ) : (
+                <span>Out of stock</span>
+              )}
+            </div>
+          </div>
+          <div className="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200">
+            <div className="space-x-2 flex text-sm">
+              <label>
+                <input
+                  className="sr-only peer"
+                  name="size"
+                  type="radio"
+                  value="xs"
+                  defaultChecked
                 />
-              </div>
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center text-slate-700 peer-checked:font-semibold peer-checked:bg-slate-900 peer-checked:text-white">
+                  XS
+                </div>
+              </label>
+              <label>
+                <input
+                  className="sr-only peer"
+                  name="size"
+                  type="radio"
+                  value="s"
+                />
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center text-slate-700 peer-checked:font-semibold peer-checked:bg-slate-900 peer-checked:text-white">
+                  S
+                </div>
+              </label>
+              <label>
+                <input
+                  className="sr-only peer"
+                  name="size"
+                  type="radio"
+                  value="m"
+                />
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center text-slate-700 peer-checked:font-semibold peer-checked:bg-slate-900 peer-checked:text-white">
+                  M
+                </div>
+              </label>
+              <label>
+                <input
+                  className="sr-only peer"
+                  name="size"
+                  type="radio"
+                  value="l"
+                />
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center text-slate-700 peer-checked:font-semibold peer-checked:bg-slate-900 peer-checked:text-white">
+                  L
+                </div>
+              </label>
+              <label>
+                <input
+                  className="sr-only peer"
+                  name="size"
+                  type="radio"
+                  value="xl"
+                />
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center text-slate-700 peer-checked:font-semibold peer-checked:bg-slate-900 peer-checked:text-white">
+                  XL
+                </div>
+              </label>
             </div>
-
-            <div className="mt-8 lg:col-span-5">
-              <button className="mt-6 bg-slate-100 shadow-md dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium tracking-tight h-11 w-full rounded-md">
+          </div>
+          <div className="flex space-x-4 mb-6 text-sm font-medium">
+            {/* TODO - Make this a component */}
+            <div className="flex-auto flex space-x-4">
+              <button className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium tracking-tight h-9 w-full rounded-md shadow-md">
                 Add to cart
               </button>
-
-              {/* Product details */}
-              <div className="mt-10">
-                <h2 className="text-sm font-medium text-gray-900">
-                  Description
-                </h2>
-
-                <div
-                  className="mt-4 prose prose-sm text-gray-500"
-                  dangerouslySetInnerHTML={{
-                    __html: product.description,
-                  }}
-                />
-              </div>
-
-              <div className="mt-8 border-t border-gray-200 pt-8">
-                <h2 className="text-sm font-medium text-gray-900">
-                  Fabric &amp; Care
-                </h2>
-
-                <div className="mt-4 prose prose-sm text-gray-500">
-                  <ul role="list">
-                    {product.details.map((item, index) => (
-                      <li key={index}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* Policies */}
-              <section
-                aria-labelledby="policies-heading"
-                className="mt-10"
-              >
-                <h2
-                  id="policies-heading"
-                  className="sr-only"
-                >
-                  Our Policies
-                </h2>
-
-                <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-                  {product.reviews.map((review) => (
-                    <div
-                      key={review.id}
-                      className="bg-gray-50 border border-gray-200 rounded-lg p-6 text-center"
-                    >
-                      <p>{review.user.displayName}</p>
-                      <p>{review.votes}</p>
-                      <p>{review.score}</p>
-                      <dt>
-                        <span className="mt-4 text-sm font-medium text-gray-900">
-                          {review.title}
-                        </span>
-                      </dt>
-                      <dd className="mt-1 text-sm text-gray-500">
-                        {review.body}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </section>
             </div>
+            <button
+              className="flex-none flex items-center justify-center w-9 h-9 rounded-md border text-slate-400 dark:text-slate-800 hover:text-slate-500 dark:hover:bg-slate-700 text-lg shadow"
+              type="button"
+              aria-label="Like"
+              title="Add to wishlist"
+            >
+              <AiFillHeart />
+            </button>
           </div>
         </div>
       </div>

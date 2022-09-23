@@ -72,7 +72,7 @@ const Category: NextPageWithLayout<ICategoryComp> = ({
   category,
 }) => {
   return (
-    <>
+    <div className="py-6">
       <h2 className="capitalize text-4xl font-bold tracking-tight text-center">
         {category.name}
       </h2>
@@ -81,7 +81,7 @@ const Category: NextPageWithLayout<ICategoryComp> = ({
         showLink={false}
         productGroup={category}
       />
-    </>
+    </div>
   );
 };
 

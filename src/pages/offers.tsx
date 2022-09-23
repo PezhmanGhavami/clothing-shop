@@ -34,7 +34,7 @@ const Offer: NextPageWithLayout<IOffer> = ({
   offerListing,
 }) => {
   return (
-    <>
+    <div className="py-6">
       <h2 className="capitalize text-4xl font-bold tracking-tight text-center">
         {offerListing.name}
       </h2>
@@ -43,7 +43,7 @@ const Offer: NextPageWithLayout<IOffer> = ({
         showLink={false}
         productGroup={offerListing}
       />
-    </>
+    </div>
   );
 };
 

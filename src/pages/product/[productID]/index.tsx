@@ -14,11 +14,13 @@ import ProductCardContainer, {
 export type reviewPopulatedWithUser = Review & {
   user: User;
 };
-export type IItemPopulatedWithReview = Item & {
-  reviews: reviewPopulatedWithUser[];
-};
+export type itemPopulatedWithReviewAndCategoryName =
+  Item & {
+    reviews: reviewPopulatedWithUser[];
+    categories: { name: string }[];
+  };
 interface IProduct {
-  product: IItemPopulatedWithReview;
+  product: itemPopulatedWithReviewAndCategoryName;
   relatedProducts: IProductCardContainerData;
 }
 
@@ -74,7 +76,13 @@ export const getStaticProps: GetStaticProps = async ({
           },
         },
         select: {
+          name: true,
           items: {
+            where: {
+              NOT: {
+                id: productID,
+              },
+            },
             take: 6,
             select: {
               id: true,
