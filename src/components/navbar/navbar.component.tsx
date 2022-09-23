@@ -51,11 +51,14 @@ const Navbar = () => {
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
   };
+  const closeModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <>
       <header className="flex justify-items-center items-center h-20 py-1">
-        {openModal && <Overlay handleClick={toggleModal} />}
+        {openModal && <Overlay handleClick={closeModal} />}
         <Hamburger
           openModal={openModal}
           handleClick={toggleModal}
@@ -78,7 +81,7 @@ const Navbar = () => {
               >
                 <Link href={link.to}>
                   <a
-                    onClick={toggleModal}
+                    onClick={closeModal}
                     className={`${navLinks.linkClasses}${
                       router.asPath === link.to
                         ? "border-b-slate-900 dark:border-b-white"
