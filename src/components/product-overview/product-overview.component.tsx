@@ -16,10 +16,10 @@ const ProductOverview = ({ product }: IProductOverview) => {
           href={"/categories/" + product.categories[0].name}
         >
           <a className="text-slate-500 dark:text-slate-400 hover:underline hover:text-slate-900 dark:hover:text-white">
-            {product.categories[0].name + " "}
+            {product.categories[0].name}
           </a>
         </Link>
-        / {product.name}
+        <span> / </span> {product.name}
       </div>
       <div className="flex flex-col sm:flex-row sm:w-11/12 lg:w-3/4 sm:mx-auto sm:h-[50vh] lg:h-[70vh] sm:pt-6">
         <div className="relative sm:w-2/6 h-[60vh] sm:h-5/6 bg-gray-200">
@@ -33,12 +33,15 @@ const ProductOverview = ({ product }: IProductOverview) => {
           />
         </div>
         <div className="flex-auto p-4 sm:p-0 sm:pl-10">
-          <div className="flex flex-wrap">
-            <h1 className="flex-auto text-lg font-semibold text-slate-900">
-              {product.name}
-            </h1>
-            <div className="text-lg font-semibold text-slate-500">
-              <p>
+          {/* Price, Name, Availablity and Reviews */}
+          <div className="flex flex-col">
+            <div className="flex justify-between">
+              {/* Product Name */}
+              <h1 className="text-lg font-semibold">
+                {product.name}
+              </h1>
+              {/* Discount */}
+              <p className="text-lg font-semibold text-slate-500 dark:text-slate-400">
                 <span
                   className={
                     product.offer ? "line-through" : ""
@@ -54,16 +57,19 @@ const ProductOverview = ({ product }: IProductOverview) => {
                 )}
               </p>
             </div>
-            <div className="w-full flex-none text-sm font-medium text-slate-700 mt-2">
+            {/* Availablity */}
+            <div className="w-full flex-none text-sm font-medium text-slate-500 dark:text-slate-400 mt-2">
               {product.currentInventory > 3 ? (
                 <span>In stock</span>
               ) : product.currentInventory > 0 &&
                 product.currentInventory <= 3 ? (
-                <span>
-                  Last {product.currentInventory} in stock
+                <span className="text-yellow-400">
+                  *Last {product.currentInventory} in stock
                 </span>
               ) : (
-                <span>Out of stock</span>
+                <span className="text-red-500">
+                  *Out of stock
+                </span>
               )}
             </div>
           </div>
@@ -130,8 +136,13 @@ const ProductOverview = ({ product }: IProductOverview) => {
           <div className="flex space-x-4 mb-6 text-sm font-medium">
             {/* TODO - Make this a component */}
             <div className="flex-auto flex space-x-4">
-              <button className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium tracking-tight h-9 w-full rounded-md shadow-md">
-                Add to cart
+              <button
+                disabled={product.currentInventory === 0}
+                className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium tracking-tight h-9 w-full rounded-md shadow-md"
+              >
+                {product.currentInventory > 0
+                  ? "Add to cart"
+                  : "Out of stock"}
               </button>
             </div>
             <button
