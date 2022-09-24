@@ -11,7 +11,7 @@ interface IProductOverview {
 const ProductOverview = ({ product }: IProductOverview) => {
   return (
     <div className="flex flex-col border-b">
-      <div className="pb-4 sm:py-4 mx-auto w-11/12 text-sm capitalize order-last sm:order-none">
+      <div className="p-4 pt-0 sm:p-0 sm:py-4 mx-auto w-full sm:w-11/12 lg:w-3/4 text-sm capitalize order-last sm:order-none">
         <Link
           href={"/categories/" + product.categories[0].name}
         >
@@ -21,7 +21,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
         </Link>
         / {product.name}
       </div>
-      <div className="flex flex-col sm:flex-row sm:w-11/12 sm:mx-auto sm:h-[50vh] sm:pt-6">
+      <div className="flex flex-col sm:flex-row sm:w-11/12 lg:w-3/4 sm:mx-auto sm:h-[50vh] lg:h-[70vh] sm:pt-6">
         <div className="relative sm:w-2/6 h-[55vh] sm:h-5/6 bg-gray-200">
           <Image
             src={product.images[0]}
