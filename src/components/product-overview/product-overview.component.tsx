@@ -6,6 +6,8 @@ import {
   AiFillHeart,
 } from "react-icons/ai";
 
+import ReviewStars from "../product-review-stars/product-review-stars.component";
+
 import { itemPopulatedWithReviewAndCategoryName } from "../../pages/product/[productID]";
 
 interface IProductOverview {
@@ -45,18 +47,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
           <div className="flex flex-col">
             {/* Reviews */}
             <div className="flex">
-              <div
-                title={`Rated ${product.reviewsScore} out of 5`}
-                className="flex items-center"
-              >
-                {[1, 2, 3, 4, 5].map((rating) =>
-                  product.reviewsScore >= rating ? (
-                    <AiFillStar key={rating} />
-                  ) : (
-                    <AiOutlineStar key={rating} />
-                  )
-                )}
-              </div>
+              <ReviewStars score={product.reviewsScore} />
               <a
                 title="Click to see all reviews"
                 href="#reviews-section"

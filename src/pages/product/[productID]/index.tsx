@@ -56,10 +56,12 @@ export const getStaticProps: GetStaticProps = async ({
     include: {
       reviews: {
         select: {
+          id: true,
           title: true,
           body: true,
           score: true,
           votes: true,
+          createdAt: true,
           user: {
             select: { displayName: true },
           },
@@ -134,7 +136,7 @@ const Product: NextPageWithLayout<IProduct> = ({
         showLink={false}
         productGroup={relatedProducts}
       />
-      <ProductReviewsContainer />
+      <ProductReviewsContainer reviews={product.reviews} />
     </div>
   );
 };
