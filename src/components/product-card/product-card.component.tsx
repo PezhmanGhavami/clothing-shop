@@ -29,7 +29,7 @@ const ProductCard = ({
               layout="fill"
               quality={100}
               priority
-              className="object-cover object-center"
+              className="object-cover object-center dark:brightness-90"
             />
           </div>
           <div className="mt-4 flex justify-between">
