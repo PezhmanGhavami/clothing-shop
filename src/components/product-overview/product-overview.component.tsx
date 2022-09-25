@@ -1,6 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { AiFillStar, AiFillHeart } from "react-icons/ai";
+import {
+  AiFillStar,
+  AiOutlineStar,
+  AiFillHeart,
+} from "react-icons/ai";
 
 import { itemPopulatedWithReviewAndCategoryName } from "../../pages/product/[productID]";
 
@@ -39,6 +43,28 @@ const ProductOverview = ({ product }: IProductOverview) => {
         <div className="flex-auto p-4 sm:p-0 sm:pl-10">
           {/* Price, Name, Availablity and Reviews */}
           <div className="flex flex-col">
+            {/* Reviews */}
+            <div className="flex">
+              <div
+                title={`Rated ${product.reviewsScore} out of 5`}
+                className="flex items-center"
+              >
+                {[1, 2, 3, 4, 5].map((rating) =>
+                  product.reviewsScore >= rating ? (
+                    <AiFillStar key={rating} />
+                  ) : (
+                    <AiOutlineStar key={rating} />
+                  )
+                )}
+              </div>
+              <a
+                title="Click to see all reviews"
+                href="#"
+                className="ml-3 text-sm font-medium underline text-blue-700 dark:text-blue-400"
+              >
+                {product.reviewsCount} reviews
+              </a>
+            </div>
             {/* Price and name */}
             <div className="flex justify-between">
               {/* Product Name */}
