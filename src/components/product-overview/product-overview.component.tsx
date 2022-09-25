@@ -59,7 +59,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
               </div>
               <a
                 title="Click to see all reviews"
-                href="#"
+                href="#reviews-section"
                 className="ml-3 text-sm font-medium underline text-blue-700 dark:text-blue-400"
               >
                 {product.reviewsCount} reviews

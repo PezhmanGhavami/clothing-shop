@@ -10,6 +10,7 @@ import ProductOverview from "../../../components/product-overview/product-overvi
 import ProductCardContainer, {
   IProductCardContainerData,
 } from "../../../components/product-card-container/product-card-container.component";
+import ProductReviewsContainer from "../../../components/product-reviews-container/product-reviews-container.component";
 
 export type reviewPopulatedWithUser = Review & {
   user: User;
@@ -66,7 +67,7 @@ export const getStaticProps: GetStaticProps = async ({
         orderBy: {
           votes: "desc",
         },
-        take: 3,
+        take: 5,
       },
       categories: {
         take: 1,
@@ -133,6 +134,7 @@ const Product: NextPageWithLayout<IProduct> = ({
         showLink={false}
         productGroup={relatedProducts}
       />
+      <ProductReviewsContainer />
     </div>
   );
 };
