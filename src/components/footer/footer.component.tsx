@@ -1,8 +1,3 @@
-import Link from "next/link";
-
-const footerATags =
-  "text-sm text-slate-600 dark:text-slate-400 hover:underline hover:text-slate-900 dark:hover:text-white md:pl-4";
-
 function Footer() {
   return (
     <footer className="flex justify-center sm:justify-start items-center h-14 py-4 px-2">
