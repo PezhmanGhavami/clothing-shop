@@ -91,6 +91,7 @@ const Home: NextPageWithLayout<IHome> = ({
         <div className="h-full overflow-x-hidden">
           <div className="h-full flex justify-between items-center bg-[url('https://i.ibb.co/R70vBrQ/men.png')] bg-center bg-cover">
             <div>Back</div>
+            {/* Info box */}
             <div className="border h-12">
               <h3>Mens</h3>
               <p>Shop now</p>
