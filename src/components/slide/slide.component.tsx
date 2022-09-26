@@ -1,18 +1,19 @@
 import Link from "next/link";
 
-type slide = { name: string; imageURL: string };
+type slide = { name: string; imageUrl: string };
 interface ISlide {
   slide: slide;
 }
 
 const Slide = ({ slide }: ISlide) => {
-  const imageURL = `bg-[url(\'${slide.imageURL}')]`;
   return (
     <div
       className={
-        "h-full flex justify-between items-center bg-center bg-cover " +
-        imageURL
+        "h-full w-screen flex justify-between items-center bg-center bg-cover "
       }
+      style={{
+        backgroundImage: `url(${slide.imageUrl})`,
+      }}
     >
       <div>Back</div>
       {/* Info box */}

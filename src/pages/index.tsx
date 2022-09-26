@@ -12,31 +12,33 @@ interface IHome {
   specialOffers: IProductCardContainerData;
 }
 
+import Slide from "../components/slide/slide.component";
+
 const landingDir = [
   {
+    id: 5,
+    name: "mens",
+    imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
+  },
+  {
+    id: 4,
+    name: "womens",
+    imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
+  },
+  {
     id: 1,
-    title: "hats",
+    name: "hats",
     imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
   },
   {
     id: 2,
-    title: "jackets",
+    name: "jackets",
     imageUrl: "https://i.ibb.co/px2tCc3/jackets.png",
   },
   {
     id: 3,
-    title: "sneakers",
+    name: "sneakers",
     imageUrl: "https://i.ibb.co/0jqHpnp/sneakers.png",
-  },
-  {
-    id: 4,
-    title: "womens",
-    imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
-  },
-  {
-    id: 5,
-    title: "mens",
-    imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
   },
 ];
 
@@ -86,18 +88,14 @@ const Home: NextPageWithLayout<IHome> = ({
 }) => {
   return (
     <>
-      <div className="relative bg-slate-500 h-[65vh]">
+      <div className="relative bg-slate-500 h-[65vh] overflow-x-hidden">
         {/* Slides container */}
-        <div className="h-full overflow-x-hidden">
-          <div className="h-full flex justify-between items-center bg-[url('https://i.ibb.co/R70vBrQ/men.png')] bg-center bg-cover">
-            <div>Back</div>
-            {/* Info box */}
-            <div className="border h-12">
-              <h3>Mens</h3>
-              <p>Shop now</p>
-            </div>
-            <div>Next</div>
-          </div>
+        <div className="h-full inline-flex">
+          <Slide slide={landingDir[0]} />
+          <Slide slide={landingDir[1]} />
+          <Slide slide={landingDir[2]} />
+          <Slide slide={landingDir[3]} />
+          <Slide slide={landingDir[4]} />
         </div>
         {/* The buttons to change slides */}
         <div className="absolute bottom-0 w-full flex justify-center items-center">
