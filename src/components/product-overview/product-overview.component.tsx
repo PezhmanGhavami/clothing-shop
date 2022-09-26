@@ -1,10 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  AiFillStar,
-  AiOutlineStar,
-  AiFillHeart,
-} from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
 
 import ReviewStars from "../product-review-stars/product-review-stars.component";
 

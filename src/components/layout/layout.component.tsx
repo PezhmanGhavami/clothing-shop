@@ -9,7 +9,7 @@ const Layout = ({ children }: ILayout) => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <main className="border-y dark:border-y-slate-700 min-h-[80vh] md:min-h-[85vh]">
+      <main className="border-y dark:border-y-slate-700 min-h-[85vh]">
         {children}
       </main>
       <Footer />

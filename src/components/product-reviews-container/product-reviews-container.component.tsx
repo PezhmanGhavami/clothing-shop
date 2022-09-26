@@ -1,11 +1,6 @@
-import {
-  AiFillStar,
-  AiOutlineStar,
-} from "react-icons/ai";
-
 import ProductReview from "../product-review/product-review.component";
 
-import { reviewPopulatedWithUser } from "../../pages/product/[productID]/index";
+import { reviewPopulatedWithUser } from "../../pages/product/[productID]";
 interface IProductReviewsContainer {
   reviews: reviewPopulatedWithUser[];
 }

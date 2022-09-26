@@ -1,6 +1,6 @@
 import ReviewStars from "../product-review-stars/product-review-stars.component";
 
-import { reviewPopulatedWithUser } from "../../pages/product/[productID]/index";
+import { reviewPopulatedWithUser } from "../../pages/product/[productID]";
 
 interface IProductReview {
   review: reviewPopulatedWithUser;

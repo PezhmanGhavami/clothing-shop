@@ -1,16 +1,16 @@
 import { ReactElement } from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
-import { NextPageWithLayout } from "../../_app";
+import { NextPageWithLayout } from "../_app";
 import { Item, Review, User } from "@prisma/client";
 
-import { prisma } from "../../../utils/prisma-client";
+import { prisma } from "../../utils/prisma-client";
 
-import Layout from "../../../components/layout/layout.component";
-import ProductOverview from "../../../components/product-overview/product-overview.component";
+import Layout from "../../components/layout/layout.component";
+import ProductOverview from "../../components/product-overview/product-overview.component";
 import ProductCardContainer, {
   IProductCardContainerData,
-} from "../../../components/product-card-container/product-card-container.component";
-import ProductReviewsContainer from "../../../components/product-reviews-container/product-reviews-container.component";
+} from "../../components/product-card-container/product-card-container.component";
+import ProductReviewsContainer from "../../components/product-reviews-container/product-reviews-container.component";
 
 export type reviewPopulatedWithUser = Review & {
   user: User;
