@@ -12,6 +12,34 @@ interface IHome {
   specialOffers: IProductCardContainerData;
 }
 
+const landingDir = [
+  {
+    id: 1,
+    title: "hats",
+    imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
+  },
+  {
+    id: 2,
+    title: "jackets",
+    imageUrl: "https://i.ibb.co/px2tCc3/jackets.png",
+  },
+  {
+    id: 3,
+    title: "sneakers",
+    imageUrl: "https://i.ibb.co/0jqHpnp/sneakers.png",
+  },
+  {
+    id: 4,
+    title: "womens",
+    imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
+  },
+  {
+    id: 5,
+    title: "mens",
+    imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
+  },
+];
+
 export const getStaticProps: GetStaticProps = async () => {
   const newestProducts = await prisma.item.findMany({
     take: 6,
@@ -23,6 +51,9 @@ export const getStaticProps: GetStaticProps = async () => {
     take: 6,
     where: {
       offer: true,
+    },
+    orderBy: {
+      sold: "desc",
     },
   });
 
@@ -55,15 +86,33 @@ const Home: NextPageWithLayout<IHome> = ({
 }) => {
   return (
     <>
-      {/* TODO - Fix the link */}
+      <div className="relative bg-slate-500 h-[65vh]">
+        {/* Slides container */}
+        <div className="h-full overflow-x-hidden">
+          <div className="h-full flex justify-between items-center bg-[url('https://i.ibb.co/R70vBrQ/men.png')] bg-center bg-cover">
+            <div>Back</div>
+            <div className="border h-12">
+              <h3>Mens</h3>
+              <p>Shop now</p>
+            </div>
+            <div>Next</div>
+          </div>
+        </div>
+        {/* The buttons to change slides */}
+        <div className="absolute bottom-0 w-full flex justify-center items-center">
+          <p>button</p>
+          <p>button</p>
+          <p>button</p>
+        </div>
+      </div>
       <ProductCardContainer
         showName={true}
-        showLink={true}
+        showLink={false}
         productGroup={specialOffers}
       />
       <ProductCardContainer
         showName={true}
-        showLink={true}
+        showLink={false}
         productGroup={newestProducts}
       />
     </>
