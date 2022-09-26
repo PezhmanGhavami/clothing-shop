@@ -1,5 +1,6 @@
 import { useState, ReactElement } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { NextPageWithLayout } from "../_app";
 
 import Layout from "../../components/layout/layout.component";
@@ -21,34 +22,32 @@ const Profile: NextPageWithLayout = () => {
   return (
     <div className="p-2">
       <div className="mb-4">
-        <p>Addresses</p>
-        <p>Orders</p>
-        <p>Transactions</p>
-        <p>Edit Profile</p>
         <p>Reviews</p>
-        <p>Privacy Policy</p>
-        <p>Terms and Conditions</p>
         <p>
           Authentication (Change Password, Email, Phone)
         </p>
-        <a
-          className="bg-red-500"
-          href="/api/auth/logout"
-          onClick={async (e) => {
-            e.preventDefault();
-            setIsLoading(true);
-            mutateUser(
-              await fetcher("/api/auth/logout", {
-                method: "POST",
-              }),
-              false
-            );
-            setIsLoading(false);
-            router.push("/auth/signin");
-          }}
-        >
-          {isLoading ? <Loading /> : "Logout"}
-        </a>
+
+        <div>
+          <Link href="/api/auth/logout" passHref>
+            <a
+              onClick={async (e) => {
+                e.preventDefault();
+                setIsLoading(true);
+                mutateUser(
+                  await fetcher("/api/auth/logout", {
+                    method: "POST",
+                  }),
+                  false
+                );
+                setIsLoading(false);
+                router.push("/auth/signin");
+              }}
+              className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium tracking-tight h-9 w-full rounded-md shadow-md"
+            >
+              {isLoading ? <Loading /> : "Logout"}
+            </a>
+          </Link>
+        </div>
       </div>
     </div>
   );
