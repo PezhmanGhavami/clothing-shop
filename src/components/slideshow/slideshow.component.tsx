@@ -6,7 +6,7 @@ interface ISlideshow {
 
 const Slideshow = ({ slides }: ISlideshow) => {
   return (
-    <div className="relative bg-gray-200 dark:bg-slate-500 h-[65vh] overflow-x-hidden">
+    <div className="relative bg-gray-200 dark:bg-slate-500 text-white h-[65vh] overflow-x-hidden">
       {/* Slides container */}
       <div className="h-full inline-flex">
         {slides.map((slide) => (
@@ -14,17 +14,20 @@ const Slideshow = ({ slides }: ISlideshow) => {
         ))}
       </div>
       {/* The buttons to change slides */}
-      <div className="absolute w-full inset-x-0 top-2/4 flex justify-between bg-red-600">
-        <div className="cursor-pointer">Back</div>
-        <div className="cursor-pointer">Next</div>
+      <div className="absolute w-full inset-0 flex justify-between items-center text-2xl">
+        <span className="cursor-pointer py-4 px-7">
+          &#10094;
+        </span>
+        <span className="cursor-pointer py-4 px-7">
+          &#10095;
+        </span>
       </div>
-      <div className="absolute bottom-0 w-full flex justify-center items-center">
-        <p>button</p>
+      <div className="absolute bottom-0 w-full flex justify-center items-center text-white">
+        <span>&#9899;</span>
         <p>button</p>
         <p>button</p>
       </div>
     </div>
   );
 };
-
 export default Slideshow;
