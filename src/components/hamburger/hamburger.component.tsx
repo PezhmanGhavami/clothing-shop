@@ -10,7 +10,7 @@ function Hamburger({ openModal, handleClick }: IHamburger) {
   return (
     <button
       onClick={handleClick}
-      className="z-30 fixed bottom-32 right-10 md:hidden"
+      className="z-50 fixed bottom-32 right-10 md:hidden"
     >
       <div
         className={`flex overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-neutral-200 dark:bg-slate-700 ring-0 ring-slate-900 dark:ring-white shadow-2xl ${

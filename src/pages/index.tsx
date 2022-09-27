@@ -5,14 +5,13 @@ import { NextPageWithLayout } from "./_app";
 import { prisma } from "../utils/prisma-client";
 import Layout from "../components/layout/layout.component";
 import ProductCardContainer from "../components/product-card-container/product-card-container.component";
+import Slideshow from "../components/slideshow/slideshow.component";
 
 import { IProductCardContainerData } from "../components/product-card-container/product-card-container.component";
 interface IHome {
   newestProducts: IProductCardContainerData;
   specialOffers: IProductCardContainerData;
 }
-
-import Slide from "../components/slide/slide.component";
 
 const landingDir = [
   {
@@ -88,22 +87,7 @@ const Home: NextPageWithLayout<IHome> = ({
 }) => {
   return (
     <>
-      <div className="relative bg-slate-500 h-[65vh] overflow-x-hidden">
-        {/* Slides container */}
-        <div className="h-full inline-flex">
-          <Slide slide={landingDir[0]} />
-          <Slide slide={landingDir[1]} />
-          <Slide slide={landingDir[2]} />
-          <Slide slide={landingDir[3]} />
-          <Slide slide={landingDir[4]} />
-        </div>
-        {/* The buttons to change slides */}
-        <div className="absolute bottom-0 w-full flex justify-center items-center">
-          <p>button</p>
-          <p>button</p>
-          <p>button</p>
-        </div>
-      </div>
+      <Slideshow slides={landingDir} />
       <ProductCardContainer
         showName={true}
         showLink={false}

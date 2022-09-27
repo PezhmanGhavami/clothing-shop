@@ -70,7 +70,7 @@ const Navbar = () => {
           </div>
           {/* Links */}
           <ul
-            className={`fixed md:static top-0 right-0 z-20 md:z-auto h-screen w-2/4 md:h-auto md:w-auto flex flex-col md:flex-row justify-center items-center bg-neutral-200 dark:bg-slate-700 md:bg-inherit shadow-2xl md:shadow-none translate-x-full md:translate-x-0 transition-transform md:transition-none ease-in-out duration-500 ${
+            className={`fixed md:static top-0 right-0 z-40 md:z-auto h-screen w-2/4 md:h-auto md:w-auto flex flex-col md:flex-row justify-center items-center bg-neutral-200 dark:bg-slate-700 md:bg-inherit shadow-2xl md:shadow-none translate-x-full md:translate-x-0 transition-transform md:transition-none ease-in-out duration-500 ${
               openModal ? "translate-x-0" : ""
             }`}
           >
