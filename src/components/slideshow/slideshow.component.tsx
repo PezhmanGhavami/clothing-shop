@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Slide, { slide } from "../slide/slide.component";
 
 interface ISlideshow {
@@ -5,8 +7,11 @@ interface ISlideshow {
 }
 
 const Slideshow = ({ slides }: ISlideshow) => {
+  const [currentSlide, setCurrentSlide] = useState(
+    slides[0].id
+  );
   return (
-    <div className="relative bg-gray-200 dark:bg-slate-500 text-white h-[65vh] overflow-x-hidden">
+    <div className="relative bg-gray-200 dark:bg-slate-500 text-white h-[65vh] overflow-hidden">
       {/* Slides container */}
       <div className="h-full inline-flex">
         {slides.map((slide) => (

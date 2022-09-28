@@ -10,10 +10,10 @@ const Slide = ({ slide }: ISlide) => {
   return (
     <div
       className={
-        "h-full w-screen flex justify-center items-center bg-center bg-cover"
+        "h-full w-screen flex justify-center items-center"
       }
     >
-      <div className="absolute h-full w-full">
+      <div className="relative h-full w-full">
         <Image
           src={slide.imageUrl}
           alt={slide.name}
@@ -25,7 +25,7 @@ const Slide = ({ slide }: ISlide) => {
       </div>
       {/* Info box */}
       <Link href={"categories/" + slide.name}>
-        <div className="border h-24 w-32 flex flex-col justify-center items-center cursor-pointer z-10">
+        <div className="absolute border h-24 w-32 flex flex-col justify-center items-center cursor-pointer z-10">
           <h3 className="capitalize">{slide.name}</h3>
           <p>Shop now</p>
         </div>
