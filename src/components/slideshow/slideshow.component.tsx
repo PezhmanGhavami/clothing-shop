@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, TouchEvent } from "react";
 
 import Slide, { slide } from "../slide/slide.component";
 
@@ -6,45 +6,83 @@ interface ISlideshow {
   slides: (slide & { id: number })[];
 }
 
-const getTranslate = (slide: number) => {
-  return -slide * 100;
-};
-
 const Slideshow = ({ slides }: ISlideshow) => {
   const [currentSlide, setCurrentSlide] = useState(1);
-  // const [currentSlideID, setCurrentSlideID] = useState(1);
-  const [currentTranslate, setcurrentTranslate] = useState(
-    getTranslate(currentSlide)
-  );
+  const [touchPosition, setTouchPosition] = useState<
+    number | null
+  >(null);
+  const [animateSlides, setAnimateSlides] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(handleNextSlide, 3000);
-    return () => {
-      clearInterval(timer);
-    };
+    return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    setcurrentTranslate(getTranslate(currentSlide));
-    if (currentSlide <= 0) setCurrentSlide(slides.length);
-    if (currentSlide >= slides.length + 1)
-      setCurrentSlide(1);
-  }, [currentSlide, slides.length]);
-
   const handleNextSlide = () => {
-    setCurrentSlide((prev) => prev + 1);
+    if (currentSlide <= slides.length) {
+      setAnimateSlides(true);
+      setCurrentSlide((prev) => prev + 1);
+    }
   };
   const handlePreviousSlide = () => {
-    setCurrentSlide((prev) => prev - 1);
+    if (currentSlide > 0) {
+      setAnimateSlides(true);
+      setCurrentSlide((prev) => prev - 1);
+    }
+  };
+
+  const handleTouchStart = (event: TouchEvent) => {
+    const touchDown = event.touches[0].clientX;
+    setTouchPosition(touchDown);
+  };
+  const handleTouchMove = (event: TouchEvent) => {
+    const touchDown = touchPosition;
+
+    if (touchDown === null) {
+      return;
+    }
+
+    const currentTouch = event.touches[0].clientX;
+    const diff = touchDown - currentTouch;
+
+    if (diff > 5) {
+      handleNextSlide();
+    }
+
+    if (diff < -5) {
+      handlePreviousSlide();
+    }
+
+    setTouchPosition(null);
+  };
+
+  const handleTransitionEnd = () => {
+    if (currentSlide === 0) {
+      console.log("currentSlide === 0");
+      setAnimateSlides(false);
+      setCurrentSlide(slides.length);
+    } else if (currentSlide === slides.length + 1) {
+      console.log("currentSlide === slides.length + 1");
+      setAnimateSlides(false);
+      setCurrentSlide(1);
+    }
   };
 
   return (
-    <div className="relative bg-gray-200 dark:bg-slate-500 text-white h-[65vh] overflow-hidden">
+    <div
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      className="relative bg-gray-200 dark:bg-slate-500 text-white h-[65vh] overflow-hidden"
+    >
       {/* Slides container */}
       <div
+        onTransitionEnd={handleTransitionEnd}
         className="h-full inline-flex"
         style={{
-          transform: `translateX(${currentTranslate}vw)`,
+          transform: `translateX(-${currentSlide * 100}vw)`,
+          transition: `${
+            animateSlides ? "transform" : "none"
+          } 500ms ease`,
         }}
       >
         <Slide slide={slides[slides.length - 1]} />
