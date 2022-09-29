@@ -1,9 +1,4 @@
-import {
-  useState,
-  useEffect,
-  TouchEvent,
-  MouseEvent,
-} from "react";
+import { useState, useEffect, TouchEvent } from "react";
 
 import Slide, { slide } from "../slide/slide.component";
 
@@ -43,8 +38,8 @@ const Slideshow = ({ slides }: ISlideshow) => {
     setCurrentSlide(index);
   };
 
-  const handleTouchStart = (event: MouseEvent) => {
-    const touchDown = event.clientX;
+  const handleTouchStart = (event: TouchEvent) => {
+    const touchDown = event.touches[0].clientX;
     setTouchPosition(touchDown);
   };
   const handleTouchMove = (event: TouchEvent) => {
@@ -82,9 +77,9 @@ const Slideshow = ({ slides }: ISlideshow) => {
 
   return (
     <div
-      onMouseDown={handleTouchStart}
+      onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
-      className="relative bg-gray-200 dark:bg-slate-500 text-white h-[65vh] overflow-hidden"
+      className="relative bg-gray-200 dark:bg-slate-500 text-white h-[65vh] overflow-hidden select-none"
     >
       {/* Slides container */}
       <div

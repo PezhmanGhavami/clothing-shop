@@ -20,7 +20,7 @@ const Slide = ({ slide }: ISlide) => {
           layout="fill"
           priority
           quality={100}
-          className="object-cover object-center brightness-90"
+          className="object-cover object-center brightness-90 pointer-events-none"
         />
       </div>
       {/* Info box */}
