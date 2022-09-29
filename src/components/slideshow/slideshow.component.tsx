@@ -105,18 +105,20 @@ const Slideshow = ({ slides }: ISlideshow) => {
       </div>
       {/* The buttons to change slides */}
       {/* Next and previous */}
-      <div className="absolute w-full inset-0 flex justify-between items-center text-2xl">
+      <div className="absolute inset-y-0 left-0 flex flex-col justify-center">
         <span
           onClick={handlePreviousSlide}
           title={"Click to go to the previous slide"}
-          className="cursor-pointer py-4 px-7"
+          className="cursor-pointer py-4 px-7 text-2xl"
         >
           &#10094;
         </span>
+      </div>
+      <div className="absolute inset-y-0 right-0 flex flex-col justify-center">
         <span
           onClick={handleNextSlide}
           title={"Click to go to the next slide"}
-          className="cursor-pointer py-4 px-7"
+          className="cursor-pointer py-4 px-7 text-2xl"
         >
           &#10095;
         </span>
