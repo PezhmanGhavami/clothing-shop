@@ -21,6 +21,9 @@ const Slideshow = ({ slides }: ISlideshow) => {
   useEffect(() => {
     const timer = setInterval(handleNextSlide, 3000);
     return () => clearInterval(timer);
+
+    // TODO - Cheeck if using useClaback would break anything or not
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleNextSlide = () => {
@@ -34,6 +37,10 @@ const Slideshow = ({ slides }: ISlideshow) => {
       setAnimateSlides(true);
       setCurrentSlide((prev) => prev - 1);
     }
+  };
+  const handleSlideChange = (index: number) => {
+    setAnimateSlides(true);
+    setCurrentSlide(index);
   };
 
   const handleTouchStart = (event: MouseEvent) => {
@@ -97,27 +104,39 @@ const Slideshow = ({ slides }: ISlideshow) => {
         <Slide slide={slides[0]} />
       </div>
       {/* The buttons to change slides */}
+      {/* Next and previous */}
       <div className="absolute w-full inset-0 flex justify-between items-center text-2xl">
         <span
           onClick={handlePreviousSlide}
+          title={"Click to go to the previous slide"}
           className="cursor-pointer py-4 px-7"
         >
           &#10094;
         </span>
         <span
           onClick={handleNextSlide}
+          title={"Click to go to the next slide"}
           className="cursor-pointer py-4 px-7"
         >
           &#10095;
         </span>
       </div>
+      {/* Specific slide */}
       <div className="absolute bottom-0 w-full flex justify-center items-center text-white py-2">
-        {slides.map((slide) => (
+        {slides.map((slide, index) => (
           <div
             key={slide.id}
+            onClick={() => {
+              handleSlideChange(index + 1);
+            }}
+            title={`Click to go to slide ${index + 1}`}
             className="cursor-pointer py-2 mx-2"
           >
-            <div className="h-1 w-7 border-b" />
+            <div
+              className={`w-7 border-b${
+                index + 1 === currentSlide ? "-2" : ""
+              }`}
+            />
           </div>
         ))}
       </div>
