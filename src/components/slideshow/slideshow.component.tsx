@@ -1,4 +1,9 @@
-import { useState, useEffect, TouchEvent } from "react";
+import {
+  useState,
+  useEffect,
+  TouchEvent,
+  MouseEvent,
+} from "react";
 
 import Slide, { slide } from "../slide/slide.component";
 
@@ -31,8 +36,8 @@ const Slideshow = ({ slides }: ISlideshow) => {
     }
   };
 
-  const handleTouchStart = (event: TouchEvent) => {
-    const touchDown = event.touches[0].clientX;
+  const handleTouchStart = (event: MouseEvent) => {
+    const touchDown = event.clientX;
     setTouchPosition(touchDown);
   };
   const handleTouchMove = (event: TouchEvent) => {
@@ -70,7 +75,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
 
   return (
     <div
-      onTouchStart={handleTouchStart}
+      onMouseDown={handleTouchStart}
       onTouchMove={handleTouchMove}
       className="relative bg-gray-200 dark:bg-slate-500 text-white h-[65vh] overflow-hidden"
     >
