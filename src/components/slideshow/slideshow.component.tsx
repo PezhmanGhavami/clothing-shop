@@ -49,13 +49,12 @@ const Slideshow = ({ slides }: ISlideshow) => {
       return;
     }
 
-    const currentTouch = event.touches[0].clientX;
+    const currentTouch = event.changedTouches[0].clientX;
     const diff = touchDown - currentTouch;
 
     if (diff > 5) {
       handleNextSlide();
     }
-
     if (diff < -5) {
       handlePreviousSlide();
     }
@@ -78,7 +77,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
   return (
     <div
       onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchMove}
       className="relative bg-gray-200 dark:bg-slate-500 text-white h-[65vh] overflow-hidden select-none"
     >
       {/* Slides container */}
