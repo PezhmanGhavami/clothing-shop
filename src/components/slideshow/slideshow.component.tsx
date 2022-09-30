@@ -1,4 +1,9 @@
-import { useState, useEffect, TouchEvent } from "react";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  TouchEvent,
+} from "react";
 
 import Slide, { slide } from "../slide/slide.component";
 
@@ -12,37 +17,44 @@ const Slideshow = ({ slides }: ISlideshow) => {
     number | null
   >(null);
   const [animateSlides, setAnimateSlides] = useState(true);
+  const [autoSwipe, setAutoSwipe] = useState(true);
+  const [pausingEvent, setPausingEvent] = useState(0);
 
-  useEffect(() => {
-    const timer = setInterval(handleNextSlide, 3000);
-    return () => clearInterval(timer);
-
-    // TODO - Cheeck if using useClaback would break anything or not
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const handleNextSlide = () => {
+  const handleNextSlide = useCallback(() => {
     if (currentSlide <= slides.length) {
       setAnimateSlides(true);
+      setPausingEvent(Date.now());
       setCurrentSlide((prev) => prev + 1);
     }
-  };
+  }, [currentSlide, slides.length]);
   const handlePreviousSlide = () => {
     if (currentSlide > 0) {
       setAnimateSlides(true);
+      setPausingEvent(Date.now());
       setCurrentSlide((prev) => prev - 1);
     }
   };
   const handleSlideChange = (index: number) => {
     setAnimateSlides(true);
+    setPausingEvent(Date.now());
     setCurrentSlide(index);
   };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      console.log("interval");
+      if (autoSwipe && Date.now() - pausingEvent >= 2500) {
+        handleNextSlide();
+      }
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [autoSwipe, pausingEvent, handleNextSlide]);
 
   const handleTouchStart = (event: TouchEvent) => {
     const touchDown = event.touches[0].clientX;
     setTouchPosition(touchDown);
   };
-  const handleTouchMove = (event: TouchEvent) => {
+  const handleTouchEnd = (event: TouchEvent) => {
     const touchDown = touchPosition;
 
     if (touchDown === null) {
@@ -62,13 +74,24 @@ const Slideshow = ({ slides }: ISlideshow) => {
     setTouchPosition(null);
   };
 
+  const handleMouseOver = () => {
+    console.log("mouseOver");
+    setPausingEvent(Date.now());
+    setAutoSwipe(false);
+  };
+  const handleMouseLeave = () => {
+    console.log("mouseLeave");
+    setPausingEvent(Date.now());
+    setAutoSwipe(true);
+  };
+
   const handleTransitionEnd = () => {
-    if (currentSlide === 0) {
-      console.log("currentSlide === 0");
+    if (currentSlide <= 0) {
+      // console.log("currentSlide <= 0");
       setAnimateSlides(false);
       setCurrentSlide(slides.length);
-    } else if (currentSlide === slides.length + 1) {
-      console.log("currentSlide === slides.length + 1");
+    } else if (currentSlide >= slides.length + 1) {
+      // console.log("currentSlide >= slides.length + 1");
       setAnimateSlides(false);
       setCurrentSlide(1);
     }
@@ -76,8 +99,10 @@ const Slideshow = ({ slides }: ISlideshow) => {
 
   return (
     <div
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       className="relative bg-gray-200 dark:bg-slate-500 text-white h-[65vh] overflow-hidden select-none"
     >
       {/* Slides container */}
