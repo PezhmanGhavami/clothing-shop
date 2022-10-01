@@ -42,7 +42,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      console.log("interval");
+      //console.log("interval");
       if (autoSwipe && Date.now() - pausingEvent >= 2500) {
         handleNextSlide();
       }
@@ -51,10 +51,12 @@ const Slideshow = ({ slides }: ISlideshow) => {
   }, [autoSwipe, pausingEvent, handleNextSlide]);
 
   const handleTouchStart = (event: TouchEvent) => {
+    //console.log("onTouchStart");
     const touchDown = event.touches[0].clientX;
     setTouchPosition(touchDown);
   };
   const handleTouchEnd = (event: TouchEvent) => {
+    //console.log("onTouchEnd");
     const touchDown = touchPosition;
 
     if (touchDown === null) {
@@ -75,12 +77,12 @@ const Slideshow = ({ slides }: ISlideshow) => {
   };
 
   const handleMouseOver = () => {
-    console.log("mouseOver");
+    //console.log("mouseOver");
     setPausingEvent(Date.now());
     setAutoSwipe(false);
   };
   const handleMouseLeave = () => {
-    console.log("mouseLeave");
+    //console.log("mouseLeave");
     setPausingEvent(Date.now());
     setAutoSwipe(true);
   };
