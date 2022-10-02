@@ -17,27 +17,32 @@ const landingDir = [
   {
     id: 5,
     name: "mens",
-    imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
+    imageUrl:
+      "https://res.cloudinary.com/drsgyshsf/image/upload/v1664706429/clothing-shop/selected/joshua-lawrence-0HuiKa8AFls-unsplash_gfju7b.jpg",
   },
   {
     id: 4,
     name: "womens",
-    imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
+    imageUrl:
+      "https://res.cloudinary.com/drsgyshsf/image/upload/v1664706239/clothing-shop/selected/fabian-albert-_Wt5CgwWk1k-unsplash_u4t2vj.jpg",
   },
   {
     id: 1,
     name: "hats",
-    imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
+    imageUrl:
+      "https://res.cloudinary.com/drsgyshsf/image/upload/v1664706305/clothing-shop/selected/jenn-lopez-YsR3K2yylMc-unsplash_s6yaaz.jpg",
   },
   {
     id: 2,
     name: "jackets",
-    imageUrl: "https://i.ibb.co/px2tCc3/jackets.png",
+    imageUrl:
+      "https://res.cloudinary.com/drsgyshsf/image/upload/v1664701577/clothing-shop/selected/wallpaperflare.com_wallpaper_w8lyvl.jpg",
   },
   {
     id: 3,
     name: "sneakers",
-    imageUrl: "https://i.ibb.co/0jqHpnp/sneakers.png",
+    imageUrl:
+      "https://res.cloudinary.com/drsgyshsf/image/upload/v1664701720/clothing-shop/selected/hermes-rivera-OX_en7CXMj4-unsplash_fv5kev.jpg",
   },
 ];
 
