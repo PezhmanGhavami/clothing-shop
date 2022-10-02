@@ -106,11 +106,6 @@ const Navbar = () => {
                 <FaHeart title="Wishlist" />
               </a>
             </Link> */}
-            <Link href={"/cart"}>
-              <a className={navLinks.iconClasses}>
-                <FaShoppingCart title="Cart" />
-              </a>
-            </Link>
             {/* TODO - Compelete this */}
             <Link
               href={
@@ -121,6 +116,12 @@ const Navbar = () => {
             >
               <a className={navLinks.iconClasses}>
                 <FaUser title="User" />
+              </a>
+            </Link>
+            <Link href={"/cart"}>
+              <a className={navLinks.iconClasses}>
+                <FaShoppingCart title="Cart" />
+                <span className="text-xs pl-2">0</span>
               </a>
             </Link>
           </div>
