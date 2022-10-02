@@ -156,8 +156,10 @@ const Slideshow = ({ slides }: ISlideshow) => {
             className="cursor-pointer py-2 mx-2"
           >
             <div
-              className={`w-7 border-b${
-                index + 1 === currentSlide ? "-2" : ""
+              className={`w-7 border-b ${
+                index + 1 === currentSlide
+                  ? "border-b-2"
+                  : ""
               }`}
             />
           </div>
