@@ -12,6 +12,7 @@ import Hamburger from "../hamburger/hamburger.component";
 import Overlay from "../overlay/overlay.component";
 
 import useUser from "../../hooks/useUser";
+import useCart from "../../hooks/useCart";
 
 const navLinks = {
   liClasses:
@@ -44,6 +45,7 @@ const navLinks = {
 const Navbar = () => {
   const [openModal, setOpenModal] = useState(false);
   const { user } = useUser();
+  const { cart } = useCart();
 
   const router = useRouter();
   // NOTE - I'm using router.asPath which might not work because it won't be availble unitle router.isReady
@@ -121,7 +123,9 @@ const Navbar = () => {
             <Link href={"/cart"}>
               <a className={navLinks.iconClasses}>
                 <FaShoppingCart title="Cart" />
-                <span className="text-xs pl-2">0</span>
+                <span className="text-xs pl-2">
+                  {cart?.cartCount}
+                </span>
               </a>
             </Link>
           </div>

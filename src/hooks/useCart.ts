@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import fetcher from "../utils/fetcher";
@@ -77,24 +76,27 @@ export default function useCart() {
     "/api/cart",
     fetcher
   );
-  let cart: ICartItemsUpdate | undefined;
-  if (data) cart = { ...data, isLocal: false };
-  else {
-    const items = localStorage.getItem("cartItems");
-    const parsedItems: ICartItem[] | null = items
-      ? JSON.parse(items)
-      : null;
-    cart = parsedItems
-      ? {
+  const [cart, setCart] = useState<ICartItemsUpdate>({
+    cartItems: [],
+    cartCount: 0,
+    cartTotal: 0.0,
+    isLocal: true,
+  });
+  useEffect(() => {
+    if (data) setCart({ ...data, isLocal: false });
+    else {
+      const items =
+        window.localStorage.getItem("cartItems");
+      const parsedItems: ICartItem[] | null = items
+        ? JSON.parse(items)
+        : null;
+      if (parsedItems) {
+        setCart({
           ...cartItemsUpdatePayloadMaker(parsedItems, true),
-        }
-      : {
-          cartItems: [],
-          cartCount: 0,
-          cartTotal: 0.0,
-          isLocal: true,
-        };
-  }
+        });
+      }
+    }
+  }, [data]);
 
   const addItemToCart = (product: IProductCard) => {
     if (data) {
@@ -109,7 +111,8 @@ export default function useCart() {
           cartItemsUpdatePayloadMaker(
             newCartItems,
             data.isLocal
-          )
+          ),
+          false
         );
     }
   };
@@ -127,7 +130,8 @@ export default function useCart() {
           cartItemsUpdatePayloadMaker(
             newCartItems,
             data.isLocal
-          )
+          ),
+          false
         );
     }
   };
@@ -142,7 +146,8 @@ export default function useCart() {
           cartItemsUpdatePayloadMaker(
             newCartitems,
             data.isLocal
-          )
+          ),
+          false
         );
     }
   };
