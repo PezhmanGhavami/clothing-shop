@@ -27,7 +27,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
       {/* Main component */}
       <div className="flex flex-col sm:flex-row sm:w-11/12 lg:w-3/4 sm:mx-auto sm:h-[50vh] lg:h-[70vh] sm:pt-6">
         {/* Image */}
-        <div className="relative sm:w-2/6 h-[60vh] sm:h-5/6 bg-gray-200">
+        <div className="relative sm:w-1/3 2xl:w-3/12 h-[60vh] sm:h-5/6 bg-gray-200">
           <Image
             src={product.images[0]}
             alt={product.name}
