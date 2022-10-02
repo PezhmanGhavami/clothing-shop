@@ -105,7 +105,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative bg-gray-200 dark:bg-slate-500 text-white h-[65vh] overflow-hidden select-none"
+      className="relative bg-gray-200 dark:bg-slate-500 text-white h-[65vh] md:h-[80vh] overflow-hidden select-none"
     >
       {/* Slides container */}
       <div
