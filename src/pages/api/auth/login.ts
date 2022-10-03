@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import { sessionOptions } from "../../../utils/session";
 import { prisma } from "../../../utils/prisma-client";
 
-import type { IUser } from "./user";
+import type { IUser } from "./index";
 
 export default withIronSessionApiRoute(
   loginRoute,

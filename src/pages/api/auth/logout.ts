@@ -1,7 +1,7 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { IUser } from "./user";
+import { IUser } from "./index";
 import { IApiError } from "./login";
 import { sessionOptions } from "../../../utils/session";
 
