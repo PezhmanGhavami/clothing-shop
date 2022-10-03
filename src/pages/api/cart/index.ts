@@ -17,6 +17,15 @@ async function cartRoute(
   res: NextApiResponse<ICart | IApiError>
 ) {
   if (req.method === "GET") {
+    const cart = req.session.cart;
+    if (cart) {
+      return res.json({ ...cart });
+    }
+    return res.json({
+      cartItems: [],
+      cartCount: 0,
+      cartTotal: 0.0,
+    });
   } else if (req.method === "PUT") {
   }
   return res

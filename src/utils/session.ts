@@ -1,4 +1,5 @@
 import type { IronSessionOptions } from "iron-session";
+import { ICart } from "../hooks/useCart";
 
 export const sessionOptions: IronSessionOptions = {
   password: process.env.SECRET_COOKIE_PASSWORD as string,
@@ -12,8 +13,8 @@ declare module "iron-session" {
   interface IronSessionData {
     user?: {
       userID: string;
-      cartID: string;
       dateCreated: number;
     };
+    cart?: ICart;
   }
 }

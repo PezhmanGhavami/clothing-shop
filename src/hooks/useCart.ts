@@ -8,10 +8,10 @@ export interface ICartItem extends IProductCard {
   quantity: number;
 }
 export interface ICart {
+  cartID?: string;
   cartItems: ICartItem[];
   cartTotal: number;
   cartCount: number;
-  isLocal: boolean;
 }
 
 const checkForItemInCartThenChangeItAccordingly = (
@@ -46,8 +46,7 @@ const checkForItemInCartThenChangeItAccordingly = (
 };
 
 const cartItemsUpdatePayloadMaker = (
-  newCartItems: ICartItem[],
-  isLocal: boolean
+  newCartItems: ICartItem[]
 ): ICart => {
   localStorage.setItem(
     "cartItems",
@@ -65,7 +64,6 @@ const cartItemsUpdatePayloadMaker = (
     cartItems: newCartItems,
     cartTotal: newCartTotal,
     cartCount: newCartCount,
-    isLocal,
   };
 
   return payload;
@@ -80,10 +78,9 @@ export default function useCart() {
     cartItems: [],
     cartCount: 0,
     cartTotal: 0.0,
-    isLocal: true,
   });
   useEffect(() => {
-    if (data) setCart({ ...data, isLocal: false });
+    if (data) setCart({ ...data });
     else {
       const items =
         window.localStorage.getItem("cartItems");
@@ -92,7 +89,7 @@ export default function useCart() {
         : null;
       if (parsedItems) {
         setCart({
-          ...cartItemsUpdatePayloadMaker(parsedItems, true),
+          ...cartItemsUpdatePayloadMaker(parsedItems),
         });
       }
     }
@@ -108,10 +105,7 @@ export default function useCart() {
         );
       newCartItems &&
         mutate(
-          cartItemsUpdatePayloadMaker(
-            newCartItems,
-            data.isLocal
-          ),
+          cartItemsUpdatePayloadMaker(newCartItems),
           false
         );
     }
@@ -127,10 +121,7 @@ export default function useCart() {
         );
       newCartItems &&
         mutate(
-          cartItemsUpdatePayloadMaker(
-            newCartItems,
-            data.isLocal
-          ),
+          cartItemsUpdatePayloadMaker(newCartItems),
           false
         );
     }
@@ -143,10 +134,7 @@ export default function useCart() {
       );
       newCartitems &&
         mutate(
-          cartItemsUpdatePayloadMaker(
-            newCartitems,
-            data.isLocal
-          ),
+          cartItemsUpdatePayloadMaker(newCartitems),
           false
         );
     }
