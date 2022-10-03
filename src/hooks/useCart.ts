@@ -7,7 +7,7 @@ import { IProductCard } from "../components/product-card/product-card.component"
 export interface ICartItem extends IProductCard {
   quantity: number;
 }
-export interface ICartItemsUpdate {
+export interface ICart {
   cartItems: ICartItem[];
   cartTotal: number;
   cartCount: number;
@@ -48,7 +48,7 @@ const checkForItemInCartThenChangeItAccordingly = (
 const cartItemsUpdatePayloadMaker = (
   newCartItems: ICartItem[],
   isLocal: boolean
-): ICartItemsUpdate => {
+): ICart => {
   localStorage.setItem(
     "cartItems",
     JSON.stringify(newCartItems)
@@ -72,11 +72,11 @@ const cartItemsUpdatePayloadMaker = (
 };
 
 export default function useCart() {
-  const { data, mutate } = useSWR<ICartItemsUpdate>(
+  const { data, mutate } = useSWR<ICart>(
     "/api/cart",
     fetcher
   );
-  const [cart, setCart] = useState<ICartItemsUpdate>({
+  const [cart, setCart] = useState<ICart>({
     cartItems: [],
     cartCount: 0,
     cartTotal: 0.0,
