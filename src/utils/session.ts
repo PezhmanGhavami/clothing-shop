@@ -15,6 +15,6 @@ declare module "iron-session" {
       userID: string;
       dateCreated: number;
     };
-    cart?: ICart;
+    cart?: ICart & { dateModified?: number };
   }
 }

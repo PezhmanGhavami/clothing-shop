@@ -21,11 +21,14 @@ async function cartRoute(
     if (cart) {
       return res.json({ ...cart });
     }
-    return res.json({
+    const newCart = {
       cartItems: [],
       cartCount: 0,
       cartTotal: 0.0,
-    });
+    };
+    req.session.cart = newCart;
+    await req.session.save();
+    return res.json(newCart);
   } else if (req.method === "PUT") {
   }
   return res
