@@ -280,10 +280,12 @@ async function seedDB() {
   const deleteBrands = prisma.brand.deleteMany({});
   const deleteReviews = prisma.review.deleteMany({});
   const deleteUsers = prisma.user.deleteMany({});
+  const deleteCarts = prisma.cart.deleteMany({});
 
   await prisma.$transaction([
     deleteReviews,
     deleteUsers,
+    deleteCarts,
     deleteItems,
     deleteCategories,
     deleteBrands,
