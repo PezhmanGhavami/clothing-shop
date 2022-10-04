@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import ReviewStars from "../product-review-stars/product-review-stars.component";
 
 import { reviewPopulatedWithUser } from "../../pages/product/[productID]";
@@ -7,6 +8,12 @@ interface IProductReview {
 }
 
 const ProductReview = ({ review }: IProductReview) => {
+  const [commentDate, setCommentDate] = useState("");
+  useEffect(() => {
+    setCommentDate(
+      new Date(review.createdAt).toLocaleDateString()
+    );
+  }, [review.createdAt]);
   return (
     <div className="border-b last:border-0 pt-6 pb-12 sm:flex">
       {/* Name, Score, Date */}
@@ -16,7 +23,7 @@ const ProductReview = ({ review }: IProductReview) => {
           {review.user.displayName}
         </p>
         <p className="pb-2 text-sm text-slate-600 dark:text-slate-300">
-          {new Date(review.createdAt).toLocaleDateString()}
+          {commentDate}
         </p>
       </div>
       {/* Title and Body */}
