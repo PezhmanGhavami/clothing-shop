@@ -90,8 +90,6 @@ async function userRoute(
 
       const user = {
         userID: newUser.id,
-        cartID:
-          "Some cart ID that belongs to " + newUser.id,
         dateCreated: Date.now(),
       };
       req.session.user = user;
