@@ -34,6 +34,9 @@ async function loginRoute(
         where: {
           email,
         },
+        include: {
+          cart: true,
+        },
       });
       if (!userExists) {
         res.status(401);
@@ -54,6 +57,37 @@ async function loginRoute(
         dateCreated: Date.now(),
       };
       req.session.user = user;
+      if (userExists.cart) {
+        const cartItems = JSON.parse(
+          userExists.cart.cartItems
+        );
+        req.session.cart = {
+          ...userExists.cart,
+          cartItems,
+        };
+      } else {
+        const updatedUser = await prisma.user.update({
+          where: {
+            id: userExists.id,
+          },
+          data: {
+            cart: {
+              create: {
+                cartItems: "[]",
+                cartCount: 0,
+                cartTotal: 0.0,
+              },
+            },
+          },
+          include: { cart: true },
+        });
+        if (updatedUser.cart) {
+          req.session.cart = {
+            ...updatedUser.cart,
+            cartItems: [],
+          };
+        }
+      }
       await req.session.save();
 
       return res.json({ isLoggedIn: true });

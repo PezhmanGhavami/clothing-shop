@@ -85,7 +85,15 @@ async function userRoute(
           email,
           password: hashedPassword,
           displayName,
+          cart: {
+            create: {
+              cartItems: "[]",
+              cartCount: 0,
+              cartTotal: 0.0,
+            },
+          },
         },
+        include: { cart: true },
       });
 
       const user = {
@@ -93,6 +101,12 @@ async function userRoute(
         dateCreated: Date.now(),
       };
       req.session.user = user;
+      if (newUser.cart) {
+        req.session.cart = {
+          ...newUser.cart,
+          cartItems: [],
+        };
+      }
       await req.session.save();
 
       return res.json({ isLoggedIn: true });

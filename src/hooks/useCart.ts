@@ -8,7 +8,7 @@ export interface ICartItem extends IProductCard {
   quantity: number;
 }
 export interface ICart {
-  cartID?: string;
+  id?: string;
   cartItems: ICartItem[];
   cartTotal: number;
   cartCount: number;
