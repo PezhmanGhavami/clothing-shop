@@ -51,8 +51,6 @@ async function loginRoute(
 
       const user = {
         userID: userExists.id,
-        cartID:
-          "Some cart ID that belongs to " + userExists.id,
         dateCreated: Date.now(),
       };
       req.session.user = user;
