@@ -60,12 +60,9 @@ const checkForItemInCartThenChangeItAccordingly = (
 };
 
 const cartItemsUpdatePayloadMaker = (
-  newCartItems: ICartItem[]
+  newCartItems: ICartItem[],
+  cart: ICart
 ): ICart => {
-  localStorage.setItem(
-    "cartItems",
-    JSON.stringify(newCartItems)
-  );
   const newCartTotal = newCartItems.reduce(
     (acc, item) => (acc += item.quantity * item.price),
     0
@@ -75,6 +72,7 @@ const cartItemsUpdatePayloadMaker = (
     0
   );
   const payload = {
+    ...cart,
     cartItems: newCartItems,
     cartTotal: newCartTotal,
     cartCount: newCartCount,
@@ -103,10 +101,11 @@ async function cartRoute(
       const cart = req.session.cart;
       if (cart) {
         const { product, operation } = await req.body;
-        if (!product || !operation) {
+        if (!product || isNaN(operation)) {
           res.status(400);
           throw new Error("All fields are required.");
         }
+        //TODO - add the change operations to the db
 
         if (operation === 0) {
           // Delete an item
@@ -114,8 +113,7 @@ async function cartRoute(
             (item) => item.id !== product.id
           );
           const newCart = {
-            ...cart,
-            cartItems,
+            ...cartItemsUpdatePayloadMaker(cartItems, cart),
           };
           req.session.cart = newCart;
           await req.session.save();
@@ -130,8 +128,7 @@ async function cartRoute(
               operation
             );
           const newCart = {
-            ...cart,
-            ...cartItemsUpdatePayloadMaker(cartItems),
+            ...cartItemsUpdatePayloadMaker(cartItems, cart),
           };
           req.session.cart = newCart;
           await req.session.save();

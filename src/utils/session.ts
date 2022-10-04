@@ -1,5 +1,5 @@
 import type { IronSessionOptions } from "iron-session";
-import { ICart } from "../hooks/useCart";
+import { ICart } from "../pages/api/cart";
 
 export const sessionOptions: IronSessionOptions = {
   password: process.env.SECRET_COOKIE_PASSWORD as string,

@@ -4,6 +4,8 @@ import { AiFillHeart } from "react-icons/ai";
 
 import ReviewStars from "../product-review-stars/product-review-stars.component";
 
+import useCart from "../../hooks/useCart";
+
 import { itemPopulatedWithReviewAndCategoryName } from "../../pages/product/[productID]";
 
 interface IProductOverview {
@@ -11,6 +13,18 @@ interface IProductOverview {
 }
 
 const ProductOverview = ({ product }: IProductOverview) => {
+  const { addItemToCart } = useCart();
+  const handleAddItemToCart = () => {
+    addItemToCart({
+      id: product.id,
+      name: product.name,
+      currentInventory: product.currentInventory,
+      price: product.price,
+      offer: product.offer,
+      dsicountedPrice: product.dsicountedPrice,
+      images: product.images,
+    });
+  };
   return (
     <div className="flex flex-col border-b">
       {/* Breadcrumbs */}
@@ -100,6 +114,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
             {/* TODO - Make this a component */}
             <button
               disabled={product.currentInventory === 0}
+              onClick={handleAddItemToCart}
               className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium tracking-tight h-9 w-full rounded-md shadow-md"
             >
               {product.currentInventory > 0

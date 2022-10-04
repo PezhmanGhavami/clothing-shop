@@ -1,18 +1,9 @@
-import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import fetcher from "../utils/fetcher";
 
 import { IProductCard } from "../components/product-card/product-card.component";
-export interface ICartItem extends IProductCard {
-  quantity: number;
-}
-export interface ICart {
-  id?: string;
-  cartItems: ICartItem[];
-  cartTotal: number;
-  cartCount: number;
-}
+import { ICart, ICartItem } from "../pages/api/cart";
 
 const checkForItemInCartThenChangeItAccordingly = (
   cartItems: ICartItem[],
@@ -46,12 +37,9 @@ const checkForItemInCartThenChangeItAccordingly = (
 };
 
 const cartItemsUpdatePayloadMaker = (
-  newCartItems: ICartItem[]
+  newCartItems: ICartItem[],
+  cart: ICart
 ): ICart => {
-  localStorage.setItem(
-    "cartItems",
-    JSON.stringify(newCartItems)
-  );
   const newCartTotal = newCartItems.reduce(
     (acc, item) => (acc += item.quantity * item.price),
     0
@@ -61,6 +49,7 @@ const cartItemsUpdatePayloadMaker = (
     0
   );
   const payload = {
+    ...cart,
     cartItems: newCartItems,
     cartTotal: newCartTotal,
     cartCount: newCartCount,
@@ -69,31 +58,44 @@ const cartItemsUpdatePayloadMaker = (
   return payload;
 };
 
+const updateFunction = (
+  product: IProductCard,
+  operation: number
+) => {
+  const headers = new Headers({
+    "Content-Type": "application/json",
+  });
+  return fetcher("/api/cart", {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ product, operation }),
+  });
+};
+
 export default function useCart() {
   const { data, mutate } = useSWR<ICart>(
     "/api/cart",
     fetcher
   );
-  const [cart, setCart] = useState<ICart>({
-    cartItems: [],
-    cartCount: 0,
-    cartTotal: 0.0,
-  });
-  useEffect(() => {
-    if (data) setCart({ ...data });
-    else {
-      const items =
-        window.localStorage.getItem("cartItems");
-      const parsedItems: ICartItem[] | null = items
-        ? JSON.parse(items)
-        : null;
-      if (parsedItems) {
-        setCart({
-          ...cartItemsUpdatePayloadMaker(parsedItems),
-        });
+
+  const mutateCart = async (
+    product: IProductCard,
+    operation: number,
+    newData: ICart
+  ) => {
+    try {
+      mutate(await updateFunction(product, operation), {
+        optimisticData: newData,
+        rollbackOnError: true,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("Something went wrong.");
       }
     }
-  }, [data]);
+  };
 
   const addItemToCart = (product: IProductCard) => {
     if (data) {
@@ -103,11 +105,10 @@ export default function useCart() {
           product,
           1
         );
-      newCartItems &&
-        mutate(
-          cartItemsUpdatePayloadMaker(newCartItems),
-          false
-        );
+      const newData = {
+        ...cartItemsUpdatePayloadMaker(newCartItems, data),
+      };
+      mutateCart(product, 1, newData);
     }
   };
 
@@ -119,29 +120,27 @@ export default function useCart() {
           product,
           -1
         );
-      newCartItems &&
-        mutate(
-          cartItemsUpdatePayloadMaker(newCartItems),
-          false
-        );
+      const newData = {
+        ...cartItemsUpdatePayloadMaker(newCartItems, data),
+      };
+      mutateCart(product, -1, newData);
     }
   };
 
   const deleteItemFromCart = (product: IProductCard) => {
     if (data) {
-      const newCartitems = data.cartItems.filter(
+      const newCartItems = data.cartItems.filter(
         (item) => item.id !== product.id
       );
-      newCartitems &&
-        mutate(
-          cartItemsUpdatePayloadMaker(newCartitems),
-          false
-        );
+      const newData = {
+        ...cartItemsUpdatePayloadMaker(newCartItems, data),
+      };
+      mutateCart(product, 0, newData);
     }
   };
 
   return {
-    cart,
+    cart: data,
     addItemToCart,
     removeItemFromCart,
     deleteItemFromCart,
