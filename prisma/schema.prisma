@@ -144,6 +144,14 @@ model Category {
 //   updatedAt    DateTime    @updatedAt
 // }
 
+model Cart {
+  id        String @id @default(cuid())
+  cartItems String
+  cartTotal Float
+  cartCount Int
+  User      User?
+}
+
 model User {
   id          String   @id @default(cuid())
   displayName String?
@@ -154,7 +162,8 @@ model User {
   // orders      Order[]
   // addresses   Address[]
   reviews     Review[]
-  cart        Json[]
+  cart        Cart?    @relation(fields: [cartId], references: [id])
+  cartId      String?  @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
