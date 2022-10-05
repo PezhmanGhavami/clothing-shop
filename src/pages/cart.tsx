@@ -15,7 +15,6 @@ const Cart: NextPageWithLayout = () => {
   const { cart } = useCart();
   const router = useRouter();
 
-  console.log(cart);
   if (!cart) {
     return <div>Laoding...</div>;
   }
@@ -23,7 +22,7 @@ const Cart: NextPageWithLayout = () => {
     <div className="flex flex-col justify-center py-6 px-4 lg:px-8">
       {/* Heading */}
       <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
-        <h2 className="text-lg font-medium text-gray-900">
+        <h2 className="text-xl md:text-2xl font-medium text-gray-900">
           Shopping Cart
         </h2>
         <button
@@ -40,18 +39,12 @@ const Cart: NextPageWithLayout = () => {
       </div>
       {/* Cart Items */}
       <CartItemsContainer cartItems={cart.cartItems} />
-
       {/* Order summary */}
-
-      <div className="bg-gray-50 p-6 sm:p-8 sm:rounded-lg">
-        <h2 id="summary-heading" className="sr-only">
-          Order summary
-        </h2>
-
+      <div className="bg-neutral-100 p-6 sm:p-8 border rounded-lg">
         <div className="flex flex-col divide-y">
           <div className="flex h-10 justify-between">
-            <p>Subtotla</p>
-            <p>{cart.cartTotal}</p>
+            <p>Subtotal</p>
+            <p>${cart.cartTotal}.00</p>
           </div>
           <div className="flex h-10 justify-between">
             <p>Your saving</p>

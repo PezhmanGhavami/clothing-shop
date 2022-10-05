@@ -1,5 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+
+import useCart from "../../hooks/useCart";
+
 import { ICartItem } from "../../pages/api/cart";
 
 interface ICartItemComponent {
@@ -7,6 +10,20 @@ interface ICartItemComponent {
 }
 
 const CartItem = ({ item }: ICartItemComponent) => {
+  const {
+    addItemToCart,
+    removeItemFromCart,
+    deleteItemFromCart,
+  } = useCart();
+  const handleAdd = () => {
+    addItemToCart(item);
+  };
+  const handleRemove = () => {
+    removeItemFromCart(item);
+  };
+  const handleDelete = () => {
+    deleteItemFromCart(item);
+  };
   return (
     <li
       key={item.id}
@@ -39,18 +56,27 @@ const CartItem = ({ item }: ICartItemComponent) => {
           <div className="w-20">
             {/* Add or minus */}
             <div className="flex justify-between items-center">
-              <button className="w-6 h-6 border rounded-md">
+              <button
+                onClick={handleRemove}
+                className="w-6 h-6 border rounded-md"
+              >
                 -
               </button>
               <span className="text-xs">
                 {item.quantity}
               </span>
-              <button className="w-6 h-6 border rounded-md">
+              <button
+                onClick={handleAdd}
+                className="w-6 h-6 border rounded-md"
+              >
                 +
               </button>
             </div>
             {/* Remove */}
-            <button className="w-full mt-2 text-center">
+            <button
+              onClick={handleDelete}
+              className="w-full mt-3 text-center"
+            >
               Remove
             </button>
           </div>
