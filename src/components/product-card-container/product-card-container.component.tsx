@@ -20,7 +20,7 @@ const ProductCardContainer = ({
   showName,
 }: IProductCardContainer) => {
   return (
-    <div className="mx-auto max-w-2xl py-6 px-4 sm:pt-10 lg:max-w-7xl lg:px-8">
+    <div className="mx-auto max-w-2xl py-6 sm:pt-10 px-4 lg:px-8 lg:max-w-7xl">
       <div className="flex justify-between items-center">
         {showName && (
           <h2 className="capitalize text-2xl font-bold tracking-tight">

@@ -10,7 +10,7 @@ const CartItemsContainer = ({
   cartItems,
 }: ICartItemContainer) => {
   return (
-    <ul className="divide-y px-4 sm:px-6 lg:px-8">
+    <ul className="divide-y">
       {cartItems.map((item) => (
         <CartItem key={item.id} item={item} />
       ))}

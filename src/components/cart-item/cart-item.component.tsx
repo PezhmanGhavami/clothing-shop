@@ -58,7 +58,8 @@ const CartItem = ({ item }: ICartItemComponent) => {
             <div className="flex justify-between items-center">
               <button
                 onClick={handleRemove}
-                className="w-6 h-6 border rounded-md"
+                title="Reduce the quantity of this item"
+                className="w-6 h-6 border rounded-md hover:bg-neutral-100 dark:hover:bg-slate-700"
               >
                 -
               </button>
@@ -67,7 +68,8 @@ const CartItem = ({ item }: ICartItemComponent) => {
               </span>
               <button
                 onClick={handleAdd}
-                className="w-6 h-6 border rounded-md"
+                title="Add to the quantity of this item"
+                className="w-6 h-6 border rounded-md hover:bg-neutral-100 dark:hover:bg-slate-700"
               >
                 +
               </button>
@@ -75,7 +77,8 @@ const CartItem = ({ item }: ICartItemComponent) => {
             {/* Remove */}
             <button
               onClick={handleDelete}
-              className="w-full mt-3 text-center"
+              title="Remove this item from your cart"
+              className="w-full mt-3 text-center text-blue-700 dark:text-blue-400 hover:underline"
             >
               Remove
             </button>
