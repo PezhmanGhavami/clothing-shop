@@ -13,7 +13,7 @@ interface IProductOverview {
 }
 
 const ProductOverview = ({ product }: IProductOverview) => {
-  const { addItemToCart } = useCart();
+  const { cart, addItemToCart } = useCart();
   const handleAddItemToCart = () => {
     addItemToCart({
       id: product.id,
@@ -24,6 +24,17 @@ const ProductOverview = ({ product }: IProductOverview) => {
       dsicountedPrice: product.dsicountedPrice,
       images: product.images,
     });
+  };
+  const itemIsInCart = () => {
+    return cart?.items.find(
+      (item) => item.id === product.id
+    );
+  };
+  const maxInventoryReached = () => {
+    const itemQuantityInCart = itemIsInCart()?.quantity;
+    return (
+      (itemQuantityInCart || 0) >= product.currentInventory
+    );
   };
   return (
     <div className="flex flex-col border-b">
@@ -113,11 +124,22 @@ const ProductOverview = ({ product }: IProductOverview) => {
           <div className="flex space-x-4 mb-6">
             {/* TODO - Make this a component */}
             <button
-              disabled={product.currentInventory === 0}
+              disabled={
+                product.currentInventory === 0 ||
+                maxInventoryReached()
+              }
               onClick={handleAddItemToCart}
-              className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium tracking-tight h-9 w-full rounded-md shadow-md"
+              className={`bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium tracking-tight h-9 w-full rounded-md shadow-md ${
+                maxInventoryReached() &&
+                "cursor-not-allowed opacity-75"
+              }`}
             >
-              {product.currentInventory > 0
+              {maxInventoryReached()
+                ? "Max inventory reached - " +
+                  `${itemIsInCart()?.quantity} in cart`
+                : itemIsInCart()
+                ? `${itemIsInCart()?.quantity} in cart`
+                : product.currentInventory > 0
                 ? "Add to cart"
                 : "Out of stock"}
             </button>
