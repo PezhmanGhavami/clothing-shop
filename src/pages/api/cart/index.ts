@@ -17,15 +17,17 @@ export interface ICartItem extends IProductCard {
 }
 export interface ICart {
   id?: string;
-  cartItems: ICartItem[];
-  cartTotal: number;
-  cartCount: number;
+  items: ICartItem[];
+  count: number;
+  total: number;
+  discountedTotal: number;
 }
 
 const emptyCart: ICart = {
-  cartItems: [],
-  cartCount: 0,
-  cartTotal: 0.0,
+  items: [],
+  count: 0,
+  total: 0.0,
+  discountedTotal: 0.0,
 };
 
 const checkForItemInCartThenChangeItAccordingly = (
@@ -63,19 +65,27 @@ const cartItemsUpdatePayloadMaker = (
   newCartItems: ICartItem[],
   cart: ICart
 ): ICart => {
-  const newCartTotal = newCartItems.reduce(
+  const newTotal = newCartItems.reduce(
     (acc, item) => (acc += item.quantity * item.price),
     0
   );
-  const newCartCount = newCartItems.reduce(
+  const newCount = newCartItems.reduce(
     (acc, item) => (acc += item.quantity),
+    0
+  );
+  const newDiscountedTotal = newCartItems.reduce(
+    (acc, item) =>
+      item.dsicountedPrice
+        ? (acc += item.quantity * item.dsicountedPrice)
+        : (acc += item.quantity * item.price),
     0
   );
   const payload = {
     ...cart,
-    cartItems: newCartItems,
-    cartTotal: newCartTotal,
-    cartCount: newCartCount,
+    items: newCartItems,
+    count: newCount,
+    total: newTotal,
+    discountedTotal: newDiscountedTotal,
   };
 
   return payload;
@@ -107,9 +117,9 @@ async function cartRoute(
         }
         //TODO - add the change operations to the db
 
+        // Remove an item
         if (operation === 0) {
-          // Delete an item
-          const cartItems = cart.cartItems.filter(
+          const cartItems = cart.items.filter(
             (item) => item.id !== product.id
           );
           const newCart = {
@@ -119,11 +129,12 @@ async function cartRoute(
           await req.session.save();
 
           return res.json({ ...newCart });
-        } else if (operation === 1 || operation === -1) {
-          // Add or remove an item
+        }
+        // Add or deduct an item
+        else if (operation === 1 || operation === -1) {
           const cartItems =
             checkForItemInCartThenChangeItAccordingly(
-              cart.cartItems,
+              cart.items,
               product,
               operation
             );

@@ -12,17 +12,17 @@ interface ICartItemComponent {
 const CartItem = ({ item }: ICartItemComponent) => {
   const {
     addItemToCart,
+    deductItemFromCart,
     removeItemFromCart,
-    deleteItemFromCart,
   } = useCart();
   const handleAdd = () => {
     addItemToCart(item);
   };
+  const handleDeduct = () => {
+    deductItemFromCart(item);
+  };
   const handleRemove = () => {
     removeItemFromCart(item);
-  };
-  const handleDelete = () => {
-    deleteItemFromCart(item);
   };
   return (
     <li
@@ -45,9 +45,22 @@ const CartItem = ({ item }: ICartItemComponent) => {
         {/* Name and price */}
         <div className="flex justify-between items-center w-full pb-6">
           <Link href={"/product/" + item.id}>
-            <p>{item.name}</p>
+            <a>{item.name}</a>
           </Link>
-          <p>${item.price}.00</p>
+          <p>
+            {" "}
+            <span
+              className={item.offer ? "line-through" : ""}
+            >
+              ${item.price}
+            </span>
+            {item.offer && (
+              <span className="text-red-700 dark:text-red-400">
+                {" "}
+                ${item.dsicountedPrice}
+              </span>
+            )}
+          </p>
         </div>
         {/* Qty - Add or remove */}
         <div className="flex justify-between items-center">
@@ -57,7 +70,7 @@ const CartItem = ({ item }: ICartItemComponent) => {
             {/* Add or minus */}
             <div className="flex justify-between items-center">
               <button
-                onClick={handleRemove}
+                onClick={handleDeduct}
                 title="Reduce the quantity of this item"
                 className="w-6 h-6 border rounded-md hover:bg-neutral-100 dark:hover:bg-slate-700"
               >
@@ -76,7 +89,7 @@ const CartItem = ({ item }: ICartItemComponent) => {
             </div>
             {/* Remove */}
             <button
-              onClick={handleDelete}
+              onClick={handleRemove}
               title="Remove this item from your cart"
               className="w-full mt-3 text-center text-blue-700 dark:text-blue-400 hover:underline"
             >

@@ -87,9 +87,10 @@ async function userRoute(
           displayName,
           cart: {
             create: {
-              cartItems: "[]",
-              cartCount: 0,
-              cartTotal: 0.0,
+              items: "[]",
+              count: 0,
+              total: 0.0,
+              discountedTotal: 0.0,
             },
           },
         },
@@ -104,7 +105,7 @@ async function userRoute(
       if (newUser.cart) {
         req.session.cart = {
           ...newUser.cart,
-          cartItems: [],
+          items: [],
         };
       }
       await req.session.save();

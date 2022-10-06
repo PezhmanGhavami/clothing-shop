@@ -48,11 +48,19 @@ const cartItemsUpdatePayloadMaker = (
     (acc, item) => (acc += item.quantity),
     0
   );
+  const newCartDiscountedTotal = newCartItems.reduce(
+    (acc, item) =>
+      item.dsicountedPrice
+        ? (acc += item.quantity * item.dsicountedPrice)
+        : (acc += item.quantity * item.price),
+    0
+  );
   const payload = {
     ...cart,
     cartItems: newCartItems,
     cartTotal: newCartTotal,
     cartCount: newCartCount,
+    cartDiscountedTotal: newCartDiscountedTotal,
   };
 
   return payload;
@@ -101,7 +109,7 @@ export default function useCart() {
     if (data) {
       const newCartItems =
         checkForItemInCartThenChangeItAccordingly(
-          data.cartItems,
+          data.items,
           product,
           1
         );
@@ -112,11 +120,11 @@ export default function useCart() {
     }
   };
 
-  const removeItemFromCart = (product: IProductCard) => {
+  const deductItemFromCart = (product: IProductCard) => {
     if (data) {
       const newCartItems =
         checkForItemInCartThenChangeItAccordingly(
-          data.cartItems,
+          data.items,
           product,
           -1
         );
@@ -127,9 +135,9 @@ export default function useCart() {
     }
   };
 
-  const deleteItemFromCart = (product: IProductCard) => {
+  const removeItemFromCart = (product: IProductCard) => {
     if (data) {
-      const newCartItems = data.cartItems.filter(
+      const newCartItems = data.items.filter(
         (item) => item.id !== product.id
       );
       const newData = {
@@ -142,7 +150,7 @@ export default function useCart() {
   return {
     cart: data,
     addItemToCart,
+    deductItemFromCart,
     removeItemFromCart,
-    deleteItemFromCart,
   };
 }

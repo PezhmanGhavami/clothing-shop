@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import {
   FaUser,
-  FaHeart,
   FaSearch,
   FaShoppingCart,
 } from "react-icons/fa";
@@ -58,80 +57,67 @@ const Navbar = () => {
   };
 
   return (
-    <>
-      <header className="flex justify-items-center items-center h-20 py-1">
-        {openModal && <Overlay handleClick={closeModal} />}
-        <Hamburger
-          openModal={openModal}
-          handleClick={toggleModal}
-        />
-        <nav className="w-full h-full flex justify-between items-center">
-          {/* Navbar logo container */}
-          <div className="uppercase text-lg tracking-wide font-medium p-2 lg:p-4">
-            <Link href={"/"}>Clothing Shop</Link>
-          </div>
-          {/* Links */}
-          <ul
-            className={`fixed md:static top-0 right-0 z-40 md:z-auto h-screen w-2/4 md:h-auto md:w-auto flex flex-col md:flex-row justify-center items-center bg-neutral-200 dark:bg-slate-700 md:bg-inherit shadow-2xl md:shadow-none translate-x-full md:translate-x-0 transition-transform md:transition-none ease-in-out duration-500 ${
-              openModal ? "translate-x-0" : ""
-            }`}
+    <header className="flex justify-items-center items-center h-20 py-1">
+      {openModal && <Overlay handleClick={closeModal} />}
+      <Hamburger
+        openModal={openModal}
+        handleClick={toggleModal}
+      />
+      <nav className="w-full h-full flex justify-between items-center">
+        {/* Navbar logo container */}
+        <div className="uppercase text-lg tracking-wide font-medium p-2 lg:p-4">
+          <Link href={"/"}>Clothing Shop</Link>
+        </div>
+        {/* Links */}
+        <ul
+          className={`fixed md:static top-0 right-0 z-40 md:z-auto h-screen w-2/4 md:h-auto md:w-auto flex flex-col md:flex-row justify-center items-center bg-neutral-200 dark:bg-slate-700 md:bg-inherit shadow-2xl md:shadow-none translate-x-full md:translate-x-0 transition-transform md:transition-none ease-in-out duration-500 ${
+            openModal ? "translate-x-0" : ""
+          }`}
+        >
+          {navLinks.links.map((link, index) => (
+            <li key={index} className={navLinks.liClasses}>
+              <Link href={link.to}>
+                <a
+                  onClick={closeModal}
+                  className={`${navLinks.linkClasses}${
+                    router.asPath === link.to
+                      ? "border-b-slate-900 dark:border-b-white"
+                      : ""
+                  }`}
+                >
+                  {link.name}
+                </a>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        {/* Icons Search Wishlist Cart Profile */}
+        <div className="flex">
+          <Link href={"/search"}>
+            <a className={navLinks.iconClasses}>
+              <FaSearch title="Search" />
+            </a>
+          </Link>
+          <Link
+            href={
+              user?.isLoggedIn ? "/profile" : "/auth/signin"
+            }
           >
-            {navLinks.links.map((link, index) => (
-              <li
-                key={index}
-                className={navLinks.liClasses}
-              >
-                <Link href={link.to}>
-                  <a
-                    onClick={closeModal}
-                    className={`${navLinks.linkClasses}${
-                      router.asPath === link.to
-                        ? "border-b-slate-900 dark:border-b-white"
-                        : ""
-                    }`}
-                  >
-                    {link.name}
-                  </a>
-                </Link>
-              </li>
-            ))}
-          </ul>
-          {/* Icons Search Wishlist Cart Profile */}
-          <div className="flex">
-            <Link href={"/search"}>
-              <a className={navLinks.iconClasses}>
-                <FaSearch title="Search" />
-              </a>
-            </Link>
-            {/* <Link href={"/wishlist"}>
-              <a className={navLinks.iconClasses}>
-                <FaHeart title="Wishlist" />
-              </a>
-            </Link> */}
-            {/* TODO - Compelete this */}
-            <Link
-              href={
-                user?.isLoggedIn
-                  ? "/profile"
-                  : "/auth/signin"
-              }
-            >
-              <a className={navLinks.iconClasses}>
-                <FaUser title="User" />
-              </a>
-            </Link>
-            <Link href={"/cart"}>
-              <a className={navLinks.iconClasses}>
-                <FaShoppingCart title="Cart" />
-                <span className="text-xs pl-2">
-                  {cart?.cartCount}
-                </span>
-              </a>
-            </Link>
-          </div>
-        </nav>
-      </header>
-    </>
+            <a className={navLinks.iconClasses}>
+              <FaUser title="User" />
+            </a>
+          </Link>
+          <Link href={"/cart"}>
+            <a className={navLinks.iconClasses}>
+              <FaShoppingCart title="Cart" />
+              <span className="text-xs pl-2">
+                {cart?.count}
+              </span>
+            </a>
+          </Link>
+        </div>
+      </nav>
+    </header>
   );
 };
 

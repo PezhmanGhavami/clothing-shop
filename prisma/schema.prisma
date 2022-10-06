@@ -145,11 +145,12 @@ model Category {
 // }
 
 model Cart {
-  id        String @id @default(cuid())
-  cartItems String
-  cartTotal Float
-  cartCount Int
-  User      User?
+  id              String @id @default(cuid())
+  items           String
+  count           Int
+  total           Float
+  discountedTotal Float
+  User            User?
 }
 
 model User {

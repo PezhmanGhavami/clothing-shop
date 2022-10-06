@@ -41,8 +41,8 @@ const Cart: NextPageWithLayout = () => {
         </button>
       </div>
       {/* Cart Items */}
-      {cart.cartCount > 0 ? (
-        <CartItemsContainer cartItems={cart.cartItems} />
+      {cart.count > 0 ? (
+        <CartItemsContainer cartItems={cart.items} />
       ) : (
         <div className="py-12">
           <p className="pb-4">Your cart is empty!</p>
@@ -59,15 +59,18 @@ const Cart: NextPageWithLayout = () => {
         <div className="divide-y">
           <div className="flex h-10 justify-between items-center">
             <p>Subtotal</p>
-            <p>${cart.cartTotal}.00</p>
+            <p>${cart.total}.00</p>
           </div>
           <div className="flex h-10 justify-between items-center">
-            <p>Your saving</p>
-            <p>Some number</p>
+            <p>You are saving</p>
+            <p>
+              ${cart.total - cart.discountedTotal}
+              .00
+            </p>
           </div>
           <div className="flex h-10 justify-between items-center">
             <p>Order total</p>
-            <p>Actual Total</p>
+            <p>${cart.discountedTotal}.00</p>
           </div>
         </div>
         <button className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-10 font-bold w-full text-white">

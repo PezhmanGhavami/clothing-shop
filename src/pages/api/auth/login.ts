@@ -51,19 +51,16 @@ async function loginRoute(
         res.status(401);
         throw new Error("Wrong email or password");
       }
-
       const user = {
         userID: userExists.id,
         dateCreated: Date.now(),
       };
       req.session.user = user;
       if (userExists.cart) {
-        const cartItems = JSON.parse(
-          userExists.cart.cartItems
-        );
+        const cartItems = JSON.parse(userExists.cart.items);
         req.session.cart = {
           ...userExists.cart,
-          cartItems,
+          items: cartItems,
         };
       } else {
         const updatedUser = await prisma.user.update({
@@ -73,9 +70,10 @@ async function loginRoute(
           data: {
             cart: {
               create: {
-                cartItems: "[]",
-                cartCount: 0,
-                cartTotal: 0.0,
+                items: "[]",
+                count: 0,
+                total: 0.0,
+                discountedTotal: 0.0,
               },
             },
           },
@@ -84,7 +82,7 @@ async function loginRoute(
         if (updatedUser.cart) {
           req.session.cart = {
             ...updatedUser.cart,
-            cartItems: [],
+            items: [],
           };
         }
       }
