@@ -115,8 +115,6 @@ async function cartRoute(
           res.status(400);
           throw new Error("All fields are required.");
         }
-        //TODO - add the change operations to the db
-
         // Remove an item
         if (operation === 0) {
           const cartItems = cart.items.filter(
@@ -127,6 +125,20 @@ async function cartRoute(
           };
           req.session.cart = newCart;
           await req.session.save();
+
+          if (cart.id) {
+            await prisma.cart.update({
+              where: {
+                id: cart.id,
+              },
+              data: {
+                items: JSON.stringify(newCart.items),
+                count: newCart.count,
+                total: newCart.total,
+                discountedTotal: newCart.discountedTotal,
+              },
+            });
+          }
 
           return res.json({ ...newCart });
         }
@@ -143,6 +155,21 @@ async function cartRoute(
           };
           req.session.cart = newCart;
           await req.session.save();
+
+          if (cart.id) {
+            await prisma.cart.update({
+              where: {
+                id: cart.id,
+              },
+              data: {
+                items: JSON.stringify(newCart.items),
+                count: newCart.count,
+                total: newCart.total,
+                discountedTotal: newCart.discountedTotal,
+              },
+            });
+          }
+
           return res.json({ ...newCart });
         }
       }
