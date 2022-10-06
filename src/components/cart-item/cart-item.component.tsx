@@ -71,20 +71,35 @@ const CartItem = ({ item }: ICartItemComponent) => {
             <div className="flex justify-between items-center">
               <button
                 onClick={handleDeduct}
-                title="Reduce the quantity of this item"
+                title={
+                  item.quantity === 1
+                    ? "Remove this item from your cart"
+                    : "Reduce the quantity of this item"
+                }
                 className="w-6 h-6 border rounded-md hover:bg-neutral-100 dark:hover:bg-slate-700"
               >
-                -
+                {item.quantity === 1 ? (
+                  <span>&#128465;</span>
+                ) : (
+                  <span>-</span>
+                )}
               </button>
               <span className="text-xs">
                 {item.quantity}
               </span>
               <button
                 onClick={handleAdd}
-                title="Add to the quantity of this item"
-                className="w-6 h-6 border rounded-md hover:bg-neutral-100 dark:hover:bg-slate-700"
+                title={
+                  item.quantity >= item.currentInventory
+                    ? "Max inventory reached"
+                    : "Add to the quantity of this item"
+                }
+                className={`w-6 h-6 border rounded-md hover:bg-neutral-100 dark:hover:bg-slate-700 ${
+                  item.quantity >= item.currentInventory &&
+                  "cursor-not-allowed opacity-50"
+                }`}
               >
-                +
+                <span>+</span>
               </button>
             </div>
             {/* Remove */}
