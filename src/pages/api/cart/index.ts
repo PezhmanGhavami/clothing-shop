@@ -42,6 +42,24 @@ const checkForItemInCartThenChangeItAccordingly = (
   );
 
   if (productIndex !== -1) {
+    if (
+      localCartItems[productIndex].quantity >=
+        localCartItems[productIndex].currentInventory &&
+      changeValue === 1
+    ) {
+      if (
+        localCartItems[productIndex].quantity >
+        localCartItems[productIndex].currentInventory
+      ) {
+        localCartItems[productIndex] = {
+          ...localCartItems[productIndex],
+          quantity:
+            localCartItems[productIndex].currentInventory,
+        };
+      }
+      return localCartItems;
+    }
+
     localCartItems[productIndex] = {
       ...localCartItems[productIndex],
       quantity:

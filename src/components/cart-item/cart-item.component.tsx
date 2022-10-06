@@ -96,6 +96,9 @@ const CartItem = ({ item }: ICartItemComponent) => {
               </span>
               <button
                 onClick={handleAdd}
+                disabled={
+                  item.quantity >= item.currentInventory
+                }
                 title={
                   item.quantity >= item.currentInventory
                     ? "Max inventory reached"
