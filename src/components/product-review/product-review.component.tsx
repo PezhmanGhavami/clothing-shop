@@ -15,7 +15,7 @@ const ProductReview = ({ review }: IProductReview) => {
     );
   }, [review.createdAt]);
   return (
-    <div className="border-b last:border-0 pt-6 pb-12 sm:flex">
+    <div className="pt-6 pb-12 sm:flex">
       {/* Name, Score, Date */}
       <div className="mb-4 pr-6 sm:w-1/3">
         <ReviewStars score={review.score} />
