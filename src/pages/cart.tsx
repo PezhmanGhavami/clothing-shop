@@ -11,7 +11,7 @@ import Loading from "../components/loading/loading.component";
 import useCart from "../hooks/useCart";
 
 const Cart: NextPageWithLayout = () => {
-  const { cart } = useCart();
+  const { cart, cartIsUpdating } = useCart();
   const router = useRouter();
 
   if (!cart) {
@@ -73,8 +73,14 @@ const Cart: NextPageWithLayout = () => {
             <p>${cart.discountedTotal}.00</p>
           </div>
         </div>
-        <button className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-10 font-bold w-full text-white">
-          Go to checkout
+        <button
+          disabled={cartIsUpdating}
+          className={`bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-10 font-bold w-full text-white ${
+            cartIsUpdating &&
+            "cursor-not-allowed opacity-75"
+          }`}
+        >
+          {cartIsUpdating ? <Loading /> : "Go to checkout"}
         </button>
       </div>
     </div>

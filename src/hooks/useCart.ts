@@ -81,7 +81,7 @@ const updateFunction = (
 };
 
 export default function useCart() {
-  const { data, mutate } = useSWR<ICart>(
+  const { data, isValidating, mutate } = useSWR<ICart>(
     "/api/cart",
     fetcher
   );
@@ -149,6 +149,7 @@ export default function useCart() {
 
   return {
     cart: data,
+    cartIsUpdating: isValidating,
     addItemToCart,
     deductItemFromCart,
     removeItemFromCart,
