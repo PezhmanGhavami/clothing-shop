@@ -31,7 +31,7 @@ const ProductReview = ({ review }: IProductReview) => {
         <h3 className="text-lg leading-none">
           {review.title}
         </h3>
-        <p className=" font-light dark:text-slate-200">
+        <p className="mt-2 font-light dark:text-slate-200">
           {review.body}
         </p>
       </div>
