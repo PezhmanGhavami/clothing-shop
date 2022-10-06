@@ -64,7 +64,14 @@ const CartItem = ({ item }: ICartItemComponent) => {
         </div>
         {/* Qty - Add or remove */}
         <div className="flex justify-between items-center">
-          <p>Quantity: {item.quantity}</p>
+          <p>
+            Quantity: {item.quantity}
+            {item.quantity >= item.currentInventory && (
+              <span className="block text-xs text-red-700 dark:text-red-400">
+                *Max inventory reached
+              </span>
+            )}
+          </p>
           {/* Buttons */}
           <div className="w-20">
             {/* Add or minus */}
