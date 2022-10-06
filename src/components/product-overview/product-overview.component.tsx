@@ -122,7 +122,6 @@ const ProductOverview = ({ product }: IProductOverview) => {
           </div>
           {/* Buttons (Add to cart and wishlist) */}
           <div className="flex space-x-4 mb-6">
-            {/* TODO - Make this a component */}
             <button
               disabled={
                 product.currentInventory === 0 ||

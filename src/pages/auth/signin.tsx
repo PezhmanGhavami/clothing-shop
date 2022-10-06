@@ -7,6 +7,7 @@ import {
 import Link from "next/link";
 import { NextPageWithLayout } from "../_app";
 import { BiShow, BiHide } from "react-icons/bi";
+import { toast } from "react-toastify";
 
 import Loading from "../../components/loading/loading.component";
 import AuthLayout from "../../components/auth-layout/auth-layout";
@@ -53,10 +54,7 @@ const Login: NextPageWithLayout = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { user, mutateUser } = useUser();
-
-  //FIXME - location.state causes type error fix it and use the commented codes to do the redirect
-  // const location = useLocation();
+  const { mutateUser } = useUser();
 
   const { email, password } = formFields;
 
@@ -87,7 +85,7 @@ const Login: NextPageWithLayout = () => {
           ? inputStatus.EMPTY
           : inputStatus.INVALID;
       onSubmit &&
-        alert(
+        toast.error(
           emailStatus === inputStatus.EMPTY
             ? "You should provide an email address."
             : "Invalid email address."
@@ -95,7 +93,8 @@ const Login: NextPageWithLayout = () => {
     }
 
     if (password === "" || !password) {
-      onSubmit && alert("You should provide a password.");
+      onSubmit &&
+        toast.error("You should provide a password.");
       formIsValid = false;
       passwordStatus = inputStatus.EMPTY;
     }
@@ -133,21 +132,15 @@ const Login: NextPageWithLayout = () => {
       );
       //TODO - maybe add a prop to redirect to the corrct page after login
     } catch (error) {
-      // TODO - Add toastify for these kind of messages
       // throw new Error(loginRes.statusText);
       if (error instanceof Error) {
-        alert(error.message);
+        toast.error(error.message);
       } else {
-        alert("Something went wrong.");
+        toast.error("Something went wrong.");
       }
     }
     setIsLoading(false);
   };
-
-  if (!user || user.isLoggedIn) {
-    //TODO - Make this full screen
-    return <Loading />;
-  }
 
   return (
     <>

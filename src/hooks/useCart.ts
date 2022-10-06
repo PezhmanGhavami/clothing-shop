@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import { toast } from "react-toastify";
 
 import fetcher from "../utils/fetcher";
 
@@ -117,8 +118,11 @@ export default function useCart() {
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
+        toast.error(`${error.message}`);
       } else {
-        alert("Something went wrong.");
+        toast.error(
+          "Something went wrong while updating the cart."
+        );
       }
     }
   };

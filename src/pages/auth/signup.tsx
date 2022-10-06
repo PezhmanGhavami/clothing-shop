@@ -6,6 +6,7 @@ import {
 } from "react";
 import Link from "next/link";
 import { NextPageWithLayout } from "../_app";
+import { toast } from "react-toastify";
 
 import Loading from "../../components/loading/loading.component";
 import AuthLayout from "../../components/auth-layout/auth-layout";
@@ -40,10 +41,7 @@ const SignUp: NextPageWithLayout = () => {
     useState<IUserRegisterFrom>(defaultFormFields);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { user, mutateUser } = useUser();
-
-  //FIXME - location.state causes type error fix it and use the commented codes to do the redirect
-  // const location = useLocation();
+  const { mutateUser } = useUser();
 
   const { displayName, email, password, confirmPassword } =
     formFields;
@@ -71,7 +69,7 @@ const SignUp: NextPageWithLayout = () => {
     if (displayName === "" || !displayName) {
       nameStatus = inputStatus.EMPTY;
       formIsValid = false;
-      onSubmit && alert("You should provide a name.");
+      onSubmit && toast.error("You should provide a name.");
     }
 
     if (email === "" || !email || !emailRegex.test(email)) {
@@ -81,7 +79,7 @@ const SignUp: NextPageWithLayout = () => {
           ? inputStatus.EMPTY
           : inputStatus.INVALID;
       onSubmit &&
-        alert(
+        toast.error(
           emailStatus === inputStatus.EMPTY
             ? "You should provide an email address."
             : "Invalid email address."
@@ -89,20 +87,21 @@ const SignUp: NextPageWithLayout = () => {
     }
 
     if (password === "" || !password) {
-      onSubmit && alert("You should provide a password.");
+      onSubmit &&
+        toast.error("You should provide a password.");
       formIsValid = false;
       passwordStatus = inputStatus.EMPTY;
     }
 
     if (confirmPassword === "" || !confirmPassword) {
       onSubmit &&
-        alert("You should confirm your password.");
+        toast.error("You should confirm your password.");
       formIsValid = false;
       confirmPasswordStatus = inputStatus.EMPTY;
     }
 
     if (password !== confirmPassword) {
-      onSubmit && alert("Passwords should match.");
+      onSubmit && toast.error("Passwords should match.");
       formIsValid = false;
     }
 
@@ -147,21 +146,15 @@ const SignUp: NextPageWithLayout = () => {
       );
       //TODO - maybe add a prop to redirect to the corrct page after login
     } catch (error) {
-      // TODO - Add toastify for these kind of messages
       // throw new Error(loginRes.statusText);
       if (error instanceof Error) {
-        alert(error.message);
+        toast.error(error.message);
       } else {
-        alert("Something went wrong.");
+        toast.error("Something went wrong.");
       }
     }
     setIsLoading(false);
   };
-
-  if (!user || user.isLoggedIn) {
-    //TODO - Make this full screen
-    return <Loading />;
-  }
 
   return (
     <>

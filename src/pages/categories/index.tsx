@@ -39,8 +39,6 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   });
 
-  //TODO - Change the date in db to UNIX date so this whole json parsing can be avoided
-
   return {
     props: {
       categories: JSON.parse(JSON.stringify(categories)),
