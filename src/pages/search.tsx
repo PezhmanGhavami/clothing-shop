@@ -11,8 +11,18 @@ import { AiOutlineClose } from "react-icons/ai";
 import Layout from "../components/layout/layout.component";
 import Loading from "../components/loading/loading.component";
 
+import fetcher from "../utils/fetcher";
+
+import ProductContainer, {
+  IProductCardContainerData,
+} from "../components/product-card-container/product-card-container.component";
+
 const Search: NextPageWithLayout = () => {
   const [searchInput, setSearchInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [foundProducts, setFoundProducts] =
+    useState<IProductCardContainerData | null>(null);
   const router = useRouter();
 
   const handleChange = (
@@ -24,6 +34,28 @@ const Search: NextPageWithLayout = () => {
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
+    if (searchInput.length >= 3) {
+      setIsLoading(true);
+      fetcher("/api/search?q=" + searchInput, {
+        method: "GET",
+      })
+        .then((resolvedQuery) => {
+          setFoundProducts(resolvedQuery);
+          setError(null);
+        })
+        .catch((error) => {
+          if (error instanceof Error) {
+            setError(error.message);
+          } else {
+            setError("Something went wrong");
+          }
+        })
+        .finally(() => setIsLoading(false));
+    } else {
+      setError(
+        "Your serach needs to atleast be 3 characters"
+      );
+    }
   };
 
   return (
@@ -58,7 +90,7 @@ const Search: NextPageWithLayout = () => {
             name="searchInput"
             id="search"
             className="w-full h-9 rounded-md px-2 dark:bg-slate-900 border dark:border-slate-600 focus:outline-none focus:ring focus:ring-blue-400"
-            placeholder="Search for products or categories"
+            placeholder="Search for products"
             value={searchInput}
             onChange={handleChange}
             tabIndex={1}
@@ -71,6 +103,27 @@ const Search: NextPageWithLayout = () => {
             Search
           </button>
         </form>
+      </div>
+      <div>
+        {isLoading ? (
+          <div className="mt-52 text-3xl">
+            <Loading />
+          </div>
+        ) : error ? (
+          <div className="mt-52">
+            <p className="text-center text-slate-600 dark:text-slate-400">
+              {error}
+            </p>
+          </div>
+        ) : foundProducts ? (
+          <ProductContainer
+            productGroup={foundProducts}
+            showLink={false}
+            showName={true}
+          />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
