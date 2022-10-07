@@ -59,50 +59,52 @@ const Search: NextPageWithLayout = () => {
   };
 
   return (
-    <div className="mx-auto py-6 sm:py-10 px-5 lg:px-8">
+    <div className="mx-auto py-6 sm:py-10">
       {/* Search input */}
-      <div className="border bg-slate-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 mx-auto md:w-3/5 xl:w-2/5">
-        {/* Heading */}
-        <div className="flex items-center justify-between">
-          <label
-            htmlFor="search"
-            className="text-xl md:text-2xl font-medium"
-          >
-            Search
-          </label>
-          <button
-            type="button"
-            title="Close"
-            className="hover:text-slate-600 dark:hover:text-slate-300"
-            onClick={() => router.back()}
-          >
-            <AiOutlineClose
-              className="h-6 w-6"
-              aria-hidden="true"
-            />
-          </button>
-        </div>
+      <div className="px-4 lg:px-8">
+        <div className="border bg-slate-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 mx-auto md:w-3/5 xl:w-2/5">
+          {/* Heading */}
+          <div className="flex items-center justify-between">
+            <label
+              htmlFor="search"
+              className="text-xl md:text-2xl font-medium"
+            >
+              Search
+            </label>
+            <button
+              type="button"
+              title="Close"
+              className="hover:text-slate-600 dark:hover:text-slate-300"
+              onClick={() => router.back()}
+            >
+              <AiOutlineClose
+                className="h-6 w-6"
+                aria-hidden="true"
+              />
+            </button>
+          </div>
 
-        {/* Input */}
-        <form onSubmit={handleSubmit} className="mt-4">
-          <input
-            type="text"
-            name="searchInput"
-            id="search"
-            className="w-full h-9 rounded-md px-2 dark:bg-slate-900 border dark:border-slate-600 focus:outline-none focus:ring focus:ring-blue-400"
-            placeholder="Search for products"
-            value={searchInput}
-            onChange={handleChange}
-            tabIndex={1}
-            autoFocus
-          />
-          <button
-            className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-medium tracking-tight w-full text-white mt-2"
-            tabIndex={2}
-          >
-            Search
-          </button>
-        </form>
+          {/* Input */}
+          <form onSubmit={handleSubmit} className="mt-4">
+            <input
+              type="text"
+              name="searchInput"
+              id="search"
+              className="w-full h-9 rounded-md px-2 dark:bg-slate-900 border dark:border-slate-600 focus:outline-none focus:ring focus:ring-blue-400"
+              placeholder="Search for products"
+              value={searchInput}
+              onChange={handleChange}
+              tabIndex={1}
+              autoFocus
+            />
+            <button
+              className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-medium tracking-tight w-full text-white mt-2"
+              tabIndex={2}
+            >
+              Search
+            </button>
+          </form>
+        </div>
       </div>
       <div>
         {isLoading ? (
