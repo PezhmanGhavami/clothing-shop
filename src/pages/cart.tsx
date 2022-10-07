@@ -55,7 +55,7 @@ const Cart: NextPageWithLayout = () => {
         </div>
       )}
       {/* Order summary */}
-      <div className="bg-slate-50 dark:bg-slate-800 p-4 sm:p-8 border rounded-lg">
+      <div className="bg-slate-50 dark:bg-slate-800 p-4 sm:p-8 border rounded-lg mb-28">
         <div className="divide-y">
           <div className="flex h-10 justify-between items-center">
             <p>Subtotal</p>
@@ -75,7 +75,7 @@ const Cart: NextPageWithLayout = () => {
         </div>
         <button
           disabled={cartIsUpdating}
-          className={`bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-10 font-bold w-full text-white ${
+          className={`bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-10 font-bold w-full text-white mt-4 ${
             cartIsUpdating &&
             "cursor-not-allowed opacity-75"
           }`}
