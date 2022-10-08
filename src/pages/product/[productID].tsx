@@ -142,7 +142,11 @@ const Product: NextPageWithLayout<IProduct> = ({
         showLink={false}
         productGroup={relatedProducts}
       />
-      <ProductReviewsContainer reviews={product.reviews} />
+      <ProductReviewsContainer
+        reviews={product.reviews}
+        avgScore={product.reviewsScore}
+        reviewsCount={product.reviewsCount}
+      />
     </div>
   );
 };
