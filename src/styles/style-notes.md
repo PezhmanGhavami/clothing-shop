@@ -46,3 +46,9 @@ aTagClasses:
 successButtonClasses:
 "bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-bold w-full text-white ",
 }; `
+
+> favicon
+>
+> > font open sans
+> > bg body
+> > color body
