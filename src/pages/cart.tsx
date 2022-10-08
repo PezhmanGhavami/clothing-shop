@@ -7,6 +7,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import Layout from "../components/layout/layout.component";
 import CartItemsContainer from "../components/cart-items-container/cart-items-container.component";
 import Loading from "../components/loading/loading.component";
+import Meta from "../components/meta/meta.component";
 
 import useCart from "../hooks/useCart";
 
@@ -23,6 +24,7 @@ const Cart: NextPageWithLayout = () => {
   }
   return (
     <div className="mx-auto md:w-3/5 xl:w-2/5 py-6 sm:py-10 px-5 lg:px-8">
+      <Meta title="Cart" />
       {/* Heading */}
       <div className="flex items-center justify-between">
         <h2 className="text-xl md:text-2xl font-medium">

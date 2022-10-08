@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 
 import Loading from "../../components/loading/loading.component";
 import AuthLayout from "../../components/auth-layout/auth-layout";
+import Meta from "../../components/meta/meta.component";
 
 import useUser from "../../hooks/useUser";
 import fetcher from "../../utils/fetcher";
@@ -158,6 +159,7 @@ const SignUp: NextPageWithLayout = () => {
 
   return (
     <>
+      <Meta title="Register" />
       {/* Page title */}
       <p className="pb-4 text-lg">
         Sign up to Clothing Shop

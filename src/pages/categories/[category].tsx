@@ -5,6 +5,7 @@ import { prisma } from "../../utils/prisma-client";
 
 import Layout from "../../components/layout/layout.component";
 import ProductCardContainer from "../../components/product-card-container/product-card-container.component";
+import Meta from "../../components/meta/meta.component";
 
 import { IProductCardContainerData } from "../../components/product-card-container/product-card-container.component";
 interface ICategoryComp {
@@ -73,6 +74,7 @@ const Category: NextPageWithLayout<ICategoryComp> = ({
 }) => {
   return (
     <div className="py-6">
+      <Meta title={category.name} />
       <h2 className="capitalize text-4xl font-bold tracking-tight text-center">
         {category.name}
       </h2>

@@ -6,6 +6,7 @@ import { Category, Item } from "@prisma/client";
 
 import Layout from "../../components/layout/layout.component";
 import ProductCardContainer from "../../components/product-card-container/product-card-container.component";
+import Meta from "../../components/meta/meta.component";
 
 interface ICategory extends Category {
   items: Item[];
@@ -52,6 +53,7 @@ const Categories: NextPageWithLayout<ICategories> = ({
 }) => {
   return (
     <>
+      <Meta title="Categories" />
       {categories.map((category) => (
         <ProductCardContainer
           key={category.id}

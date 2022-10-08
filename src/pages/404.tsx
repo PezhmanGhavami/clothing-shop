@@ -3,10 +3,12 @@ import { ReactElement } from "react";
 import { NextPageWithLayout } from "./_app";
 
 import Layout from "../components/layout/layout.component";
+import Meta from "../components/meta/meta.component";
 
 const NotFound: NextPageWithLayout = () => {
   return (
     <div className="h-[85vh] flex flex-col justify-center items-center">
+      <Meta title="Page not found" />
       <p className="text-4xl pb-4">
         There&apos;s nothing here!
       </p>

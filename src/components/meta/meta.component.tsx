@@ -21,7 +21,9 @@ const Meta = ({
         content="width=device-width, initial-scale=1"
       />
       <link rel="manifest" href="/manifest.json" />
-      <title>{title} | A demo clothing shop</title>
+      <title>
+        {title} | Clothing Shop - A demo clothing shop
+      </title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       {/* Icons */}
@@ -50,7 +52,7 @@ const Meta = ({
       />
       <meta
         name="twitter:title"
-        content={`${title} | A demo clothing shop`}
+        content={`${title} | Clothing Shop - A demo clothing shop`}
       />
       <meta
         name="twitter:description"
@@ -60,7 +62,7 @@ const Meta = ({
       {/* Open graph tags */}
       <meta
         property="og:title"
-        content={`${title} | A demo clothing shop`}
+        content={`${title} | Clothing Shop - A demo clothing shop`}
       />
       <meta
         property="og:description"

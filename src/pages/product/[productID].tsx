@@ -11,6 +11,7 @@ import ProductCardContainer, {
   IProductCardContainerData,
 } from "../../components/product-card-container/product-card-container.component";
 import ProductReviewsContainer from "../../components/product-reviews-container/product-reviews-container.component";
+import Meta from "../../components/meta/meta.component";
 
 export type reviewPopulatedWithUser = Review & {
   user: User;
@@ -130,6 +131,11 @@ const Product: NextPageWithLayout<IProduct> = ({
 }) => {
   return (
     <div>
+      <Meta
+        title={product.name}
+        description={product.description}
+        oGImageUrl={product.images[0]}
+      />
       <ProductOverview product={product} />
       <ProductCardContainer
         showName={true}

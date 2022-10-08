@@ -5,6 +5,7 @@ import { NextPageWithLayout } from "../_app";
 
 import Layout from "../../components/layout/layout.component";
 import Loading from "../../components/loading/loading.component";
+import Meta from "../../components/meta/meta.component";
 
 import useUser from "../../hooks/useUser";
 import fetcher from "../../utils/fetcher";
@@ -21,6 +22,7 @@ const Profile: NextPageWithLayout = () => {
 
   return (
     <div className="p-2">
+      <Meta title="Profile" />
       <div className="mb-4">
         <p>Reviews</p>
         <p>

@@ -6,6 +6,7 @@ import { prisma } from "../utils/prisma-client";
 import Layout from "../components/layout/layout.component";
 import ProductCardContainer from "../components/product-card-container/product-card-container.component";
 import Slideshow from "../components/slideshow/slideshow.component";
+import Meta from "../components/meta/meta.component";
 
 import { IProductCardContainerData } from "../components/product-card-container/product-card-container.component";
 interface IHome {
@@ -92,6 +93,7 @@ const Home: NextPageWithLayout<IHome> = ({
 }) => {
   return (
     <>
+      <Meta title="Home" />
       <Slideshow slides={landingDir} />
       <ProductCardContainer
         showName={true}

@@ -10,6 +10,7 @@ import { AiOutlineClose } from "react-icons/ai";
 
 import Layout from "../components/layout/layout.component";
 import Loading from "../components/loading/loading.component";
+import Meta from "../components/meta/meta.component";
 
 import fetcher from "../utils/fetcher";
 
@@ -60,6 +61,13 @@ const Search: NextPageWithLayout = () => {
 
   return (
     <div className="mx-auto py-6 sm:py-10">
+      <Meta
+        title={
+          foundProducts
+            ? "Search results for " + searchInput
+            : "Search"
+        }
+      />
       {/* Search input */}
       <div className="px-4 lg:px-8">
         <div className="border bg-slate-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 mx-auto md:w-3/5 xl:w-2/5">
