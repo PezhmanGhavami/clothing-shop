@@ -32,16 +32,19 @@ const CartItem = ({ item }: ICartItemComponent) => {
       className="py-8 flex justify-between text-sm"
     >
       {/* Image */}
-      <div className="relative flex-none w-24 sm:w-32 h-24 sm:h-32 rounded-lg overflow-hidden border border-gray-200">
-        <Image
-          src={item.images[0]}
-          alt={item.name}
-          layout="fill"
-          quality={100}
-          priority
-          className="object-cover object-center dark:brightness-90"
-        />
-      </div>
+      <Link href={"/product/" + item.id}>
+        <a className="relative flex-none w-24 sm:w-32 h-24 sm:h-32 rounded-lg overflow-hidden border border-gray-200">
+          <Image
+            src={item.images[0]}
+            alt={item.name}
+            layout="fill"
+            quality={100}
+            priority
+            className="object-cover object-center dark:brightness-90"
+          />
+        </a>
+      </Link>
+
       {/* Info */}
       <div className="flex flex-col justify-between flex-1 pl-4 sm:pl-6 lg:pl-8">
         {/* Name and price */}
