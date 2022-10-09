@@ -43,7 +43,7 @@ const ProductReviewsContainer = ({
               <div
                 key={score}
                 title={`only show ${score} star ratings`}
-                className="flex items-center"
+                className="flex items-center hover:opacity-75 cursor-pointer"
               >
                 <ReviewStars score={score} />
                 <div className="bg-neutral-200 h-3 w-full rounded-md overflow-hidden ml-4 mr-2">
