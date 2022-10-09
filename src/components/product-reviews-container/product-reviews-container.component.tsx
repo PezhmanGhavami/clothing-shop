@@ -36,7 +36,7 @@ const ProductReviewsContainer = ({
           </p>
         </div>
         {/* Filter */}
-        <div className="w-full text-lg sm:pl-6">
+        <div className="w-5/6 sm:w-full text-lg sm:pl-6">
           <p className="mb-2">Filter by stars</p>
           <div>
             <div
