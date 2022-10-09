@@ -27,7 +27,7 @@ const ProductReviewsContainer = ({
         <div className="w-full pb-6 sm:pb-0 sm:pr-6">
           <div className="text-3xl flex justify-center sm:justify-end">
             <span className="pr-1 font-medium">
-              {avgScore}
+              {avgScore.toFixed(1)}
             </span>
             <ReviewStars score={avgScore} />
           </div>
