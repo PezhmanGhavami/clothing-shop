@@ -146,6 +146,13 @@ const Product: NextPageWithLayout<IProduct> = ({
         reviews={product.reviews}
         avgScore={product.reviewsScore}
         reviewsCount={product.reviewsCount}
+        scoreCounts={[
+          product.reviewsScored5Count,
+          product.reviewsScored4Count,
+          product.reviewsScored3Count,
+          product.reviewsScored2Count,
+          product.reviewsScored1Count,
+        ]}
       />
     </div>
   );

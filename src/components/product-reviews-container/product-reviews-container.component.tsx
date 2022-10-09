@@ -6,12 +6,14 @@ interface IProductReviewsContainer {
   avgScore: number;
   reviewsCount: number;
   reviews: reviewPopulatedWithUser[];
+  scoreCounts: number[];
 }
 
 const ProductReviewsContainer = ({
   reviews,
   avgScore,
   reviewsCount,
+  scoreCounts,
 }: IProductReviewsContainer) => {
   return (
     <div
@@ -39,17 +41,25 @@ const ProductReviewsContainer = ({
         <div className="w-5/6 sm:w-full text-lg sm:pl-6">
           <p className="mb-2">Filter by stars</p>
           <div>
-            {[5, 4, 3, 2, 1].map((score) => (
+            {[5, 4, 3, 2, 1].map((score, index) => (
               <div
                 key={score}
                 title={`only show ${score} star ratings`}
                 className="flex items-center hover:opacity-75 cursor-pointer"
               >
                 <ReviewStars score={score} />
-                <div className="bg-neutral-200 h-3 w-full rounded-md overflow-hidden ml-4 mr-2">
-                  <div className="h-full w-3/4 bg-slate-900" />
+                <div className="bg-neutral-200 h-3 w-2/5 rounded-md overflow-hidden ml-4 mr-2">
+                  <div
+                    className="h-full bg-slate-900"
+                    style={{
+                      width: `${(
+                        (scoreCounts[index] * 100) /
+                        reviewsCount
+                      ).toFixed(2)}%`,
+                    }}
+                  />
                 </div>
-                <span className="text-sm">{`(${56})`}</span>
+                <span className="text-sm">{`(${scoreCounts[index]})`}</span>
               </div>
             ))}
           </div>
