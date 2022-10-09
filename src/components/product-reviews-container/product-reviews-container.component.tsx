@@ -36,6 +36,13 @@ const ProductReviewsContainer = ({
           <p className="pt-2 text-center sm:text-right">
             Based on {reviewsCount} reviews
           </p>
+          <div className="flex justify-center sm:justify-end">
+            <button
+              className={`border hover:bg-neutral-100 dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 w-3/5 rounded-md shadow mt-2`}
+            >
+              Write a review
+            </button>
+          </div>
         </div>
         {/* Filter */}
         <div className="w-5/6 sm:w-full text-lg sm:pl-6">
