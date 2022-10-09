@@ -6,6 +6,8 @@ import ReviewStars from "../product-review-stars/product-review-stars.component"
 
 import useCart from "../../hooks/useCart";
 
+import currencyFormatter from "../../utils/currencyFormatter";
+
 import { itemPopulatedWithReviewAndCategoryName } from "../../pages/product/[productID]";
 
 interface IProductOverview {
@@ -90,12 +92,14 @@ const ProductOverview = ({ product }: IProductOverview) => {
                     product.offer ? "line-through" : ""
                   }
                 >
-                  ${product.price}
+                  {currencyFormatter.format(product.price)}
                 </span>
-                {product.offer && (
+                {product.dsicountedPrice && (
                   <span className="text-red-700 dark:text-red-400">
                     {" "}
-                    ${product.dsicountedPrice}
+                    {currencyFormatter.format(
+                      product.dsicountedPrice
+                    )}
                   </span>
                 )}
               </p>
@@ -137,7 +141,9 @@ const ProductOverview = ({ product }: IProductOverview) => {
                 ? "Max inventory reached - " +
                   `${itemIsInCart()?.quantity} in cart`
                 : itemIsInCart()
-                ? `${itemIsInCart()?.quantity} in cart`
+                ? `Add to cart - ${
+                    itemIsInCart()?.quantity
+                  } in cart`
                 : product.currentInventory > 0
                 ? "Add to cart"
                 : "Out of stock"}

@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import currencyFormatter from "../../utils/currencyFormatter";
+
 export interface IProductCard {
   id: string;
   images: string[];
@@ -60,12 +62,14 @@ const ProductCard = ({
                   product.offer ? "line-through" : ""
                 }
               >
-                ${product.price}
+                {currencyFormatter.format(product.price)}
               </span>
-              {product.offer && (
+              {product.dsicountedPrice && (
                 <span className="text-red-700 dark:text-red-400">
                   {" "}
-                  ${product.dsicountedPrice}
+                  {currencyFormatter.format(
+                    product.dsicountedPrice
+                  )}
                 </span>
               )}
             </p>

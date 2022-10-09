@@ -11,6 +11,8 @@ import Meta from "../components/meta/meta.component";
 
 import useCart from "../hooks/useCart";
 
+import currencyFormatter from "../utils/currencyFormatter";
+
 const Cart: NextPageWithLayout = () => {
   const { cart, cartIsUpdating } = useCart();
   const router = useRouter();
@@ -61,18 +63,23 @@ const Cart: NextPageWithLayout = () => {
         <div className="divide-y">
           <div className="flex h-10 justify-between items-center">
             <p>Subtotal</p>
-            <p>${cart.total}.00</p>
+            <p>{currencyFormatter.format(cart.total)}</p>
           </div>
           <div className="flex h-10 justify-between items-center">
             <p>You are saving</p>
             <p>
-              ${cart.total - cart.discountedTotal}
-              .00
+              {currencyFormatter.format(
+                cart.total - cart.discountedTotal
+              )}
             </p>
           </div>
           <div className="flex h-10 justify-between items-center">
             <p>Order total</p>
-            <p>${cart.discountedTotal}.00</p>
+            <p>
+              {currencyFormatter.format(
+                cart.discountedTotal
+              )}
+            </p>
           </div>
         </div>
         <button

@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import useCart from "../../hooks/useCart";
 
+import currencyFormatter from "../../utils/currencyFormatter";
+
 import { ICartItem } from "../../pages/api/cart";
 
 interface ICartItemComponent {
@@ -52,12 +54,14 @@ const CartItem = ({ item }: ICartItemComponent) => {
             <span
               className={item.offer ? "line-through" : ""}
             >
-              ${item.price}
+              {currencyFormatter.format(item.price)}
             </span>
-            {item.offer && (
+            {item.dsicountedPrice && (
               <span className="text-red-700 dark:text-red-400">
                 {" "}
-                ${item.dsicountedPrice}
+                {currencyFormatter.format(
+                  item.dsicountedPrice
+                )}
               </span>
             )}
           </p>
