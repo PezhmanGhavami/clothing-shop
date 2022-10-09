@@ -18,20 +18,20 @@ const ProductReviewsContainer = ({
       id="reviews-section"
       className="sm:w-3/4 lg:w-2/4 mx-auto p-8 scroll-mt-20"
     >
-      <h2 className="text-3xl text-center p-4">
+      <h2 className="text-3xl text-center p-4 pb-12">
         Customer Reviews
       </h2>
       {/* Score and filter */}
-      <div className="flex flex-col items-center sm:flex-row sm:justify-center sm:divide-x border-b pb-12">
+      <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
         {/* Score */}
-        <div className="w-full pb-6 sm:p-0">
-          <div className="flex justify-center text-3xl">
+        <div className="w-full pb-6 sm:pb-0 sm:pr-6">
+          <div className="text-3xl flex justify-center sm:justify-end">
             <span className="pr-1 font-medium">
               {avgScore}
             </span>
             <ReviewStars score={avgScore} />
           </div>
-          <p className="pt-2 text-center">
+          <p className="pt-2 text-center sm:text-right">
             Based on {reviewsCount} reviews
           </p>
         </div>
