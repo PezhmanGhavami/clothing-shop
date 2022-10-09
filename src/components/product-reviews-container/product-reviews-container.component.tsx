@@ -39,28 +39,19 @@ const ProductReviewsContainer = ({
         <div className="w-5/6 sm:w-full text-lg sm:pl-6">
           <p className="mb-2">Filter by stars</p>
           <div>
-            <div
-              title="only show 5 star ratings"
-              className="flex items-center"
-            >
-              <ReviewStars score={5} />
-              <div className="bg-neutral-200 h-3 w-full rounded-md overflow-hidden ml-4 mr-2">
-                <div className="h-full w-3/4 bg-slate-900" />
+            {[5, 4, 3, 2, 1].map((score) => (
+              <div
+                key={score}
+                title={`only show ${score} star ratings`}
+                className="flex items-center"
+              >
+                <ReviewStars score={score} />
+                <div className="bg-neutral-200 h-3 w-full rounded-md overflow-hidden ml-4 mr-2">
+                  <div className="h-full w-3/4 bg-slate-900" />
+                </div>
+                <span className="text-sm">{`(${56})`}</span>
               </div>
-              <span className="text-sm">{`(${56})`}</span>
-            </div>
-            <div title="only show 4 star ratings">
-              <ReviewStars score={4} />
-            </div>
-            <div title="only show 3 star ratings">
-              <ReviewStars score={3} />
-            </div>
-            <div title="only show 2 star ratings">
-              <ReviewStars score={2} />
-            </div>
-            <div title="only show 1 star ratings">
-              <ReviewStars score={1} />
-            </div>
+            ))}
           </div>
         </div>
       </div>
