@@ -13,6 +13,7 @@ const Meta = ({
   description,
   oGImageUrl,
 }: IMeta) => {
+  const correctTitle = `${title} | Clothing Shop - A demo clothing shop`;
   return (
     <Head>
       {/* Title and others */}
@@ -21,9 +22,7 @@ const Meta = ({
         content="width=device-width, initial-scale=1"
       />
       <link rel="manifest" href="/manifest.json" />
-      <title>
-        {title} | Clothing Shop - A demo clothing shop
-      </title>
+      <title>{correctTitle}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       {/* Icons */}
@@ -50,20 +49,14 @@ const Meta = ({
         name="twitter:card"
         content="summary_large_image"
       />
-      <meta
-        name="twitter:title"
-        content={`${title} | Clothing Shop - A demo clothing shop`}
-      />
+      <meta name="twitter:title" content={correctTitle} />
       <meta
         name="twitter:description"
         content={description}
       />
       <meta name="twitter:image" content={oGImageUrl} />
       {/* Open graph tags */}
-      <meta
-        property="og:title"
-        content={`${title} | Clothing Shop - A demo clothing shop`}
-      />
+      <meta property="og:title" content={correctTitle} />
       <meta
         property="og:description"
         content={description}
