@@ -397,7 +397,7 @@ async function seedDB() {
   }
 
   const items = await prisma.item.findMany({
-    include: { reviews: true },
+    select: { id: true, reviews: true },
   });
 
   for (const item of items) {
@@ -420,6 +420,28 @@ async function seedDB() {
             : 0,
       },
     });
+
+    for (let index = 1; index <= 5; index++) {
+      const foundItem = await prisma.item.findUnique({
+        where: {
+          id: item.id,
+        },
+        select: {
+          reviews: {
+            where: {
+              score: index,
+            },
+          },
+        },
+      });
+      await prisma.item.update({
+        where: { id: item.id },
+        data: {
+          [`reviewsScored${index}Count`]:
+            foundItem.reviews.length,
+        },
+      });
+    }
   }
 }
 
