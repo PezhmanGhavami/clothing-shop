@@ -55,9 +55,9 @@ const ProductReviewsContainer = ({
                 className="flex items-center hover:opacity-75 cursor-pointer"
               >
                 <ReviewStars score={score} />
-                <div className="bg-neutral-200 h-3 w-2/5 rounded-md overflow-hidden ml-4 mr-2">
+                <div className="bg-neutral-200 dark:bg-slate-700 h-3 w-2/5 rounded-md overflow-hidden ml-4 mr-2">
                   <div
-                    className="h-full bg-slate-900"
+                    className="h-full bg-slate-900 dark:bg-white"
                     style={{
                       width: `${(
                         (scoreCounts[index] * 100) /
