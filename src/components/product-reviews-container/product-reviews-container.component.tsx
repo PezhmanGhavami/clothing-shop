@@ -114,7 +114,7 @@ const FormModal = ({
         </h2>
         <button
           onClick={closeModal}
-          title="Close modal"
+          title="Click to close modal"
           className="hover:text-slate-600 dark:hover:text-slate-300"
         >
           <AiOutlineClose
@@ -125,7 +125,7 @@ const FormModal = ({
       </div>
       {/* Form */}
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col rounded-md overflow-hidden">
+        <div className="flex flex-col rounded-md overflow-hidden border border-neutral-200 dark:border-slate-600">
           <label htmlFor="review-title" className="sr-only">
             Write a title
           </label>
@@ -135,8 +135,8 @@ const FormModal = ({
             id="review-title"
             value={formData.title}
             onChange={handleChange}
-            placeholder="Write a title..."
-            className="h-9 p-2 dark:bg-slate-900 border-2 focus-within:outline-none rounded-t-md border-transparent focus-within:border-blue-400"
+            placeholder="Title"
+            className="h-9 p-2 dark:bg-slate-900 border-2 focus-within:outline-none rounded-t-md border-transparent focus-within:border-blue-400 placeholder:text-slate-500 dark:placeholder:text-slate-300 placeholder:text-xl"
             tabIndex={1}
             autoFocus
           />
@@ -149,12 +149,13 @@ const FormModal = ({
             value={formData.body}
             onChange={handleChange}
             placeholder="Write your review..."
-            className="h-24 p-2 dark:bg-slate-900 border-2 focus-within:outline-none rounded-b-md border-transparent focus-within:border-blue-400 resize-none"
+            className="h-24 p-2 dark:bg-slate-900 border-2 focus-within:outline-none rounded-b-md border-transparent focus-within:border-blue-400 resize-none placeholder:text-slate-500 dark:placeholder:text-slate-300 placeholder:text-base"
             tabIndex={2}
           />
         </div>
         <button
           className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-medium tracking-tight w-full text-white mt-2"
+          title="Click to submit your review"
           tabIndex={3}
         >
           Submit
