@@ -106,71 +106,60 @@ const FormModal = ({
     event.preventDefault();
   };
   return (
-    <div className="px-4 lg:px-8">
-      <div className="border bg-slate-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 mx-auto md:w-3/5 xl:w-2/5">
-        {/* Heading */}
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl md:text-2xl font-medium">
-            Add a review
-          </h2>
-          <button
-            type="button"
-            title="Close"
-            className="hover:text-slate-600 dark:hover:text-slate-300"
-            onClick={closeModal}
-          >
-            <AiOutlineClose
-              className="h-6 w-6"
-              aria-hidden="true"
-            />
-          </button>
-        </div>
-
-        {/* Input */}
-        <form onSubmit={handleSubmit} className="mt-4">
-          <div className="border bg-white dark:bg-slate-900 dark:border-slate-600 rounded-md overflow-hidden">
-            <label
-              htmlFor="review-title"
-              className="sr-only"
-            >
-              Review title
-            </label>
-            <input
-              type="text"
-              name="title"
-              id="review-title"
-              className="w-full h-9 px-2 dark:bg-slate-900 focus:outline-none border-2 border-transparent focus:border-blue-400"
-              placeholder="Write a title..."
-              value={formData.title}
-              onChange={handleChange}
-              tabIndex={1}
-              autoFocus
-            />
-            <label
-              htmlFor="review-body"
-              className="sr-only"
-            >
-              Review body
-            </label>
-            <textarea
-              name="body"
-              id="review-body"
-              className="w-full h-24 px-2 dark:bg-slate-900 focus:outline-none border-2 border-transparent focus:border-blue-400 resize-none"
-              placeholder="Write your review..."
-              value={formData.body}
-              onChange={handleChange}
-              tabIndex={2}
-            />
-          </div>
-
-          <button
-            className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-medium tracking-tight w-full text-white mt-2"
-            tabIndex={3}
-          >
-            Submit
-          </button>
-        </form>
+    <div className="border bg-slate-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 mx-auto md:w-3/5 xl:w-2/5">
+      {/* Title and close button */}
+      <div className="flex justify-between mb-4">
+        <h2 className="text-xl md:text-2xl font-medium">
+          Add a review
+        </h2>
+        <button
+          onClick={closeModal}
+          title="Close modal"
+          className="hover:text-slate-600 dark:hover:text-slate-300"
+        >
+          <AiOutlineClose
+            className="h-6 w-6"
+            aria-hidden="true"
+          />
+        </button>
       </div>
+      {/* Form */}
+      <form onSubmit={handleSubmit}>
+        <div className="flex flex-col rounded-md overflow-hidden">
+          <label htmlFor="review-title" className="sr-only">
+            Write a title
+          </label>
+          <input
+            type="text"
+            name="title"
+            id="review-title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Write a title..."
+            className="h-9 p-2 dark:bg-slate-900 border-2 focus-within:outline-none rounded-t-md border-transparent focus-within:border-blue-400"
+            tabIndex={1}
+            autoFocus
+          />
+          <label htmlFor="review-body" className="sr-only">
+            Write your review
+          </label>
+          <textarea
+            name="body"
+            id="review-body"
+            value={formData.body}
+            onChange={handleChange}
+            placeholder="Write your review..."
+            className="h-24 p-2 dark:bg-slate-900 border-2 focus-within:outline-none rounded-b-md border-transparent focus-within:border-blue-400 resize-none"
+            tabIndex={2}
+          />
+        </div>
+        <button
+          className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-medium tracking-tight w-full text-white mt-2"
+          tabIndex={3}
+        >
+          Submit
+        </button>
+      </form>
     </div>
   );
 };
