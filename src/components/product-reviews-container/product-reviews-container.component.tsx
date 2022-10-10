@@ -9,6 +9,73 @@ interface IProductReviewsContainer {
   scoreCounts: number[];
 }
 
+const AverageScore = ({
+  avgScore,
+  reviewsCount,
+}: {
+  avgScore: number;
+  reviewsCount: number;
+}) => {
+  return (
+    <div className="w-full pb-6 sm:pb-0 sm:pr-6">
+      <div className="text-3xl flex justify-center sm:justify-end">
+        <span className="pr-1 font-medium">
+          {avgScore.toFixed(1)}
+        </span>
+        <ReviewStars score={avgScore} />
+      </div>
+      <p className="pt-2 text-center sm:text-right">
+        Based on {reviewsCount} reviews
+      </p>
+      <div className="flex justify-center sm:justify-end">
+        <button
+          // TODO - make this button open a form modal
+          // onClick={openModal}
+          className={`border hover:bg-neutral-100 dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 w-3/5 rounded-md shadow mt-2`}
+        >
+          Write a review
+        </button>
+      </div>
+    </div>
+  );
+};
+const StarFilters = ({
+  scoreCounts,
+  reviewsCount,
+}: {
+  scoreCounts: number[];
+  reviewsCount: number;
+}) => {
+  return (
+    <div className="w-5/6 sm:w-full text-lg sm:pl-6">
+      <p className="mb-2">Filter by stars</p>
+      <div>
+        {[5, 4, 3, 2, 1].map((score, index) => (
+          <div
+            key={score}
+            title={`only show ${score} star ratings`}
+            className="flex items-center hover:opacity-75 cursor-pointer"
+          >
+            <ReviewStars score={score} />
+            <div className="bg-neutral-200 dark:bg-slate-700 h-3 w-2/5 rounded-md overflow-hidden ml-4 mr-2">
+              <div
+                className="h-full bg-slate-900 dark:bg-white"
+                style={{
+                  width: `${(
+                    (scoreCounts[index] * 100) /
+                    reviewsCount
+                  ).toFixed(2)}%`,
+                }}
+              />
+            </div>
+            <span className="text-sm">{`(${scoreCounts[index]})`}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const ProductReviewsContainer = ({
   reviews,
   avgScore,
@@ -26,51 +93,15 @@ const ProductReviewsContainer = ({
       {/* Score and filter */}
       <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
         {/* Score */}
-        <div className="w-full pb-6 sm:pb-0 sm:pr-6">
-          <div className="text-3xl flex justify-center sm:justify-end">
-            <span className="pr-1 font-medium">
-              {avgScore.toFixed(1)}
-            </span>
-            <ReviewStars score={avgScore} />
-          </div>
-          <p className="pt-2 text-center sm:text-right">
-            Based on {reviewsCount} reviews
-          </p>
-          <div className="flex justify-center sm:justify-end">
-            <button
-              className={`border hover:bg-neutral-100 dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 w-3/5 rounded-md shadow mt-2`}
-            >
-              Write a review
-            </button>
-          </div>
-        </div>
+        <AverageScore
+          avgScore={avgScore}
+          reviewsCount={reviewsCount}
+        />
         {/* Filter */}
-        <div className="w-5/6 sm:w-full text-lg sm:pl-6">
-          <p className="mb-2">Filter by stars</p>
-          <div>
-            {[5, 4, 3, 2, 1].map((score, index) => (
-              <div
-                key={score}
-                title={`only show ${score} star ratings`}
-                className="flex items-center hover:opacity-75 cursor-pointer"
-              >
-                <ReviewStars score={score} />
-                <div className="bg-neutral-200 dark:bg-slate-700 h-3 w-2/5 rounded-md overflow-hidden ml-4 mr-2">
-                  <div
-                    className="h-full bg-slate-900 dark:bg-white"
-                    style={{
-                      width: `${(
-                        (scoreCounts[index] * 100) /
-                        reviewsCount
-                      ).toFixed(2)}%`,
-                    }}
-                  />
-                </div>
-                <span className="text-sm">{`(${scoreCounts[index]})`}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <StarFilters
+          reviewsCount={reviewsCount}
+          scoreCounts={scoreCounts}
+        />
       </div>
       {/* Reviews */}
       <div className="divide-y">
