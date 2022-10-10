@@ -3,7 +3,11 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import ProductReview from "../product-review/product-review.component";
 import ReviewStars from "../product-review-stars/product-review-stars.component";
 import Overlay from "../overlay/overlay.component";
-import { AiOutlineClose } from "react-icons/ai";
+import {
+  AiOutlineClose,
+  AiFillStar,
+  AiOutlineStar,
+} from "react-icons/ai";
 
 import { reviewPopulatedWithUser } from "../../pages/product/[productID]";
 interface IProductReviewsContainer {
@@ -95,9 +99,15 @@ const FormModal = ({
       HTMLTextAreaElement | HTMLInputElement
     >
   ) => {
-    setFormData((formData) => ({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [event.target.name]: event.target.value,
+    }));
+  };
+  const handleScoreChange = (newScore: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      score: newScore,
     }));
   };
   const handleSubmit = (
@@ -125,6 +135,29 @@ const FormModal = ({
       </div>
       {/* Form */}
       <form onSubmit={handleSubmit}>
+        <div className="pb-2 flex space-x-2">
+          <label htmlFor="">Score: </label>
+          <div
+            title={`Rated ${formData.score} out of 5`}
+            className="flex items-center text-lg"
+          >
+            {[1, 2, 3, 4, 5].map((rating) => (
+              <button
+                onClick={() => handleScoreChange(rating)}
+                key={rating}
+              >
+                {formData.score >= rating ? (
+                  <AiFillStar />
+                ) : (
+                  <AiOutlineStar />
+                )}
+              </button>
+            ))}
+          </div>
+          <span className="text-base">
+            ({formData.score}/5)
+          </span>
+        </div>
         <div className="flex flex-col rounded-md overflow-hidden border border-neutral-200 dark:border-slate-600">
           <label htmlFor="review-title" className="sr-only">
             Write a title
@@ -136,7 +169,7 @@ const FormModal = ({
             value={formData.title}
             onChange={handleChange}
             placeholder="Title"
-            className="h-9 p-2 dark:bg-slate-900 border-2 focus-within:outline-none rounded-t-md border-transparent focus-within:border-blue-400 placeholder:text-slate-500 dark:placeholder:text-slate-300 placeholder:text-xl"
+            className="h-9 p-2 dark:bg-slate-900 border-2 border-transparent rounded-t-md focus-within:outline-none focus-within:border-blue-400 placeholder:text-slate-500 dark:placeholder:text-slate-300 placeholder:text-xl"
             tabIndex={1}
             autoFocus
           />
@@ -149,7 +182,7 @@ const FormModal = ({
             value={formData.body}
             onChange={handleChange}
             placeholder="Write your review..."
-            className="h-24 p-2 dark:bg-slate-900 border-2 focus-within:outline-none rounded-b-md border-transparent focus-within:border-blue-400 resize-none placeholder:text-slate-500 dark:placeholder:text-slate-300 placeholder:text-base"
+            className="h-24 p-2 dark:bg-slate-900 border-2 border-transparent rounded-b-md focus-within:outline-none focus-within:border-blue-400 resize-none placeholder:text-slate-500 dark:placeholder:text-slate-300 placeholder:text-base"
             tabIndex={2}
           />
         </div>
