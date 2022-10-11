@@ -92,8 +92,9 @@ const FormModal = ({
   const [formData, setFormData] = useState({
     title: "",
     body: "",
-    score: 1,
+    rating: 1,
   });
+  const [ratingShadow, setRatingShadow] = useState(1);
   const handleChange = (
     event: ChangeEvent<
       HTMLTextAreaElement | HTMLInputElement
@@ -104,11 +105,18 @@ const FormModal = ({
       [event.target.name]: event.target.value,
     }));
   };
-  const handleScoreChange = (newScore: number) => {
+  const handleRatingChange = (newRating: number) => {
     setFormData((prev) => ({
       ...prev,
-      score: newScore,
+      rating: newRating,
     }));
+    setRatingShadow(newRating);
+  };
+  const handleMouseOver = (newShadowRating: number) => {
+    setRatingShadow(newShadowRating);
+  };
+  const handleMouseLeave = () => {
+    setRatingShadow(formData.rating);
   };
   const handleSubmit = (
     event: FormEvent<HTMLFormElement>
@@ -135,18 +143,20 @@ const FormModal = ({
       </div>
       {/* Form */}
       <form onSubmit={handleSubmit}>
-        <div className="pb-2 flex space-x-2">
-          <label htmlFor="">Score: </label>
-          <div
-            title={`Rated ${formData.score} out of 5`}
-            className="flex items-center text-lg"
-          >
+        <div className="pb-2 space-y-1">
+          <label htmlFor="">Rating: </label>
+          <div className="flex items-center text-2xl">
             {[1, 2, 3, 4, 5].map((rating) => (
               <button
-                onClick={() => handleScoreChange(rating)}
+                title={`${rating} ${
+                  rating === 1 ? "star" : "stars"
+                }`}
+                onClick={() => handleRatingChange(rating)}
+                onMouseOver={() => handleMouseOver(rating)}
+                onMouseLeave={handleMouseLeave}
                 key={rating}
               >
-                {formData.score >= rating ? (
+                {ratingShadow >= rating ? (
                   <AiFillStar />
                 ) : (
                   <AiOutlineStar />
@@ -154,9 +164,6 @@ const FormModal = ({
               </button>
             ))}
           </div>
-          <span className="text-base">
-            ({formData.score}/5)
-          </span>
         </div>
         <div className="flex flex-col rounded-md overflow-hidden border border-neutral-200 dark:border-slate-600">
           <label htmlFor="review-title" className="sr-only">
