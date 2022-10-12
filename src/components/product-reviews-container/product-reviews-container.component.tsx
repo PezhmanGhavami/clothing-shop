@@ -11,18 +11,18 @@ import {
 
 import { reviewPopulatedWithUser } from "../../pages/product/[productID]";
 interface IProductReviewsContainer {
-  avgScore: number;
+  avgRating: number;
   reviewsCount: number;
   reviews: reviewPopulatedWithUser[];
-  scoreCounts: number[];
+  ratingCounts: number[];
 }
 
-const AverageScore = ({
-  avgScore,
+const AverageRating = ({
+  avgRating,
   reviewsCount,
   handleClick,
 }: {
-  avgScore: number;
+  avgRating: number;
   reviewsCount: number;
   handleClick: () => void;
 }) => {
@@ -30,9 +30,9 @@ const AverageScore = ({
     <div className="w-full pb-6 sm:pb-0 sm:pr-6">
       <div className="text-3xl flex justify-center sm:justify-end">
         <span className="pr-1 font-medium">
-          {avgScore.toFixed(1)}
+          {avgRating.toFixed(1)}
         </span>
-        <ReviewStars score={avgScore} />
+        <ReviewStars rating={avgRating} />
       </div>
       <p className="pt-2 text-center sm:text-right">
         Based on {reviewsCount} reviews
@@ -49,35 +49,35 @@ const AverageScore = ({
   );
 };
 const StarFilters = ({
-  scoreCounts,
+  ratingCounts,
   reviewsCount,
 }: {
-  scoreCounts: number[];
+  ratingCounts: number[];
   reviewsCount: number;
 }) => {
   return (
     <div className="w-5/6 sm:w-full text-lg sm:pl-6">
       <p className="mb-2">Filter by stars</p>
       <div>
-        {[5, 4, 3, 2, 1].map((score, index) => (
+        {[5, 4, 3, 2, 1].map((rating, index) => (
           <div
-            key={score}
-            title={`only show ${score} star ratings`}
+            key={rating}
+            title={`only show ${rating} star ratings`}
             className="flex items-center hover:opacity-75 cursor-pointer"
           >
-            <ReviewStars score={score} />
+            <ReviewStars rating={rating} />
             <div className="bg-neutral-200 dark:bg-slate-700 h-3 w-2/5 rounded-md overflow-hidden ml-4 mr-2">
               <div
                 className="h-full bg-slate-900 dark:bg-white"
                 style={{
                   width: `${(
-                    (scoreCounts[index] * 100) /
+                    (ratingCounts[index] * 100) /
                     reviewsCount
                   ).toFixed(2)}%`,
                 }}
               />
             </div>
-            <span className="text-sm">{`(${scoreCounts[index]})`}</span>
+            <span className="text-sm">{`(${ratingCounts[index]})`}</span>
           </div>
         ))}
       </div>
@@ -86,13 +86,16 @@ const StarFilters = ({
 };
 const FormModal = ({
   closeModal,
+  itemID,
 }: {
   closeModal: () => void;
+  itemID: string;
 }) => {
   const [formData, setFormData] = useState({
     title: "",
     body: "",
     rating: 1,
+    itemID: itemID,
   });
   const [ratingShadow, setRatingShadow] = useState(1);
   const handleChange = (
@@ -207,9 +210,9 @@ const FormModal = ({
 
 const ProductReviewsContainer = ({
   reviews,
-  avgScore,
+  avgRating,
   reviewsCount,
-  scoreCounts,
+  ratingCounts,
 }: IProductReviewsContainer) => {
   const [openModal, setOpenModal] = useState(false);
   const toggleModal = () => {
@@ -223,7 +226,10 @@ const ProductReviewsContainer = ({
       {openModal && (
         <>
           <Overlay handleClick={closeModal} />
-          <FormModal closeModal={closeModal} />
+          <FormModal
+            closeModal={closeModal}
+            itemID={reviews[0].itemId}
+          />
         </>
       )}
       <div
@@ -233,18 +239,18 @@ const ProductReviewsContainer = ({
         <h2 className="text-3xl text-center p-4 pb-12">
           Customer Reviews
         </h2>
-        {/* Score and filter */}
+        {/* Rating and filter */}
         <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
-          {/* Score */}
-          <AverageScore
+          {/* Rating */}
+          <AverageRating
             handleClick={toggleModal}
-            avgScore={avgScore}
+            avgRating={avgRating}
             reviewsCount={reviewsCount}
           />
           {/* Filter */}
           <StarFilters
             reviewsCount={reviewsCount}
-            scoreCounts={scoreCounts}
+            ratingCounts={ratingCounts}
           />
         </div>
         {/* Reviews */}

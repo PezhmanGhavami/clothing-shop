@@ -1,18 +1,18 @@
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 interface IReviewStars {
-  score: number;
+  rating: number;
 }
 
-const ReviewStars = ({ score }: IReviewStars) => {
-  const roundedScore = Math.round(score);
+const ReviewStars = ({ rating }: IReviewStars) => {
+  const roundedRating = Math.round(rating);
   return (
     <div
-      title={`Rated ${score} out of 5`}
+      title={`Rated ${rating} out of 5`}
       className="flex items-center"
     >
       {[1, 2, 3, 4, 5].map((rating) =>
-        roundedScore >= rating ? (
+        roundedRating >= rating ? (
           <AiFillStar key={rating} />
         ) : (
           <AiOutlineStar key={rating} />

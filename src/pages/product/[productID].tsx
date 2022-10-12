@@ -60,7 +60,7 @@ export const getStaticProps: GetStaticProps = async ({
           id: true,
           title: true,
           body: true,
-          score: true,
+          rating: true,
           votes: true,
           createdAt: true,
           user: {
@@ -144,14 +144,14 @@ const Product: NextPageWithLayout<IProduct> = ({
       />
       <ProductReviewsContainer
         reviews={product.reviews}
-        avgScore={product.reviewsScore}
+        avgRating={product.reviewsAvgRating}
         reviewsCount={product.reviewsCount}
-        scoreCounts={[
-          product.reviewsScored5Count,
-          product.reviewsScored4Count,
-          product.reviewsScored3Count,
-          product.reviewsScored2Count,
-          product.reviewsScored1Count,
+        ratingCounts={[
+          product.reviewsRated5Count,
+          product.reviewsRated4Count,
+          product.reviewsRated3Count,
+          product.reviewsRated2Count,
+          product.reviewsRated1Count,
         ]}
       />
     </div>

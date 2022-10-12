@@ -58,7 +58,7 @@ const Search: NextPageWithLayout = () => {
       );
     }
   };
-
+  // FIXME - The Html stucture is bad
   return (
     <div className="mx-auto py-6 sm:py-10">
       <Meta

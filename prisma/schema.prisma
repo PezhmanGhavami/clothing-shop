@@ -52,7 +52,7 @@ model Review {
   id        String   @id @default(cuid())
   title     String
   body      String
-  score     Int
+  rating    Int
   votes     Int      @default(0)
   published Boolean  @default(false)
   user      User     @relation(fields: [userId], references: [id])
@@ -84,35 +84,35 @@ model Review {
 // }
 
 model Item {
-  id                  String     @id @default(cuid())
-  name                String     @unique
-  price               Float
-  dsicountedPrice     Float?
-  offer               Boolean    @default(false)
+  id                 String     @id @default(cuid())
+  name               String     @unique
+  price              Float
+  dsicountedPrice    Float?
+  offer              Boolean    @default(false)
   // featured         Boolean    @default(false) //TODO - later on make another model for featured items; these items will be shown on image sliders or item card sliders
-  sold                Int        @default(0)
-  viewed              Int        @default(0)
+  sold               Int        @default(0)
+  viewed             Int        @default(0)
   // images          Image[]
-  images              String[]
+  images             String[]
   // sizes           ItemSize[]
-  currentInventory    Int        @default(0)
-  description         String
+  currentInventory   Int        @default(0)
+  description        String
   // published        Boolean    @default(true)
-  brand               Brand      @relation(fields: [brandId], references: [id])
-  brandId             String
-  categories          Category[]
-  reviews             Review[]
-  reviewsCount        Int        @default(0)
-  reviewsScore        Float      @default(0.0)
-  reviewsScored1Count Float      @default(0)
-  reviewsScored2Count Float      @default(0)
-  reviewsScored3Count Float      @default(0)
-  reviewsScored4Count Float      @default(0)
-  reviewsScored5Count Float      @default(0)
+  brand              Brand      @relation(fields: [brandId], references: [id])
+  brandId            String
+  categories         Category[]
+  reviews            Review[]
+  reviewsCount       Int        @default(0)
+  reviewsAvgRating   Float      @default(0.0)
+  reviewsRated1Count Float      @default(0)
+  reviewsRated2Count Float      @default(0)
+  reviewsRated3Count Float      @default(0)
+  reviewsRated4Count Float      @default(0)
+  reviewsRated5Count Float      @default(0)
   // specifications   Json?
-  details             String[]
-  createdAt           DateTime   @default(now())
-  updatedAt           DateTime   @updatedAt
+  details            String[]
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
 }
 
 model Category {

@@ -16,9 +16,9 @@ const ProductReview = ({ review }: IProductReview) => {
   }, [review.createdAt]);
   return (
     <div className="pt-6 pb-12 sm:flex">
-      {/* Name, Score, Date */}
+      {/* Name, Rating, Date */}
       <div className="mb-4 pr-6 sm:w-1/3">
-        <ReviewStars score={review.score} />
+        <ReviewStars rating={review.rating} />
         <p className="py-2 font-medium">
           {review.user.displayName}
         </p>

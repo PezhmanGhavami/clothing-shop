@@ -347,7 +347,7 @@ async function seedDB() {
               .map(() => ({
                 title: faker.random.word(),
                 body: faker.lorem.paragraph(),
-                score: Math.floor(
+                rating: Math.floor(
                   Math.random() * (6 - 3) + 3
                 ),
                 votes:
@@ -407,12 +407,12 @@ async function seedDB() {
       },
       data: {
         reviewsCount: item.reviews.length,
-        reviewsScore:
+        reviewsAvgRating:
           item.reviews.length > 0
             ? parseFloat(
                 (
                   item.reviews.reduce(
-                    (acc, { score }) => acc + score,
+                    (acc, { rating }) => acc + rating,
                     0
                   ) / item.reviews.length
                 ).toFixed(1)
@@ -429,7 +429,7 @@ async function seedDB() {
         select: {
           reviews: {
             where: {
-              score: index,
+              rating: index,
             },
           },
         },
@@ -437,7 +437,7 @@ async function seedDB() {
       await prisma.item.update({
         where: { id: item.id },
         data: {
-          [`reviewsScored${index}Count`]:
+          [`reviewsRated${index}Count`]:
             foundItem.reviews.length,
         },
       });

@@ -70,7 +70,9 @@ const ProductOverview = ({ product }: IProductOverview) => {
           <div className="flex flex-col">
             {/* Reviews */}
             <div className="flex">
-              <ReviewStars score={product.reviewsScore} />
+              <ReviewStars
+                rating={product.reviewsAvgRating}
+              />
               <a
                 title="Click to see all reviews"
                 href="#reviews-section"
