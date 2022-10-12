@@ -1,15 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { withIronSessionApiRoute } from "iron-session/next";
+import { Review } from "@prisma/client";
 
 import { sessionOptions } from "../../../utils/session";
 import { prisma } from "../../../utils/prisma-client";
 
 import { IApiError } from "../auth/login";
-interface IReview {
-  title: string;
-  body: string;
-  rating: number;
-}
 
 export default withIronSessionApiRoute(
   reviewRoute,
@@ -18,7 +14,7 @@ export default withIronSessionApiRoute(
 
 async function reviewRoute(
   req: NextApiRequest,
-  res: NextApiResponse<IReview | IReview[] | IApiError>
+  res: NextApiResponse<Review | Review[] | IApiError>
 ) {
   if (req.method === "GET") {
     try {
@@ -51,21 +47,49 @@ async function reviewRoute(
         throw new Error("All fields are required.");
       }
 
-      const newReview = await prisma.review.create({
-        data: {
-          title,
-          body,
-          rating,
-          Item: { connect: { id: itemID } },
-          user: { connect: { id: user.userID } },
+      const item = await prisma.item.findUnique({
+        where: {
+          id: itemID,
         },
       });
 
-      return res.json({
-        title: newReview.title,
-        body: newReview.body,
-        rating: newReview.rating,
-      });
+      if (item) {
+        const updatedItem = await prisma.item.update({
+          where: {
+            id: itemID,
+          },
+          data: {
+            reviews: {
+              create: {
+                title,
+                body,
+                rating,
+                user: { connect: { id: user.userID } },
+              },
+            },
+            reviewsAvgRating:
+              (item.reviewsAvgRating * item.reviewsCount +
+                rating) /
+              (item.reviewsCount + 1),
+            reviewsCount: {
+              increment: 1,
+            },
+            [`reviewsRated${rating}Count`]: {
+              increment: 1,
+            },
+          },
+          select: {
+            reviews: true,
+          },
+        });
+        if (updatedItem) {
+          res.json({
+            ...updatedItem.reviews[
+              updatedItem.reviews.length - 1
+            ],
+          });
+        }
+      }
     } catch (error) {
       return res.json({
         status: "ERROR",
