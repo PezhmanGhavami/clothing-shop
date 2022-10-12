@@ -67,10 +67,13 @@ async function reviewRoute(
                 user: { connect: { id: user.userID } },
               },
             },
-            reviewsAvgRating:
-              (item.reviewsAvgRating * item.reviewsCount +
-                rating) /
-              (item.reviewsCount + 1),
+            reviewsAvgRating: parseFloat(
+              (
+                (item.reviewsAvgRating * item.reviewsCount +
+                  rating) /
+                (item.reviewsCount + 1)
+              ).toFixed(1)
+            ),
             reviewsCount: {
               increment: 1,
             },

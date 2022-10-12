@@ -18,6 +18,7 @@ interface IProductReviewsContainer {
   reviewsCount: number;
   reviews: reviewPopulatedWithUser[];
   ratingCounts: number[];
+  productID: string;
 }
 
 const AverageRating = ({
@@ -135,6 +136,7 @@ const FormModal = ({
     const headers = new Headers({
       "Content-Type": "application/json",
     });
+    console.log(formData);
     try {
       await fetcher("/api/review", {
         method: "POST",
@@ -232,6 +234,7 @@ const FormModal = ({
               : "Click to submit your review"
           }
           tabIndex={3}
+          type="submit"
           disabled={isLoading}
         >
           {isLoading ? <Loading /> : "Submit"}
@@ -246,6 +249,7 @@ const ProductReviewsContainer = ({
   avgRating,
   reviewsCount,
   ratingCounts,
+  productID,
 }: IProductReviewsContainer) => {
   const [openModal, setOpenModal] = useState(false);
   const toggleModal = () => {
@@ -261,7 +265,7 @@ const ProductReviewsContainer = ({
           <Overlay handleClick={closeModal} />
           <FormModal
             closeModal={closeModal}
-            itemID={reviews[0].itemId}
+            itemID={productID}
           />
         </>
       )}

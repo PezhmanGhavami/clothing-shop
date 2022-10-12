@@ -143,6 +143,7 @@ const Product: NextPageWithLayout<IProduct> = ({
         productGroup={relatedProducts}
       />
       <ProductReviewsContainer
+        productID={product.id}
         reviews={product.reviews}
         avgRating={product.reviewsAvgRating}
         reviewsCount={product.reviewsCount}
