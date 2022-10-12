@@ -1,4 +1,9 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import {
+  useState,
+  useEffect,
+  ChangeEvent,
+  FormEvent,
+} from "react";
 import { toast } from "react-toastify";
 import {
   AiOutlineClose,
@@ -12,11 +17,10 @@ import Overlay from "../overlay/overlay.component";
 import Loading from "../loading/loading.component";
 import fetcher from "../../utils/fetcher";
 
-import { reviewPopulatedWithUser } from "../../pages/product/[productID]";
+import { reviewPopulatedWithUser } from "../../pages/api/review/index";
 interface IProductReviewsContainer {
   avgRating: number;
   reviewsCount: number;
-  reviews: reviewPopulatedWithUser[];
   ratingCounts: number[];
   productID: string;
 }
@@ -245,13 +249,42 @@ const FormModal = ({
 };
 
 const ProductReviewsContainer = ({
-  reviews,
   avgRating,
   reviewsCount,
   ratingCounts,
   productID,
 }: IProductReviewsContainer) => {
+  const [reviews, setReviews] = useState<
+    reviewPopulatedWithUser[] | null
+  >(null);
   const [openModal, setOpenModal] = useState(false);
+
+  useEffect(() => {
+    let abortPromise = false;
+    const query = `itemID=${productID}&sortBy=votes&sortMethod=desc`;
+    // asc
+    //desc
+    fetcher("/api/review?" + query, {
+      method: "GET",
+    })
+      .then((res) => {
+        if (!abortPromise) {
+          setReviews(res);
+        }
+      })
+      .catch((error) => {
+        if (error instanceof Error) {
+          toast.error(error.message);
+        } else {
+          toast.error("Something went wrong.");
+        }
+      });
+
+    return () => {
+      abortPromise = true;
+    };
+  }, [productID]);
+
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
   };
@@ -291,14 +324,20 @@ const ProductReviewsContainer = ({
           />
         </div>
         {/* Reviews */}
-        <div className="divide-y">
-          {reviews.map((review) => (
-            <ProductReview
-              key={review.id}
-              review={review}
-            />
-          ))}
-        </div>
+        {reviews ? (
+          <div className="divide-y">
+            {reviews.map((review) => (
+              <ProductReview
+                key={review.id}
+                review={review}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="py-16 text-3xl">
+            <Loading />
+          </div>
+        )}
       </div>
     </>
   );

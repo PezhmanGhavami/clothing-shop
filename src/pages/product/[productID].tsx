@@ -13,16 +13,11 @@ import ProductCardContainer, {
 import ProductReviewsContainer from "../../components/product-reviews-container/product-reviews-container.component";
 import Meta from "../../components/meta/meta.component";
 
-export type reviewPopulatedWithUser = Review & {
-  user: User;
+export type itemPopulatedWithCategoryName = Item & {
+  categories: { name: string }[];
 };
-export type itemPopulatedWithReviewAndCategoryName =
-  Item & {
-    reviews: reviewPopulatedWithUser[];
-    categories: { name: string }[];
-  };
 interface IProduct {
-  product: itemPopulatedWithReviewAndCategoryName;
+  product: itemPopulatedWithCategoryName;
   relatedProducts: IProductCardContainerData;
 }
 
@@ -55,23 +50,6 @@ export const getStaticProps: GetStaticProps = async ({
       id: productID,
     },
     include: {
-      reviews: {
-        select: {
-          id: true,
-          title: true,
-          body: true,
-          rating: true,
-          votes: true,
-          createdAt: true,
-          user: {
-            select: { displayName: true },
-          },
-        },
-        orderBy: {
-          votes: "desc",
-        },
-        take: 5,
-      },
       categories: {
         take: 1,
         where: {
@@ -144,7 +122,6 @@ const Product: NextPageWithLayout<IProduct> = ({
       />
       <ProductReviewsContainer
         productID={product.id}
-        reviews={product.reviews}
         avgRating={product.reviewsAvgRating}
         reviewsCount={product.reviewsCount}
         ratingCounts={[

@@ -1,11 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { withIronSessionApiRoute } from "iron-session/next";
-import { Review } from "@prisma/client";
+import { User, Review, Prisma } from "@prisma/client";
 
 import { sessionOptions } from "../../../utils/session";
 import { prisma } from "../../../utils/prisma-client";
 
 import { IApiError } from "../auth/login";
+export type reviewPopulatedWithUser = Review & {
+  user: User;
+};
 
 export default withIronSessionApiRoute(
   reviewRoute,
@@ -18,12 +21,42 @@ async function reviewRoute(
 ) {
   if (req.method === "GET") {
     try {
-      const user = req.session.user;
-      if (user) {
-        // Add user reviews to the top
+      const { itemID, sortBy, sortMethod } = req.query;
+      if (!itemID || !sortBy || !sortMethod) {
+        res.status(400);
+        throw new Error("All fields are required");
       }
-      res.status(500);
-      throw new Error("Not implemented yet.");
+
+      const reviews = await prisma.item.findUnique({
+        where: {
+          id: itemID as string,
+        },
+        select: {
+          reviews: {
+            include: {
+              user: {
+                select: {
+                  displayName: true,
+                },
+              },
+            },
+            orderBy: {
+              [sortBy as string]:
+                sortMethod as Prisma.SortOrder,
+            },
+            take: 5,
+          },
+        },
+      });
+
+      if (reviews?.reviews) {
+        return res.json(reviews.reviews);
+      }
+
+      res.status(404);
+      throw new Error(
+        "The resource you are looking for doesn not exist."
+      );
     } catch (error) {
       return res.json({
         status: "ERROR",
