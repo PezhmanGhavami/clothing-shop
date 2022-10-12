@@ -248,6 +248,15 @@ const FormModal = ({
   );
 };
 
+const sortOptions = {
+  mostPopular: ["votes", "desc"],
+  leastPopular: ["votes", "asc"],
+  newest: ["createdAt", "desc"],
+  oldest: ["createdAt", "asc"],
+};
+
+Object.freeze(sortOptions);
+
 const ProductReviewsContainer = ({
   avgRating,
   reviewsCount,
@@ -258,12 +267,17 @@ const ProductReviewsContainer = ({
     reviewPopulatedWithUser[] | null
   >(null);
   const [openModal, setOpenModal] = useState(false);
+  const [selectedSortOption, setSelectedSortOption] =
+    useState("mostPopular");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let abortPromise = false;
-    const query = `itemID=${productID}&sortBy=votes&sortMethod=desc`;
-    // asc
-    //desc
+    const [sortBy, sortMethod] =
+      sortOptions[
+        selectedSortOption as keyof typeof sortOptions
+      ];
+    const query = `itemID=${productID}&sortBy=${sortBy}&sortMethod=${sortMethod}`;
     fetcher("/api/review?" + query, {
       method: "GET",
     })
@@ -278,18 +292,24 @@ const ProductReviewsContainer = ({
         } else {
           toast.error("Something went wrong.");
         }
-      });
+      })
+      .finally(() => setIsLoading(false));
 
     return () => {
       abortPromise = true;
     };
-  }, [productID]);
+  }, [productID, selectedSortOption]);
 
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
   };
   const closeModal = () => {
     setOpenModal(false);
+  };
+  const handleSelectChange = (
+    event: ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelectedSortOption(event.target.value);
   };
   return (
     <>
@@ -310,21 +330,42 @@ const ProductReviewsContainer = ({
           Customer Reviews
         </h2>
         {/* Rating and filter */}
-        <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
-          {/* Rating */}
-          <AverageRating
-            handleClick={toggleModal}
-            avgRating={avgRating}
-            reviewsCount={reviewsCount}
-          />
-          {/* Filter */}
-          <StarFilters
-            reviewsCount={reviewsCount}
-            ratingCounts={ratingCounts}
-          />
+        <div>
+          <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
+            {/* Rating */}
+            <AverageRating
+              handleClick={toggleModal}
+              avgRating={avgRating}
+              reviewsCount={reviewsCount}
+            />
+            {/* Filter */}
+            <StarFilters
+              reviewsCount={reviewsCount}
+              ratingCounts={ratingCounts}
+            />
+          </div>
+          <div className="flex space-x-1 py-2 border-b">
+            <p>Sort by</p>
+            <select
+              className="rounded-md hover:cursor-pointer dark:bg-slate-900 dark:text-white"
+              value={selectedSortOption}
+              onChange={handleSelectChange}
+              name="sortOptionSelector"
+              id="sort-option-selector"
+            >
+              <option value="mostPopular">
+                most popular
+              </option>
+              <option value="leastPopular">
+                least popular
+              </option>
+              <option value="newest">newest</option>
+              <option value="oldest">oldest</option>
+            </select>
+          </div>
         </div>
         {/* Reviews */}
-        {reviews ? (
+        {reviews && !isLoading ? (
           <div className="divide-y">
             {reviews.map((review) => (
               <ProductReview
