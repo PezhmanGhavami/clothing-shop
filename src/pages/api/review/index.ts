@@ -83,7 +83,7 @@ async function reviewRoute(
           },
         });
         if (updatedItem) {
-          res.json({
+          return res.json({
             ...updatedItem.reviews[
               updatedItem.reviews.length - 1
             ],

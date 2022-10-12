@@ -1,13 +1,16 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-
-import ProductReview from "../product-review/product-review.component";
-import ReviewStars from "../product-review-stars/product-review-stars.component";
-import Overlay from "../overlay/overlay.component";
+import { toast } from "react-toastify";
 import {
   AiOutlineClose,
   AiFillStar,
   AiOutlineStar,
 } from "react-icons/ai";
+
+import ProductReview from "../product-review/product-review.component";
+import ReviewStars from "../product-review-stars/product-review-stars.component";
+import Overlay from "../overlay/overlay.component";
+import Loading from "../loading/loading.component";
+import fetcher from "../../utils/fetcher";
 
 import { reviewPopulatedWithUser } from "../../pages/product/[productID]";
 interface IProductReviewsContainer {
@@ -98,6 +101,8 @@ const FormModal = ({
     itemID: itemID,
   });
   const [ratingShadow, setRatingShadow] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (
     event: ChangeEvent<
       HTMLTextAreaElement | HTMLInputElement
@@ -121,10 +126,32 @@ const FormModal = ({
   const handleMouseLeave = () => {
     setRatingShadow(formData.rating);
   };
-  const handleSubmit = (
+  const handleSubmit = async (
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
+    setIsLoading(true);
+
+    const headers = new Headers({
+      "Content-Type": "application/json",
+    });
+    try {
+      await fetcher("/api/review", {
+        method: "POST",
+        headers,
+        body: JSON.stringify(formData),
+      });
+      toast.success("Review created successfully.");
+      closeModal();
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Something went wrong.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <div className="fixed inset-x-0 bottom-1/2 z-30 border bg-slate-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 pb-6 mx-auto w-11/12 md:w-3/5 xl:w-2/5">
@@ -151,6 +178,7 @@ const FormModal = ({
           <div className="flex items-center text-2xl">
             {[1, 2, 3, 4, 5].map((rating) => (
               <button
+                type="button"
                 title={`${rating} ${
                   rating === 1 ? "star" : "stars"
                 }`}
@@ -198,10 +226,15 @@ const FormModal = ({
         </div>
         <button
           className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-medium tracking-tight w-full text-white mt-2"
-          title="Click to submit your review"
+          title={
+            isLoading
+              ? "Submitting your review..."
+              : "Click to submit your review"
+          }
           tabIndex={3}
+          disabled={isLoading}
         >
-          Submit
+          {isLoading ? <Loading /> : "Submit"}
         </button>
       </form>
     </div>
