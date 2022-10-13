@@ -283,7 +283,7 @@ const ProductReviewsContainer = ({
     })
       .then((res) => {
         if (!abortPromise) {
-          setReviews(res);
+          setReviews(res.reviews);
         }
       })
       .catch((error) => {

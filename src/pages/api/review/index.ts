@@ -9,6 +9,21 @@ import { IApiError } from "../auth/login";
 export type reviewPopulatedWithUser = Review & {
   user: User;
 };
+interface IReviewResponse {
+  metaData: {
+    avgRating: number;
+    reviewsCount: number;
+    cursor: string;
+    ratingCounts: {
+      rated1: number;
+      rated2: number;
+      rated3: number;
+      rated4: number;
+      rated5: number;
+    };
+  };
+  reviews: Review[];
+}
 
 export default withIronSessionApiRoute(
   reviewRoute,
@@ -17,7 +32,7 @@ export default withIronSessionApiRoute(
 
 async function reviewRoute(
   req: NextApiRequest,
-  res: NextApiResponse<Review | Review[] | IApiError>
+  res: NextApiResponse<IReviewResponse | Review | IApiError>
 ) {
   if (req.method === "GET") {
     try {
@@ -32,6 +47,13 @@ async function reviewRoute(
           id: itemID as string,
         },
         select: {
+          reviewsAvgRating: true,
+          reviewsCount: true,
+          reviewsRated1Count: true,
+          reviewsRated2Count: true,
+          reviewsRated3Count: true,
+          reviewsRated4Count: true,
+          reviewsRated5Count: true,
           reviews: {
             include: {
               user: {
@@ -50,7 +72,23 @@ async function reviewRoute(
       });
 
       if (reviews?.reviews) {
-        return res.json(reviews.reviews);
+        return res.json({
+          reviews: reviews.reviews,
+          metaData: {
+            avgRating: reviews.reviewsAvgRating,
+            reviewsCount: reviews.reviewsCount,
+            cursor:
+              reviews.reviews[reviews.reviews.length - 1]
+                .id,
+            ratingCounts: {
+              rated1: reviews.reviewsRated1Count,
+              rated2: reviews.reviewsRated2Count,
+              rated3: reviews.reviewsRated3Count,
+              rated4: reviews.reviewsRated4Count,
+              rated5: reviews.reviewsRated5Count,
+            },
+          },
+        });
       }
 
       res.status(404);
