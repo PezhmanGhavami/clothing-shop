@@ -291,7 +291,8 @@ const ProductReviewsContainer = ({
       sortOptions[
         selectedSortOption as keyof typeof sortOptions
       ];
-    const query = `itemID=${productID}&sortBy=${sortBy}&sortMethod=${sortMethod}`;
+    const filter = ""; //"&selectedFilter=5";
+    const query = `itemID=${productID}&sortBy=${sortBy}&sortMethod=${sortMethod}${filter}`;
     fetcher("/api/review?" + query, {
       method: "GET",
     })

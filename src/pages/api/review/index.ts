@@ -38,10 +38,21 @@ async function reviewRoute(
 ) {
   if (req.method === "GET") {
     try {
-      const { itemID, sortBy, sortMethod } = req.query;
+      const { itemID, sortBy, sortMethod, selectedFilter } =
+        req.query;
       if (!itemID || !sortBy || !sortMethod) {
         res.status(400);
         throw new Error("All fields are required");
+      }
+
+      let filter = {};
+
+      if (selectedFilter) {
+        filter = {
+          where: {
+            rating: parseInt(selectedFilter as string),
+          },
+        };
       }
 
       const reviews = await prisma.item.findUnique({
@@ -57,6 +68,7 @@ async function reviewRoute(
           reviewsRated4Count: true,
           reviewsRated5Count: true,
           reviews: {
+            ...filter,
             include: {
               user: {
                 select: {
