@@ -17,7 +17,11 @@ import Overlay from "../overlay/overlay.component";
 import Loading from "../loading/loading.component";
 import fetcher from "../../utils/fetcher";
 
-import { reviewPopulatedWithUser } from "../../pages/api/review/index";
+import {
+  IMetaData,
+  IRatingCounts,
+  reviewPopulatedWithUser,
+} from "../../pages/api/review/index";
 interface IProductReviewsContainer {
   avgRating: number;
   reviewsCount: number;
@@ -60,14 +64,15 @@ const StarFilters = ({
   ratingCounts,
   reviewsCount,
 }: {
-  ratingCounts: number[];
+  ratingCounts: IRatingCounts;
   reviewsCount: number;
 }) => {
+  type ratingCountKeys = keyof typeof ratingCounts;
   return (
     <div className="w-5/6 sm:w-full text-lg sm:pl-6">
       <p className="mb-2">Filter by stars</p>
       <div>
-        {[5, 4, 3, 2, 1].map((rating, index) => (
+        {[5, 4, 3, 2, 1].map((rating) => (
           <div
             key={rating}
             title={`only show ${rating} star ratings`}
@@ -79,13 +84,20 @@ const StarFilters = ({
                 className="h-full bg-slate-900 dark:bg-white"
                 style={{
                   width: `${(
-                    (ratingCounts[index] * 100) /
+                    (ratingCounts[
+                      `rated${rating}` as ratingCountKeys
+                    ] *
+                      100) /
                     reviewsCount
                   ).toFixed(2)}%`,
                 }}
               />
             </div>
-            <span className="text-sm">{`(${ratingCounts[index]})`}</span>
+            <span className="text-sm">{`(${
+              ratingCounts[
+                `rated${rating}` as ratingCountKeys
+              ]
+            })`}</span>
           </div>
         ))}
       </div>
@@ -269,6 +281,8 @@ const ProductReviewsContainer = ({
   const [openModal, setOpenModal] = useState(false);
   const [selectedSortOption, setSelectedSortOption] =
     useState("mostPopular");
+  const [metaData, setMetaData] =
+    useState<IMetaData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -283,6 +297,7 @@ const ProductReviewsContainer = ({
     })
       .then((res) => {
         if (!abortPromise) {
+          setMetaData(res.metaData);
           setReviews(res.reviews);
         }
       })
@@ -311,6 +326,15 @@ const ProductReviewsContainer = ({
   ) => {
     setSelectedSortOption(event.target.value);
   };
+
+  if (isLoading) {
+    return (
+      <div className="py-16 text-3xl">
+        <Loading />
+      </div>
+    );
+  }
+
   return (
     <>
       {openModal && (
@@ -332,17 +356,25 @@ const ProductReviewsContainer = ({
         {/* Rating and filter */}
         <div>
           <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
-            {/* Rating */}
-            <AverageRating
-              handleClick={toggleModal}
-              avgRating={avgRating}
-              reviewsCount={reviewsCount}
-            />
-            {/* Filter */}
-            <StarFilters
-              reviewsCount={reviewsCount}
-              ratingCounts={ratingCounts}
-            />
+            {metaData ? (
+              <>
+                {/* Rating */}
+                <AverageRating
+                  handleClick={toggleModal}
+                  avgRating={metaData.avgRating}
+                  reviewsCount={metaData.reviewsCount}
+                />
+                {/* Filter */}
+                <StarFilters
+                  reviewsCount={metaData.reviewsCount}
+                  ratingCounts={metaData.ratingCounts}
+                />
+              </>
+            ) : (
+              <div className="py-16 text-3xl">
+                <p>Failed to load reviews metadata.</p>
+              </div>
+            )}
           </div>
           <div className="flex space-x-1 py-2 border-b">
             <p>Sort by</p>
@@ -365,7 +397,7 @@ const ProductReviewsContainer = ({
           </div>
         </div>
         {/* Reviews */}
-        {reviews && !isLoading ? (
+        {reviews ? (
           <div className="divide-y">
             {reviews.map((review) => (
               <ProductReview
@@ -376,7 +408,7 @@ const ProductReviewsContainer = ({
           </div>
         ) : (
           <div className="py-16 text-3xl">
-            <Loading />
+            <p>Failed to load reviews.</p>
           </div>
         )}
       </div>

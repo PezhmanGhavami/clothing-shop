@@ -9,19 +9,21 @@ import { IApiError } from "../auth/login";
 export type reviewPopulatedWithUser = Review & {
   user: User;
 };
+export interface IRatingCounts {
+  rated1: number;
+  rated2: number;
+  rated3: number;
+  rated4: number;
+  rated5: number;
+}
+export interface IMetaData {
+  avgRating: number;
+  reviewsCount: number;
+  cursor: string;
+  ratingCounts: IRatingCounts;
+}
 interface IReviewResponse {
-  metaData: {
-    avgRating: number;
-    reviewsCount: number;
-    cursor: string;
-    ratingCounts: {
-      rated1: number;
-      rated2: number;
-      rated3: number;
-      rated4: number;
-      rated5: number;
-    };
-  };
+  metaData: IMetaData;
   reviews: Review[];
 }
 
