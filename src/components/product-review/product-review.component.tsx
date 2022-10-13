@@ -27,7 +27,7 @@ const ProductReview = ({ review }: IProductReview) => {
         </p>
       </div>
       {/* Title and Body */}
-      <div className="sm:w-full">
+      <div className="sm:w-full truncate">
         <h3 className="text-lg leading-none">
           {review.title}
         </h3>
