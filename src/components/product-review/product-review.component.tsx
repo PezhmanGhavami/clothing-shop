@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ReviewStars from "../product-review-stars/product-review-stars.component";
 
-import { reviewPopulatedWithUser } from "../../pages/product/[productID]";
+import { reviewPopulatedWithUser } from "../../pages/api/review/index";
 
 interface IProductReview {
   review: reviewPopulatedWithUser;
@@ -11,7 +11,7 @@ const ProductReview = ({ review }: IProductReview) => {
   const [commentDate, setCommentDate] = useState("");
   useEffect(() => {
     setCommentDate(
-      new Date(review.createdAt).toLocaleDateString()
+      new Date(review.createdAt).toLocaleDateString("en-GB")
     );
   }, [review.createdAt]);
   return (
