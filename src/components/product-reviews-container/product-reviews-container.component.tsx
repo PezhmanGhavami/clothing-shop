@@ -60,22 +60,32 @@ const AverageRating = ({
   );
 };
 const StarFilters = ({
+  handleSetFilter,
   ratingCounts,
   reviewsCount,
 }: {
   ratingCounts: IRatingCounts;
   reviewsCount: number;
+  handleSetFilter: (rating: number) => void;
 }) => {
   type ratingCountKeys = keyof typeof ratingCounts;
   return (
     <div className="w-5/6 sm:w-full text-lg sm:pl-6">
-      <p className="mb-2">Filter by stars</p>
+      <div className="flex justify-between">
+        <p className="mb-2">Filter by stars</p>
+        <span onClick={() => handleSetFilter(0)}>
+          Reset
+        </span>
+      </div>
       <div>
         {[5, 4, 3, 2, 1].map((rating) => (
           <div
+            onClick={() => {
+              handleSetFilter(rating);
+            }}
             key={rating}
             title={`only show ${rating} star reviews`}
-            className="flex items-center hover:opacity-75 cursor-pointer"
+            className="flex items-center justify-center hover:opacity-75 cursor-pointer"
           >
             <ReviewStars rating={rating} />
             <div className="bg-neutral-200 dark:bg-slate-700 h-3 w-2/5 rounded-md overflow-hidden ml-4 mr-2">
@@ -284,13 +294,18 @@ const ProductReviewsContainer = ({
     sortOptions[
       selectedSortOption as keyof typeof sortOptions
     ];
-  const { reviewsData, mutateReviews } = useReviews({
+  const { reviewsData } = useReviews({
     itemID: productID,
     sortBy: sortBy,
     sortMethod: sortMethod,
     selectedFilter: filter,
   });
 
+  const handleSetFilter = (rating: number) => {
+    const newFilter =
+      rating !== 0 ? `&selectedFilter=${rating}` : "";
+    setFilter(newFilter);
+  };
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
   };
@@ -333,6 +348,7 @@ const ProductReviewsContainer = ({
             />
             {/* Filter */}
             <StarFilters
+              handleSetFilter={handleSetFilter}
               reviewsCount={reviewsCount}
               ratingCounts={ratingCounts}
             />
