@@ -2,7 +2,7 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { IUser } from "./index";
-import { IApiError } from "./login";
+import { IApiMessage } from "./login";
 import { sessionOptions } from "../../../utils/session";
 
 export default withIronSessionApiRoute(
@@ -12,7 +12,7 @@ export default withIronSessionApiRoute(
 
 function logoutRoute(
   req: NextApiRequest,
-  res: NextApiResponse<IUser | IApiError>
+  res: NextApiResponse<IUser | IApiMessage>
 ) {
   req.session.destroy();
   if (req.method === "POST") {

@@ -12,14 +12,14 @@ export default withIronSessionApiRoute(
   sessionOptions
 );
 
-export interface IApiError {
-  status: "ERROR";
+export interface IApiMessage {
+  status: "ERROR" | "SUCCESS";
   message: string;
 }
 
 async function loginRoute(
   req: NextApiRequest,
-  res: NextApiResponse<IUser | IApiError>
+  res: NextApiResponse<IUser | IApiMessage>
 ) {
   if (req.method === "POST") {
     try {

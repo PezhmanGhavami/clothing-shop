@@ -4,7 +4,7 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "../../../utils/session";
 import { prisma } from "../../../utils/prisma-client";
 
-import { IApiError } from "../auth/login";
+import { IApiMessage } from "../auth/login";
 import { IProductCard } from "../../../components/product-card/product-card.component";
 
 export default withIronSessionApiRoute(
@@ -111,7 +111,7 @@ const cartItemsUpdatePayloadMaker = (
 
 async function cartRoute(
   req: NextApiRequest,
-  res: NextApiResponse<ICart | IApiError>
+  res: NextApiResponse<ICart | IApiMessage>
 ) {
   if (req.method === "GET") {
     const cart = req.session.cart;

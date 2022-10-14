@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import { sessionOptions } from "../../../utils/session";
 import { prisma } from "../../../utils/prisma-client";
 
-import { IApiError } from "./login";
+import { IApiMessage } from "./login";
 export interface IUser {
   isLoggedIn: boolean;
 }
@@ -17,7 +17,7 @@ export default withIronSessionApiRoute(
 
 async function userRoute(
   req: NextApiRequest,
-  res: NextApiResponse<IUser | IApiError>
+  res: NextApiResponse<IUser | IApiMessage>
 ) {
   if (req.method === "GET") {
     const user = req.session.user;

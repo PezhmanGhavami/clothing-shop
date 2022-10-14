@@ -120,7 +120,18 @@ const Product: NextPageWithLayout<IProduct> = ({
         showLink={false}
         productGroup={relatedProducts}
       />
-      <ProductReviewsContainer productID={product.id} />
+      <ProductReviewsContainer
+        productID={product.id}
+        avgRating={product.reviewsAvgRating}
+        reviewsCount={product.reviewsCount}
+        ratingCounts={{
+          rated1: product.reviewsRated1Count,
+          rated2: product.reviewsRated2Count,
+          rated3: product.reviewsRated3Count,
+          rated4: product.reviewsRated4Count,
+          rated5: product.reviewsRated5Count,
+        }}
+      />
     </div>
   );
 };

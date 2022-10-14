@@ -13,12 +13,19 @@ import Loading from "../loading/loading.component";
 import fetcher from "../../utils/fetcher";
 import useReviews from "../../hooks/useReviews";
 
-import {
-  IRatingCounts,
-  reviewPopulatedWithUser,
-} from "../../pages/api/review/index";
+import { reviewPopulatedWithUser } from "../../pages/api/review/index";
+interface IRatingCounts {
+  rated1: number;
+  rated2: number;
+  rated3: number;
+  rated4: number;
+  rated5: number;
+}
 interface IProductReviewsContainer {
   productID: string;
+  avgRating: number;
+  reviewsCount: number;
+  ratingCounts: IRatingCounts;
 }
 
 const AverageRating = ({
@@ -263,7 +270,11 @@ Object.freeze(sortOptions);
 
 const ProductReviewsContainer = ({
   productID,
+  avgRating,
+  reviewsCount,
+  ratingCounts,
 }: IProductReviewsContainer) => {
+  // TODO - revert to proping the metadata - Reviews need to be approved before they can be shown anyway... so there is no point in having those varables as dynamic as they are
   const [openModal, setOpenModal] = useState(false);
   const [selectedSortOption, setSelectedSortOption] =
     useState("mostPopular");
@@ -279,16 +290,6 @@ const ProductReviewsContainer = ({
     sortMethod: sortMethod,
     selectedFilter: filter,
   });
-
-  if (!reviewsData) {
-    return (
-      <div className="py-16 text-3xl">
-        <Loading />
-      </div>
-    );
-  }
-
-  const { reviews, metaData } = reviewsData;
 
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
@@ -324,15 +325,16 @@ const ProductReviewsContainer = ({
         <div>
           <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
             {/* Rating */}
+
             <AverageRating
               handleClick={toggleModal}
-              avgRating={metaData.avgRating}
-              reviewsCount={metaData.reviewsCount}
+              avgRating={avgRating}
+              reviewsCount={reviewsCount}
             />
             {/* Filter */}
             <StarFilters
-              reviewsCount={metaData.reviewsCount}
-              ratingCounts={metaData.ratingCounts}
+              reviewsCount={reviewsCount}
+              ratingCounts={ratingCounts}
             />
           </div>
           <div className="flex space-x-1 py-2 border-b">
@@ -357,12 +359,18 @@ const ProductReviewsContainer = ({
         </div>
         {/* Reviews */}
         <div className="divide-y">
-          {reviews.map((review) => (
-            <ProductReview
-              key={review.id}
-              review={review as reviewPopulatedWithUser}
-            />
-          ))}
+          {reviewsData ? (
+            reviewsData.reviews.map((review) => (
+              <ProductReview
+                key={review.id}
+                review={review as reviewPopulatedWithUser}
+              />
+            ))
+          ) : (
+            <div className="py-72 text-3xl">
+              <Loading />
+            </div>
+          )}
         </div>
       </div>
     </>

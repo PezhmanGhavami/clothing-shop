@@ -2,12 +2,12 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../utils/prisma-client";
 
 import { IProductCardContainerData } from "../../components/product-card-container/product-card-container.component";
-import { IApiError } from "./auth/login";
+import { IApiMessage } from "./auth/login";
 
 export default async function searchHandler(
   req: NextApiRequest,
   res: NextApiResponse<
-    IProductCardContainerData | IApiError
+    IProductCardContainerData | IApiMessage
   >
 ) {
   if (req.method === "GET") {

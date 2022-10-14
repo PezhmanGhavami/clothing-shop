@@ -5,26 +5,14 @@ import { User, Review, Prisma } from "@prisma/client";
 import { sessionOptions } from "../../../utils/session";
 import { prisma } from "../../../utils/prisma-client";
 
-import { IApiError } from "../auth/login";
+import { IApiMessage } from "../auth/login";
 export type reviewPopulatedWithUser = Review & {
   user: User;
 };
-export interface IRatingCounts {
-  rated1: number;
-  rated2: number;
-  rated3: number;
-  rated4: number;
-  rated5: number;
-}
-export interface IMetaData {
-  avgRating: number;
-  reviewsCount: number;
-  cursor: string;
-  ratingCounts: IRatingCounts;
-}
+export interface IApiSucess {}
 export interface IReviewResponse {
-  metaData: IMetaData;
   reviews: Review[];
+  cursor: string;
 }
 
 export default withIronSessionApiRoute(
@@ -34,7 +22,7 @@ export default withIronSessionApiRoute(
 
 async function reviewRoute(
   req: NextApiRequest,
-  res: NextApiResponse<IReviewResponse | IApiError>
+  res: NextApiResponse<IReviewResponse | IApiMessage>
 ) {
   try {
     const { itemID, sortBy, sortMethod, selectedFilter } =
@@ -44,11 +32,18 @@ async function reviewRoute(
       throw new Error("All fields are required");
     }
 
-    let filter = {};
+    let filter: {
+      where: { published: boolean; rating?: number };
+    } = {
+      where: {
+        published: true,
+      },
+    };
 
     if (selectedFilter) {
       filter = {
         where: {
+          ...filter.where,
           rating: parseInt(selectedFilter as string),
         },
       };
@@ -60,13 +55,6 @@ async function reviewRoute(
           id: itemID as string,
         },
         select: {
-          reviewsAvgRating: true,
-          reviewsCount: true,
-          reviewsRated1Count: true,
-          reviewsRated2Count: true,
-          reviewsRated3Count: true,
-          reviewsRated4Count: true,
-          reviewsRated5Count: true,
           reviews: {
             ...filter,
             include: {
@@ -88,20 +76,8 @@ async function reviewRoute(
       if (reviews?.reviews) {
         return res.json({
           reviews: reviews.reviews,
-          metaData: {
-            avgRating: reviews.reviewsAvgRating,
-            reviewsCount: reviews.reviewsCount,
-            cursor:
-              reviews.reviews[reviews.reviews.length - 1]
-                .id,
-            ratingCounts: {
-              rated1: reviews.reviewsRated1Count,
-              rated2: reviews.reviewsRated2Count,
-              rated3: reviews.reviewsRated3Count,
-              rated4: reviews.reviewsRated4Count,
-              rated5: reviews.reviewsRated5Count,
-            },
-          },
+          cursor:
+            reviews.reviews[reviews.reviews.length - 1].id,
         });
       }
 
@@ -150,63 +126,30 @@ async function reviewRoute(
               user: { connect: { id: user.userID } },
             },
           },
-          reviewsAvgRating: parseFloat(
-            (
-              (item.reviewsAvgRating * item.reviewsCount +
-                rating) /
-              (item.reviewsCount + 1)
-            ).toFixed(1)
-          ),
-          reviewsCount: {
-            increment: 1,
-          },
-          [`reviewsRated${rating}Count`]: {
-            increment: 1,
-          },
+          // TODO - add a way to publish reviews and then update the item with the below values
+          // reviewsAvgRating: parseFloat(
+          //   (
+          //     (item.reviewsAvgRating * item.reviewsCount +
+          //       rating) /
+          //     (item.reviewsCount + 1)
+          //   ).toFixed(1)
+          // ),
+          // reviewsCount: {
+          //   increment: 1,
+          // },
+          // [`reviewsRated${rating}Count`]: {
+          //   increment: 1,
+          // },
         },
         select: {
-          reviewsAvgRating: true,
-          reviewsCount: true,
-          reviewsRated1Count: true,
-          reviewsRated2Count: true,
-          reviewsRated3Count: true,
-          reviewsRated4Count: true,
-          reviewsRated5Count: true,
-          reviews: {
-            ...filter,
-            include: {
-              user: {
-                select: {
-                  displayName: true,
-                },
-              },
-            },
-            orderBy: {
-              [sortBy as string]:
-                sortMethod as Prisma.SortOrder,
-            },
-            take: 5,
-          },
+          id: true,
         },
       });
-      if (updatedItem.reviews) {
+      if (updatedItem) {
         return res.json({
-          reviews: updatedItem.reviews,
-          metaData: {
-            avgRating: updatedItem.reviewsAvgRating,
-            reviewsCount: updatedItem.reviewsCount,
-            cursor:
-              updatedItem.reviews[
-                updatedItem.reviews.length - 1
-              ].id,
-            ratingCounts: {
-              rated1: updatedItem.reviewsRated1Count,
-              rated2: updatedItem.reviewsRated2Count,
-              rated3: updatedItem.reviewsRated3Count,
-              rated4: updatedItem.reviewsRated4Count,
-              rated5: updatedItem.reviewsRated5Count,
-            },
-          },
+          status: "SUCCESS",
+          message:
+            "Review created successfully; after review it will be published.",
         });
       }
     }
