@@ -304,12 +304,14 @@ const ProductReviewsContainer = ({
   const [selectedSortOption, setSelectedSortOption] =
     useState("mostPopular");
   const [filter, setFilter] = useState("");
+  const [page, setPage] = useState(1);
 
   const [sortBy, sortMethod] =
     sortOptions[
       selectedSortOption as keyof typeof sortOptions
     ];
   const { reviewsData } = useReviews({
+    page: page,
     itemID: productID,
     sortBy: sortBy,
     sortMethod: sortMethod,
@@ -319,7 +321,18 @@ const ProductReviewsContainer = ({
   const handleSetFilter = (rating: number) => {
     const newFilter =
       rating !== 0 ? `&selectedFilter=${rating}` : "";
+    setPage(1);
     setFilter(newFilter);
+  };
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage((prev) => prev - 1);
+    }
+  };
+  const handleNextPage = () => {
+    if (reviewsData && reviewsData.pages >= page) {
+      setPage((prev) => prev + 1);
+    }
   };
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
@@ -330,6 +343,7 @@ const ProductReviewsContainer = ({
   const handleSelectChange = (
     event: ChangeEvent<HTMLSelectElement>
   ) => {
+    setPage(1);
     setSelectedSortOption(event.target.value);
   };
 
@@ -403,6 +417,31 @@ const ProductReviewsContainer = ({
             </div>
           )}
         </div>
+        {/* Pagination */}
+        {reviewsData && (
+          <div className="flex justify-between items-center space-x-1 pb-6">
+            <div className="w-1/2">
+              {page > 1 && (
+                <button
+                  onClick={handlePreviousPage}
+                  className={`border hover:bg-neutral-100 dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 rounded-md shadow w-full`}
+                >
+                  Previous
+                </button>
+              )}
+            </div>
+            <div className="w-1/2">
+              {reviewsData.pages >= page && (
+                <button
+                  onClick={handleNextPage}
+                  className={`border hover:bg-neutral-100 dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 rounded-md shadow w-full`}
+                >
+                  Next
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

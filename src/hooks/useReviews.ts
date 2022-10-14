@@ -6,6 +6,7 @@ import { IReviewResponse } from "../pages/api/review/index";
 interface IUseReviews {
   itemID: string;
   sortBy: string;
+  page: number;
   sortMethod: string;
   selectedFilter: string;
 }
@@ -13,10 +14,13 @@ interface IUseReviews {
 const useReviews = ({
   itemID,
   sortBy,
+  page,
   sortMethod,
   selectedFilter,
 }: IUseReviews) => {
-  const query = `itemID=${itemID}&sortBy=${sortBy}&sortMethod=${sortMethod}${selectedFilter}`;
+  const query = `itemID=${itemID}&sortBy=${sortBy}&sortMethod=${sortMethod}&page=${
+    page - 1
+  }${selectedFilter}`;
   const { data, mutate } = useSWR<IReviewResponse>(
     "/api/review?" + query,
     fetcher

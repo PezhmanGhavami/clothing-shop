@@ -12,7 +12,7 @@ export type reviewPopulatedWithUser = Review & {
 export interface IApiSucess {}
 export interface IReviewResponse {
   reviews: Review[];
-  cursor: string;
+  pages: number;
 }
 
 export default withIronSessionApiRoute(
@@ -25,9 +25,14 @@ async function reviewRoute(
   res: NextApiResponse<IReviewResponse | IApiMessage>
 ) {
   try {
-    const { itemID, sortBy, sortMethod, selectedFilter } =
-      req.query;
-    if (!itemID || !sortBy || !sortMethod) {
+    const {
+      page,
+      itemID,
+      sortBy,
+      sortMethod,
+      selectedFilter,
+    } = req.query;
+    if (!itemID || !sortBy || !sortMethod || !page) {
       res.status(400);
       throw new Error("All fields are required");
     }
@@ -49,12 +54,23 @@ async function reviewRoute(
       };
     }
 
+    const reviewsPerPage = 5;
+    const skip = {
+      skip: parseInt(page as string) * reviewsPerPage,
+    };
+
     if (req.method === "GET") {
       const reviews = await prisma.item.findUnique({
         where: {
           id: itemID as string,
         },
         select: {
+          reviewsCount: true,
+          reviewsRated1Count: true,
+          reviewsRated2Count: true,
+          reviewsRated3Count: true,
+          reviewsRated4Count: true,
+          reviewsRated5Count: true,
           reviews: {
             ...filter,
             include: {
@@ -68,16 +84,31 @@ async function reviewRoute(
               [sortBy as string]:
                 sortMethod as Prisma.SortOrder,
             },
-            take: 5,
+            ...skip,
+            take: reviewsPerPage,
           },
         },
       });
 
       if (reviews?.reviews) {
+        let pages;
+        if (filter.where.rating) {
+          pages = pages = Math.floor(
+            reviews[
+              `reviewsRated${
+                filter.where.rating as 1 | 2 | 3 | 4 | 5
+              }Count`
+            ] / reviewsPerPage
+          );
+        } else {
+          pages = Math.floor(
+            reviews.reviewsCount / reviewsPerPage
+          );
+        }
+
         return res.json({
           reviews: reviews.reviews,
-          cursor:
-            reviews.reviews[reviews.reviews.length - 1].id,
+          pages,
         });
       }
 
