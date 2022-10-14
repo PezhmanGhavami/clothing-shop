@@ -22,7 +22,7 @@ export interface IMetaData {
   cursor: string;
   ratingCounts: IRatingCounts;
 }
-interface IReviewResponse {
+export interface IReviewResponse {
   metaData: IMetaData;
   reviews: Review[];
 }
@@ -34,27 +34,27 @@ export default withIronSessionApiRoute(
 
 async function reviewRoute(
   req: NextApiRequest,
-  res: NextApiResponse<IReviewResponse | Review | IApiError>
+  res: NextApiResponse<IReviewResponse | IApiError>
 ) {
-  if (req.method === "GET") {
-    try {
-      const { itemID, sortBy, sortMethod, selectedFilter } =
-        req.query;
-      if (!itemID || !sortBy || !sortMethod) {
-        res.status(400);
-        throw new Error("All fields are required");
-      }
+  try {
+    const { itemID, sortBy, sortMethod, selectedFilter } =
+      req.query;
+    if (!itemID || !sortBy || !sortMethod) {
+      res.status(400);
+      throw new Error("All fields are required");
+    }
 
-      let filter = {};
+    let filter = {};
 
-      if (selectedFilter) {
-        filter = {
-          where: {
-            rating: parseInt(selectedFilter as string),
-          },
-        };
-      }
+    if (selectedFilter) {
+      filter = {
+        where: {
+          rating: parseInt(selectedFilter as string),
+        },
+      };
+    }
 
+    if (req.method === "GET") {
       const reviews = await prisma.item.findUnique({
         where: {
           id: itemID as string,
@@ -109,14 +109,7 @@ async function reviewRoute(
       throw new Error(
         "The resource you are looking for doesn not exist."
       );
-    } catch (error) {
-      return res.json({
-        status: "ERROR",
-        message: (error as Error).message,
-      });
-    }
-  } else if (req.method === "POST") {
-    try {
+    } else if (req.method === "POST") {
       const user = req.session.user;
       if (!user) {
         res.status(401);
@@ -125,67 +118,105 @@ async function reviewRoute(
         );
       }
 
-      const { title, body, rating, itemID } =
-        await req.body;
-      if (!title || !body || !rating || !itemID) {
+      const { title, body, rating } = await req.body;
+      if (!title || !body || !rating) {
         res.status(400);
         throw new Error("All fields are required.");
       }
 
       const item = await prisma.item.findUnique({
         where: {
-          id: itemID,
+          id: itemID as string,
         },
       });
 
-      if (item) {
-        const updatedItem = await prisma.item.update({
-          where: {
-            id: itemID,
+      if (!item) {
+        res.status(400);
+        throw new Error(
+          "The product you are trying to review does not exist."
+        );
+      }
+
+      const updatedItem = await prisma.item.update({
+        where: {
+          id: itemID as string,
+        },
+        data: {
+          reviews: {
+            create: {
+              title,
+              body,
+              rating,
+              user: { connect: { id: user.userID } },
+            },
           },
-          data: {
-            reviews: {
-              create: {
-                title,
-                body,
-                rating,
-                user: { connect: { id: user.userID } },
+          reviewsAvgRating: parseFloat(
+            (
+              (item.reviewsAvgRating * item.reviewsCount +
+                rating) /
+              (item.reviewsCount + 1)
+            ).toFixed(1)
+          ),
+          reviewsCount: {
+            increment: 1,
+          },
+          [`reviewsRated${rating}Count`]: {
+            increment: 1,
+          },
+        },
+        select: {
+          reviewsAvgRating: true,
+          reviewsCount: true,
+          reviewsRated1Count: true,
+          reviewsRated2Count: true,
+          reviewsRated3Count: true,
+          reviewsRated4Count: true,
+          reviewsRated5Count: true,
+          reviews: {
+            ...filter,
+            include: {
+              user: {
+                select: {
+                  displayName: true,
+                },
               },
             },
-            reviewsAvgRating: parseFloat(
-              (
-                (item.reviewsAvgRating * item.reviewsCount +
-                  rating) /
-                (item.reviewsCount + 1)
-              ).toFixed(1)
-            ),
-            reviewsCount: {
-              increment: 1,
+            orderBy: {
+              [sortBy as string]:
+                sortMethod as Prisma.SortOrder,
             },
-            [`reviewsRated${rating}Count`]: {
-              increment: 1,
-            },
+            take: 5,
           },
-          select: {
-            reviews: true,
+        },
+      });
+      if (updatedItem.reviews) {
+        return res.json({
+          reviews: updatedItem.reviews,
+          metaData: {
+            avgRating: updatedItem.reviewsAvgRating,
+            reviewsCount: updatedItem.reviewsCount,
+            cursor:
+              updatedItem.reviews[
+                updatedItem.reviews.length - 1
+              ].id,
+            ratingCounts: {
+              rated1: updatedItem.reviewsRated1Count,
+              rated2: updatedItem.reviewsRated2Count,
+              rated3: updatedItem.reviewsRated3Count,
+              rated4: updatedItem.reviewsRated4Count,
+              rated5: updatedItem.reviewsRated5Count,
+            },
           },
         });
-        if (updatedItem) {
-          return res.json({
-            ...updatedItem.reviews[
-              updatedItem.reviews.length - 1
-            ],
-          });
-        }
       }
-    } catch (error) {
-      return res.json({
-        status: "ERROR",
-        message: (error as Error).message,
-      });
     }
+
+    res.status(400);
+    throw new Error("Bad Request.");
+  } catch (error) {
+    return res.json({
+      status: "ERROR",
+      message: (error as Error).message,
+    });
   }
-  return res
-    .status(400)
-    .json({ status: "ERROR", message: "Bad Request." });
 }
