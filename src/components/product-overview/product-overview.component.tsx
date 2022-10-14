@@ -8,10 +8,10 @@ import useCart from "../../hooks/useCart";
 
 import currencyFormatter from "../../utils/currencyFormatter";
 
-import { itemPopulatedWithReviewAndCategoryName } from "../../pages/product/[productID]";
+import { itemPopulatedWithCategoryName } from "../../pages/product/[productID]";
 
 interface IProductOverview {
-  product: itemPopulatedWithReviewAndCategoryName;
+  product: itemPopulatedWithCategoryName;
 }
 
 const ProductOverview = ({ product }: IProductOverview) => {

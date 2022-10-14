@@ -68,24 +68,39 @@ const StarFilters = ({
   reviewsCount: number;
   handleSetFilter: (rating: number) => void;
 }) => {
+  const [selectedFilter, setSelectedFilter] = useState(0);
+  const selectNewFilter = (newFilter: number) => {
+    setSelectedFilter(newFilter);
+    handleSetFilter(newFilter);
+  };
   type ratingCountKeys = keyof typeof ratingCounts;
   return (
     <div className="w-5/6 sm:w-full text-lg sm:pl-6">
       <div className="flex justify-between">
         <p className="mb-2">Filter by stars</p>
-        <span onClick={() => handleSetFilter(0)}>
-          Reset
-        </span>
+        {selectedFilter !== 0 && (
+          <span
+            className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
+            onClick={() => selectNewFilter(0)}
+          >
+            Reset
+          </span>
+        )}
       </div>
       <div>
         {[5, 4, 3, 2, 1].map((rating) => (
           <div
             onClick={() => {
-              handleSetFilter(rating);
+              selectNewFilter(rating);
             }}
             key={rating}
             title={`only show ${rating} star reviews`}
-            className="flex items-center justify-center hover:opacity-75 cursor-pointer"
+            className={`flex items-center justify-center sm:hover:opacity-75 cursor-pointer${
+              selectedFilter !== 0 &&
+              selectedFilter !== rating
+                ? " opacity-60"
+                : ""
+            }`}
           >
             <ReviewStars rating={rating} />
             <div className="bg-neutral-200 dark:bg-slate-700 h-3 w-2/5 rounded-md overflow-hidden ml-4 mr-2">
