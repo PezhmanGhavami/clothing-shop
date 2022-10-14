@@ -1,9 +1,4 @@
-import {
-  useState,
-  useEffect,
-  ChangeEvent,
-  FormEvent,
-} from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { toast } from "react-toastify";
 import {
   AiOutlineClose,
@@ -16,16 +11,13 @@ import ReviewStars from "../product-review-stars/product-review-stars.component"
 import Overlay from "../overlay/overlay.component";
 import Loading from "../loading/loading.component";
 import fetcher from "../../utils/fetcher";
+import useReviews from "../../hooks/useReviews";
 
 import {
-  IMetaData,
   IRatingCounts,
   reviewPopulatedWithUser,
 } from "../../pages/api/review/index";
 interface IProductReviewsContainer {
-  avgRating: number;
-  reviewsCount: number;
-  ratingCounts: number[];
   productID: string;
 }
 
@@ -270,51 +262,33 @@ const sortOptions = {
 Object.freeze(sortOptions);
 
 const ProductReviewsContainer = ({
-  avgRating,
-  reviewsCount,
-  ratingCounts,
   productID,
 }: IProductReviewsContainer) => {
-  const [reviews, setReviews] = useState<
-    reviewPopulatedWithUser[] | null
-  >(null);
   const [openModal, setOpenModal] = useState(false);
   const [selectedSortOption, setSelectedSortOption] =
     useState("mostPopular");
-  const [metaData, setMetaData] =
-    useState<IMetaData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [filter, setFilter] = useState("");
 
-  useEffect(() => {
-    let abortPromise = false;
-    const [sortBy, sortMethod] =
-      sortOptions[
-        selectedSortOption as keyof typeof sortOptions
-      ];
-    const filter = ""; //"&selectedFilter=5";
-    const query = `itemID=${productID}&sortBy=${sortBy}&sortMethod=${sortMethod}${filter}`;
-    fetcher("/api/review?" + query, {
-      method: "GET",
-    })
-      .then((res) => {
-        if (!abortPromise) {
-          setMetaData(res.metaData);
-          setReviews(res.reviews);
-        }
-      })
-      .catch((error) => {
-        if (error instanceof Error) {
-          toast.error(error.message);
-        } else {
-          toast.error("Something went wrong.");
-        }
-      })
-      .finally(() => setIsLoading(false));
+  const [sortBy, sortMethod] =
+    sortOptions[
+      selectedSortOption as keyof typeof sortOptions
+    ];
+  const { reviewsData, mutateReviews } = useReviews({
+    itemID: productID,
+    sortBy: sortBy,
+    sortMethod: sortMethod,
+    selectedFilter: filter,
+  });
 
-    return () => {
-      abortPromise = true;
-    };
-  }, [productID, selectedSortOption]);
+  if (!reviewsData) {
+    return (
+      <div className="py-16 text-3xl">
+        <Loading />
+      </div>
+    );
+  }
+
+  const { reviews, metaData } = reviewsData;
 
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
@@ -327,14 +301,6 @@ const ProductReviewsContainer = ({
   ) => {
     setSelectedSortOption(event.target.value);
   };
-
-  if (isLoading) {
-    return (
-      <div className="py-16 text-3xl">
-        <Loading />
-      </div>
-    );
-  }
 
   return (
     <>
@@ -357,25 +323,17 @@ const ProductReviewsContainer = ({
         {/* Rating and filter */}
         <div>
           <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
-            {metaData ? (
-              <>
-                {/* Rating */}
-                <AverageRating
-                  handleClick={toggleModal}
-                  avgRating={metaData.avgRating}
-                  reviewsCount={metaData.reviewsCount}
-                />
-                {/* Filter */}
-                <StarFilters
-                  reviewsCount={metaData.reviewsCount}
-                  ratingCounts={metaData.ratingCounts}
-                />
-              </>
-            ) : (
-              <div className="py-16 text-3xl">
-                <p>Failed to load reviews metadata.</p>
-              </div>
-            )}
+            {/* Rating */}
+            <AverageRating
+              handleClick={toggleModal}
+              avgRating={metaData.avgRating}
+              reviewsCount={metaData.reviewsCount}
+            />
+            {/* Filter */}
+            <StarFilters
+              reviewsCount={metaData.reviewsCount}
+              ratingCounts={metaData.ratingCounts}
+            />
           </div>
           <div className="flex space-x-1 py-2 border-b">
             <p>Sort by</p>
@@ -398,20 +356,14 @@ const ProductReviewsContainer = ({
           </div>
         </div>
         {/* Reviews */}
-        {reviews ? (
-          <div className="divide-y">
-            {reviews.map((review) => (
-              <ProductReview
-                key={review.id}
-                review={review}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="py-16 text-3xl">
-            <p>Failed to load reviews.</p>
-          </div>
-        )}
+        <div className="divide-y">
+          {reviews.map((review) => (
+            <ProductReview
+              key={review.id}
+              review={review as reviewPopulatedWithUser}
+            />
+          ))}
+        </div>
       </div>
     </>
   );

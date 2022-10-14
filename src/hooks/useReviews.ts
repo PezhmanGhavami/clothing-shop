@@ -18,12 +18,12 @@ const useReviews = ({
 }: IUseReviews) => {
   const query = `itemID=${itemID}&sortBy=${sortBy}&sortMethod=${sortMethod}${selectedFilter}`;
   const { data, mutate } = useSWR<IReviewResponse>(
-    "/api/reviews?" + query,
+    "/api/review?" + query,
     fetcher
   );
 
   return {
-    reviews: data,
+    reviewsData: data,
     mutateReviews: mutate,
   };
 };
