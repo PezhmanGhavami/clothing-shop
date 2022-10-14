@@ -75,7 +75,7 @@ const StarFilters = ({
         {[5, 4, 3, 2, 1].map((rating) => (
           <div
             key={rating}
-            title={`only show ${rating} star ratings`}
+            title={`only show ${rating} star reviews`}
             className="flex items-center hover:opacity-75 cursor-pointer"
           >
             <ReviewStars rating={rating} />
