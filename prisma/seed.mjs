@@ -350,13 +350,13 @@ async function seedDB() {
                 rating: Math.floor(
                   Math.random() * (6 - 3) + 3
                 ),
-                votes:
-                  Math.floor(
-                    (Math.random() * reviewsLength) / 2
-                  ) -
-                  Math.floor(
-                    (Math.random() * reviewsLength) / 2
-                  ),
+                // votes:
+                //   Math.floor(
+                //     (Math.random() * reviewsLength) / 2
+                //   ) -
+                //   Math.floor(
+                //     (Math.random() * reviewsLength) / 2
+                //   ),
                 published: true,
                 user: {
                   connect: {

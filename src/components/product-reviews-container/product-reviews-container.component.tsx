@@ -285,8 +285,8 @@ const FormModal = ({
 };
 
 const sortOptions = {
-  mostPopular: ["votes", "desc"],
-  leastPopular: ["votes", "asc"],
+  // mostPopular: ["votes", "desc"],
+  // leastPopular: ["votes", "asc"],
   newest: ["createdAt", "desc"],
   oldest: ["createdAt", "asc"],
 };
@@ -302,7 +302,7 @@ const ProductReviewsContainer = ({
   // TODO - revert to proping the metadata - Reviews need to be approved before they can be shown anyway... so there is no point in having those varables as dynamic as they are
   const [openModal, setOpenModal] = useState(false);
   const [selectedSortOption, setSelectedSortOption] =
-    useState("mostPopular");
+    useState("newest");
   const [filter, setFilter] = useState("");
   const [page, setPage] = useState(1);
 
@@ -391,12 +391,12 @@ const ProductReviewsContainer = ({
               name="sortOptionSelector"
               id="sort-option-selector"
             >
-              <option value="mostPopular">
+              {/* <option value="mostPopular">
                 most popular
               </option>
               <option value="leastPopular">
                 least popular
-              </option>
+              </option> */}
               <option value="newest">newest</option>
               <option value="oldest">oldest</option>
             </select>

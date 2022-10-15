@@ -27,18 +27,6 @@ const ProductReview = ({ review }: IProductReview) => {
         <p className="pb-2 text-sm text-slate-600 dark:text-slate-300">
           {commentDate}
         </p>
-        <div className="flex items-center text-base space-x-2">
-          <span>{review.votes}</span>
-          <div className="flex space-x-1">
-            <div className="cursor-pointer">
-              <AiOutlineUp />
-            </div>
-            <div className="border-l border-slate-900 dark:border-white"></div>
-            <div className="cursor-pointer">
-              <AiOutlineDown />
-            </div>
-          </div>
-        </div>
       </div>
       {/* Title and Body */}
       <div className="sm:w-full truncate">
