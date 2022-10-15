@@ -29,7 +29,7 @@ const ProductReview = ({ review }: IProductReview) => {
         </p>
       </div>
       {/* Title and Body */}
-      <div className="sm:w-full truncate">
+      <div className="sm:w-full overflow-hidden text-clip">
         <h3 className="text-lg leading-none">
           {review.title}
         </h3>

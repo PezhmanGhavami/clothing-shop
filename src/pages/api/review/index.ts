@@ -25,41 +25,41 @@ async function reviewRoute(
   res: NextApiResponse<IReviewResponse | IApiMessage>
 ) {
   try {
-    const {
-      page,
-      itemID,
-      sortBy,
-      sortMethod,
-      selectedFilter,
-    } = req.query;
-    if (!itemID || !sortBy || !sortMethod || !page) {
-      res.status(400);
-      throw new Error("All fields are required");
-    }
+    if (req.method === "GET") {
+      const {
+        page,
+        itemID,
+        sortBy,
+        sortMethod,
+        selectedFilter,
+      } = req.query;
+      if (!itemID || !sortBy || !sortMethod || !page) {
+        res.status(400);
+        throw new Error("All fields are required");
+      }
 
-    let filter: {
-      where: { published: boolean; rating?: number };
-    } = {
-      where: {
-        published: true,
-      },
-    };
-
-    if (selectedFilter) {
-      filter = {
+      let filter: {
+        where: { published: boolean; rating?: number };
+      } = {
         where: {
-          ...filter.where,
-          rating: parseInt(selectedFilter as string),
+          published: true,
         },
       };
-    }
 
-    const reviewsPerPage = 5;
-    const skip = {
-      skip: parseInt(page as string) * reviewsPerPage,
-    };
+      if (selectedFilter) {
+        filter = {
+          where: {
+            ...filter.where,
+            rating: parseInt(selectedFilter as string),
+          },
+        };
+      }
 
-    if (req.method === "GET") {
+      const reviewsPerPage = 5;
+      const skip = {
+        skip: parseInt(page as string) * reviewsPerPage,
+      };
+
       const reviews = await prisma.item.findUnique({
         where: {
           id: itemID as string,
@@ -125,8 +125,9 @@ async function reviewRoute(
         );
       }
 
-      const { title, body, rating } = await req.body;
-      if (!title || !body || !rating) {
+      const { title, body, rating, itemID } =
+        await req.body;
+      if (!title || !body || !rating || !itemID) {
         res.status(400);
         throw new Error("All fields are required.");
       }
