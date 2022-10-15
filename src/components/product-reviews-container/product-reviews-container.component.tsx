@@ -95,7 +95,7 @@ const StarFilters = ({
             }}
             key={rating}
             title={`only show ${rating} star reviews`}
-            className={`flex items-center justify-center sm:hover:opacity-75 cursor-pointer${
+            className={`flex items-center sm:hover:opacity-75 cursor-pointer${
               selectedFilter !== 0 &&
               selectedFilter !== rating
                 ? " opacity-60"
