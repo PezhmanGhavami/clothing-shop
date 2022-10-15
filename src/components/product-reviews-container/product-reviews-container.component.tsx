@@ -95,7 +95,7 @@ const StarFilters = ({
             }}
             key={rating}
             title={`only show ${rating} star reviews`}
-            className={`flex items-center sm:hover:opacity-75 cursor-pointer${
+            className={`flex items-center justify-center sm:hover:opacity-75 cursor-pointer${
               selectedFilter !== 0 &&
               selectedFilter !== rating
                 ? " opacity-60"
@@ -103,7 +103,7 @@ const StarFilters = ({
             }`}
           >
             <ReviewStars rating={rating} />
-            <div className="bg-neutral-200 dark:bg-slate-700 h-3 w-2/5 rounded-md overflow-hidden ml-4 mr-2">
+            <div className="bg-neutral-200 dark:bg-slate-700 h-3 w-1/2 rounded-md overflow-hidden ml-4 mr-2">
               <div
                 className="h-full bg-slate-900 dark:bg-white"
                 style={{
@@ -117,7 +117,7 @@ const StarFilters = ({
                 }}
               />
             </div>
-            <span className="text-sm">{`(${
+            <span className="text-sm basis-8">{`(${
               ratingCounts[
                 `rated${rating}` as ratingCountKeys
               ]
