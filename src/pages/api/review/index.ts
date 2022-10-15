@@ -55,7 +55,7 @@ async function reviewRoute(
         };
       }
 
-      const reviewsPerPage = 5;
+      const reviewsPerPage = 10;
       const skip = {
         skip: parseInt(page as string) * reviewsPerPage,
       };

@@ -327,11 +327,17 @@ const ProductReviewsContainer = ({
   const handlePreviousPage = () => {
     if (page > 1) {
       setPage((prev) => prev - 1);
+      document
+        .getElementById("reviews-sort")
+        ?.scrollIntoView();
     }
   };
   const handleNextPage = () => {
     if (reviewsData && reviewsData.pages >= page) {
       setPage((prev) => prev + 1);
+      document
+        .getElementById("reviews-sort")
+        ?.scrollIntoView();
     }
   };
   const toggleModal = () => {
@@ -365,7 +371,7 @@ const ProductReviewsContainer = ({
         <h2 className="text-3xl text-center p-4 pb-12">
           Customer Reviews
         </h2>
-        {/* Rating and filter */}
+        {/* Rating, sort and filter */}
         <div>
           <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
             {/* Rating */}
@@ -382,7 +388,11 @@ const ProductReviewsContainer = ({
               ratingCounts={ratingCounts}
             />
           </div>
-          <div className="flex space-x-1 py-2 border-b">
+          {/* Sort */}
+          <div
+            id="reviews-sort"
+            className="flex space-x-1 py-2 border-b scroll-mt-20"
+          >
             <p>Sort by</p>
             <select
               className="rounded-md hover:cursor-pointer dark:bg-slate-900 dark:text-white"
@@ -412,7 +422,7 @@ const ProductReviewsContainer = ({
               />
             ))
           ) : (
-            <div className="py-72 text-3xl">
+            <div className="py-80 sm:py-96 text-3xl">
               <Loading />
             </div>
           )}
@@ -424,7 +434,7 @@ const ProductReviewsContainer = ({
               {page > 1 && (
                 <button
                   onClick={handlePreviousPage}
-                  className={`border hover:bg-neutral-100 dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 rounded-md shadow w-full`}
+                  className={`border sm:hover:bg-neutral-100 sm:dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 rounded-md shadow w-full`}
                 >
                   Previous
                 </button>
@@ -434,7 +444,7 @@ const ProductReviewsContainer = ({
               {reviewsData.pages >= page && (
                 <button
                   onClick={handleNextPage}
-                  className={`border hover:bg-neutral-100 dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 rounded-md shadow w-full`}
+                  className={`border sm:hover:bg-neutral-100 sm:dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 rounded-md shadow w-full`}
                 >
                   Next
                 </button>
