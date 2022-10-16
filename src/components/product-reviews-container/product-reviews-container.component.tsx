@@ -305,6 +305,8 @@ const ProductReviewsContainer = ({
     useState("newest");
   const [filter, setFilter] = useState("");
   const [page, setPage] = useState(1);
+  const [showUserReviews, setShowUserReviews] =
+    useState(false);
 
   const [sortBy, sortMethod] =
     sortOptions[
@@ -345,6 +347,9 @@ const ProductReviewsContainer = ({
   };
   const closeModal = () => {
     setOpenModal(false);
+  };
+  const toggleShowUserReviews = () => {
+    setShowUserReviews((prev) => !prev);
   };
   const handleSelectChange = (
     event: ChangeEvent<HTMLSelectElement>
@@ -388,39 +393,60 @@ const ProductReviewsContainer = ({
               ratingCounts={ratingCounts}
             />
           </div>
-          {/* Sort */}
+          {/* Sort and user*/}
           <div
             id="reviews-sort"
-            className="flex space-x-1 py-2 border-b scroll-mt-20"
+            className="flex justify-between py-2 border-b scroll-mt-20"
           >
-            <p>Sort by</p>
-            <select
-              className="rounded-md hover:cursor-pointer dark:bg-slate-900 dark:text-white"
-              value={selectedSortOption}
-              onChange={handleSelectChange}
-              name="sortOptionSelector"
-              id="sort-option-selector"
-            >
-              {/* <option value="mostPopular">
+            {/* Sort */}
+            <div className="flex">
+              <p>Sort by</p>
+              <select
+                className="rounded-md hover:cursor-pointer dark:bg-slate-900 dark:text-white"
+                value={selectedSortOption}
+                onChange={handleSelectChange}
+                name="sortOptionSelector"
+                id="sort-option-selector"
+              >
+                {/* <option value="mostPopular">
                 most popular
               </option>
               <option value="leastPopular">
                 least popular
               </option> */}
-              <option value="newest">newest</option>
-              <option value="oldest">oldest</option>
-            </select>
+                <option value="newest">newest</option>
+                <option value="oldest">oldest</option>
+              </select>
+            </div>
+            {/* User */}
+            <div>
+              <p
+                title="Click to see your reviews"
+                onClick={toggleShowUserReviews}
+                className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
+              >
+                {showUserReviews
+                  ? "Back to all reviews"
+                  : "See your reviews"}
+              </p>
+            </div>
           </div>
         </div>
         {/* Reviews */}
         <div className="divide-y">
           {reviewsData ? (
-            reviewsData.reviews.map((review) => (
-              <ProductReview
-                key={review.id}
-                review={review as reviewPopulatedWithUser}
-              />
-            ))
+            reviewsData.reviews.length > 0 ? (
+              reviewsData.reviews.map((review) => (
+                <ProductReview
+                  key={review.id}
+                  review={review as reviewPopulatedWithUser}
+                />
+              ))
+            ) : (
+              <div className="py-20 text-3xl">
+                There are no reviews yet
+              </div>
+            )
           ) : (
             <div className="py-80 sm:py-96 text-3xl">
               <Loading />
