@@ -88,7 +88,10 @@ async function loginRoute(
       }
       await req.session.save();
 
-      return res.json({ isLoggedIn: true });
+      return res.json({
+        isLoggedIn: true,
+        userID: userExists.id,
+      });
     } catch (error) {
       return res.json({
         status: "ERROR",

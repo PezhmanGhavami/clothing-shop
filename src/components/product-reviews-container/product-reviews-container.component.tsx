@@ -12,6 +12,7 @@ import Overlay from "../overlay/overlay.component";
 import Loading from "../loading/loading.component";
 import fetcher from "../../utils/fetcher";
 import useReviews from "../../hooks/useReviews";
+import useUser from "../../hooks/useUser";
 
 import { reviewPopulatedWithUser } from "../../pages/api/review/index";
 interface IRatingCounts {
@@ -320,6 +321,7 @@ const ProductReviewsContainer = ({
     selectedFilter: filter,
     showUserReviews: showUserReviews,
   });
+  const { user } = useUser();
 
   const handleSetFilter = (rating: number) => {
     const newFilter =
@@ -420,17 +422,19 @@ const ProductReviewsContainer = ({
               </select>
             </div>
             {/* User */}
-            <div>
-              <p
-                title="Click to see your reviews"
-                onClick={toggleShowUserReviews}
-                className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
-              >
-                {showUserReviews
-                  ? "Back to all reviews"
-                  : "See your reviews"}
-              </p>
-            </div>
+            {user?.isLoggedIn && (
+              <div>
+                <p
+                  title="Click to see your reviews"
+                  onClick={toggleShowUserReviews}
+                  className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
+                >
+                  {showUserReviews
+                    ? "Back to all reviews"
+                    : "See your reviews"}
+                </p>
+              </div>
+            )}
           </div>
         </div>
         {/* Reviews */}
@@ -440,6 +444,9 @@ const ProductReviewsContainer = ({
               reviewsData.reviews.map((review) => (
                 <ProductReview
                   key={review.id}
+                  isUsersReview={
+                    review.userId === user?.userID
+                  }
                   review={review as reviewPopulatedWithUser}
                 />
               ))

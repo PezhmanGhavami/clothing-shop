@@ -8,6 +8,7 @@ import { prisma } from "../../../utils/prisma-client";
 import { IApiMessage } from "./login";
 export interface IUser {
   isLoggedIn: boolean;
+  userID: string;
 }
 
 export default withIronSessionApiRoute(
@@ -35,10 +36,12 @@ async function userRoute(
       }
       return res.json({
         isLoggedIn: true,
+        userID: user.userID,
       });
     }
     return res.json({
       isLoggedIn: false,
+      userID: "",
     });
   } else if (req.method === "POST") {
     try {
@@ -110,7 +113,10 @@ async function userRoute(
       }
       await req.session.save();
 
-      return res.json({ isLoggedIn: true });
+      return res.json({
+        isLoggedIn: true,
+        userID: newUser.id,
+      });
     } catch (error) {
       return res.json({
         status: "ERROR",

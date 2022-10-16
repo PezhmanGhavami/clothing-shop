@@ -16,7 +16,7 @@ function logoutRoute(
 ) {
   req.session.destroy();
   if (req.method === "POST") {
-    return res.json({ isLoggedIn: false });
+    return res.json({ isLoggedIn: false, userID: "" });
   } else if (req.method === "GET") {
     return res.redirect("/auth/signin");
   }
