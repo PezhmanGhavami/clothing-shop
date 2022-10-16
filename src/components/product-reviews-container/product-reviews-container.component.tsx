@@ -178,12 +178,12 @@ const FormModal = ({
     });
     console.log(formData);
     try {
-      await fetcher("/api/review", {
+      const res = await fetcher("/api/review", {
         method: "POST",
         headers,
         body: JSON.stringify(formData),
       });
-      toast.success("Review created successfully.");
+      toast.success(res.message);
       closeModal();
     } catch (error) {
       if (error instanceof Error) {
@@ -318,6 +318,7 @@ const ProductReviewsContainer = ({
     sortBy: sortBy,
     sortMethod: sortMethod,
     selectedFilter: filter,
+    showUserReviews: showUserReviews,
   });
 
   const handleSetFilter = (rating: number) => {
@@ -454,6 +455,7 @@ const ProductReviewsContainer = ({
           )}
         </div>
         {/* Pagination */}
+        {/* TODO - Make this infinity scroll */}
         {reviewsData && (
           <div className="flex justify-between items-center space-x-1 pb-6">
             <div className="w-1/2">

@@ -9,6 +9,7 @@ interface IUseReviews {
   page: number;
   sortMethod: string;
   selectedFilter: string;
+  showUserReviews: boolean;
 }
 
 const useReviews = ({
@@ -17,10 +18,11 @@ const useReviews = ({
   page,
   sortMethod,
   selectedFilter,
+  showUserReviews,
 }: IUseReviews) => {
   const query = `itemID=${itemID}&sortBy=${sortBy}&sortMethod=${sortMethod}&page=${
     page - 1
-  }${selectedFilter}`;
+  }&showUserReviews=${showUserReviews}${selectedFilter}`;
   const { data, mutate } = useSWR<IReviewResponse>(
     "/api/review?" + query,
     fetcher

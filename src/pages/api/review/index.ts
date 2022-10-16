@@ -32,6 +32,7 @@ async function reviewRoute(
         sortBy,
         sortMethod,
         selectedFilter,
+        showUserReviews,
       } = req.query;
       if (!itemID || !sortBy || !sortMethod || !page) {
         res.status(400);
@@ -39,20 +40,31 @@ async function reviewRoute(
       }
 
       let filter: {
-        where: { published: boolean; rating?: number };
-      } = {
-        where: {
-          published: true,
-        },
-      };
+        rating?: number;
+        user?: { id: string };
+        published?: boolean;
+      } = { published: true };
 
       if (selectedFilter) {
         filter = {
-          where: {
-            ...filter.where,
-            rating: parseInt(selectedFilter as string),
-          },
+          ...filter,
+          rating: parseInt(selectedFilter as string),
         };
+      }
+
+      if (showUserReviews === "true") {
+        const user = req.session.user;
+        if (!user) {
+          res.status(401);
+          throw new Error(
+            "You need to be logged in to see your own reviews."
+          );
+        }
+        filter = {
+          ...filter,
+          user: { id: user.userID },
+        };
+        delete filter.published;
       }
 
       const reviewsPerPage = 10;
@@ -72,7 +84,9 @@ async function reviewRoute(
           reviewsRated4Count: true,
           reviewsRated5Count: true,
           reviews: {
-            ...filter,
+            where: {
+              ...filter,
+            },
             include: {
               user: {
                 select: {
@@ -92,11 +106,11 @@ async function reviewRoute(
 
       if (reviews?.reviews) {
         let pages;
-        if (filter.where.rating) {
+        if (filter.rating) {
           pages = pages = Math.floor(
             reviews[
               `reviewsRated${
-                filter.where.rating as 1 | 2 | 3 | 4 | 5
+                filter.rating as 1 | 2 | 3 | 4 | 5
               }Count`
             ] / reviewsPerPage
           );
@@ -181,7 +195,7 @@ async function reviewRoute(
         return res.json({
           status: "SUCCESS",
           message:
-            "Review created successfully; after review it will be published.",
+            "Review created successfully; after reappraisal it will be published.\nYou can still view and edit your review before it is approved.",
         });
       }
     }
