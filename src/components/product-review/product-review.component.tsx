@@ -20,8 +20,17 @@ const ProductReview = ({
     );
   }, [review.createdAt]);
   return (
-    <div className="pt-6 pb-12 sm:flex">
+    <div className="pt-6 pb-12 sm:flex relative">
       {/* Name, Rating, Date */}
+      {!review.published && (
+        <span
+          className={
+            "px-2 rounded-md absolute top-1 right-0 z-10 text-white bg-yellow-600"
+          }
+        >
+          Under review
+        </span>
+      )}
       <div className="flex flex-col justify-between pr-6 sm:w-1/3 xl:w-1/4 2xl:w-1/5">
         <div>
           <ReviewStars rating={review.rating} />

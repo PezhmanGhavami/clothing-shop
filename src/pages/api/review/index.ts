@@ -192,7 +192,7 @@ async function reviewRoute(
         },
       });
       if (updatedItem) {
-        return res.json({
+        return res.status(201).json({
           status: "SUCCESS",
           message:
             "Review created successfully; after reappraisal it will be published.\nYou can still view and edit your review before it is approved.",
