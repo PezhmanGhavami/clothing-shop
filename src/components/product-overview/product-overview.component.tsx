@@ -139,15 +139,15 @@ const ProductOverview = ({ product }: IProductOverview) => {
                 "cursor-not-allowed opacity-75"
               }`}
             >
-              {maxInventoryReached()
-                ? "Max inventory reached - " +
-                  `${itemIsInCart()?.quantity} in cart`
-                : itemIsInCart()
-                ? `Add to cart - ${
-                    itemIsInCart()?.quantity
-                  } in cart`
-                : product.currentInventory > 0
-                ? "Add to cart"
+              {product.currentInventory > 0
+                ? maxInventoryReached()
+                  ? "Max inventory reached - " +
+                    `${itemIsInCart()?.quantity} in cart`
+                  : itemIsInCart()
+                  ? `Add to cart - ${
+                      itemIsInCart()?.quantity
+                    } in cart`
+                  : "Add to cart"
                 : "Out of stock"}
             </button>
             {/* Wishlist */}
