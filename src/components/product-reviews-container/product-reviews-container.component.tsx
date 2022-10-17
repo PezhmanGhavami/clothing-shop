@@ -300,7 +300,6 @@ const ProductReviewsContainer = ({
   reviewsCount,
   ratingCounts,
 }: IProductReviewsContainer) => {
-  // TODO - revert to proping the metadata - Reviews need to be approved before they can be shown anyway... so there is no point in having those varables as dynamic as they are
   const [openModal, setOpenModal] = useState(false);
   const [selectedSortOption, setSelectedSortOption] =
     useState("newest");
