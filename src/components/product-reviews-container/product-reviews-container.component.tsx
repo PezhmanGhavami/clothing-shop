@@ -377,7 +377,10 @@ const ProductReviewsContainer = ({
   };
 
   return (
-    <>
+    <div
+      id="reviews-section"
+      className="sm:w-3/4 lg:w-2/4 mx-auto p-8 scroll-mt-20"
+    >
       {openModal && (
         <>
           <Overlay handleClick={closeModal} />
@@ -387,124 +390,119 @@ const ProductReviewsContainer = ({
           />
         </>
       )}
-      <div
-        id="reviews-section"
-        className="sm:w-3/4 lg:w-2/4 mx-auto p-8 scroll-mt-20"
-      >
-        <h2 className="text-3xl text-center p-4 pb-12">
-          Customer Reviews
-        </h2>
-        {/* Rating, sort and filter */}
-        <div>
-          <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
-            {/* Rating */}
+      <h2 className="text-3xl text-center p-4 pb-12">
+        Customer Reviews
+      </h2>
+      {/* Rating, sort and filter */}
+      <div>
+        <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
+          {/* Rating */}
 
-            <AverageRating
-              handleClick={toggleModal}
-              avgRating={avgRating}
-              reviewsCount={reviewsCount}
-            />
-            {/* Filter */}
-            <StarFilters
-              handleSetFilter={handleSetFilter}
-              reviewsCount={reviewsCount}
-              ratingCounts={ratingCounts}
-            />
-          </div>
-          {/* Sort and user*/}
-          <div
-            id="reviews-sort"
-            className="flex justify-between py-2 border-b scroll-mt-20"
-          >
-            {/* Sort */}
-            <div className="flex">
-              <p>Sort by</p>
-              <select
-                className="rounded-md hover:cursor-pointer dark:bg-slate-900 dark:text-white"
-                value={selectedSortOption}
-                onChange={handleSelectChange}
-                name="sortOptionSelector"
-                id="sort-option-selector"
-              >
-                {/* <option value="mostPopular">
+          <AverageRating
+            handleClick={toggleModal}
+            avgRating={avgRating}
+            reviewsCount={reviewsCount}
+          />
+          {/* Filter */}
+          <StarFilters
+            handleSetFilter={handleSetFilter}
+            reviewsCount={reviewsCount}
+            ratingCounts={ratingCounts}
+          />
+        </div>
+        {/* Sort and user*/}
+        <div
+          id="reviews-sort"
+          className="flex justify-between py-2 border-b scroll-mt-20"
+        >
+          {/* Sort */}
+          <div className="flex">
+            <p>Sort by</p>
+            <select
+              className="rounded-md hover:cursor-pointer dark:bg-slate-900 dark:text-white"
+              value={selectedSortOption}
+              onChange={handleSelectChange}
+              name="sortOptionSelector"
+              id="sort-option-selector"
+            >
+              {/* <option value="mostPopular">
                 most popular
               </option>
               <option value="leastPopular">
                 least popular
               </option> */}
-                <option value="newest">newest</option>
-                <option value="oldest">oldest</option>
-              </select>
-            </div>
-            {/* User */}
-            {user?.isLoggedIn && (
-              <div>
-                <p
-                  title="Click to see your reviews"
-                  onClick={toggleShowUserReviews}
-                  className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
-                >
-                  {showUserReviews
-                    ? "Back to all reviews"
-                    : "See your reviews"}
-                </p>
-              </div>
-            )}
+              <option value="newest">newest</option>
+              <option value="oldest">oldest</option>
+            </select>
           </div>
-        </div>
-        {/* Reviews */}
-        <div className="divide-y">
-          {reviewsData ? (
-            reviewsData.reviews.length > 0 ? (
-              reviewsData.reviews.map((review) => (
-                <ProductReview
-                  key={review.id}
-                  handleDeleteReview={handleDeleteReview}
-                  isUsersReview={
-                    review.userId === user?.userID
-                  }
-                  review={review as reviewPopulatedWithUser}
-                />
-              ))
-            ) : (
-              <div className="py-20 text-3xl">
-                There are no reviews yet
-              </div>
-            )
-          ) : (
-            <div className="py-80 sm:py-96 text-3xl">
-              <Loading />
+          {/* User */}
+          {user?.isLoggedIn && (
+            <div>
+              <p
+                title="Click to see your reviews"
+                onClick={toggleShowUserReviews}
+                className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
+              >
+                {showUserReviews
+                  ? "Back to all reviews"
+                  : "See your reviews"}
+              </p>
             </div>
           )}
         </div>
-        {/* Pagination */}
-        {/* TODO - Make this infinity scroll */}
-        {reviewsData && (
-          <div className="flex justify-between items-center space-x-1 pb-6">
-            <div className="w-1/2">
-              {page > 1 && (
-                <button
-                  onClick={handlePreviousPage}
-                  className={`border sm:hover:bg-neutral-100 sm:dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 rounded-md shadow w-full`}
-                >
-                  Previous
-                </button>
-              )}
+      </div>
+      {/* Reviews */}
+      <div className="divide-y">
+        {reviewsData ? (
+          reviewsData.reviews.length > 0 ? (
+            reviewsData.reviews.map((review) => (
+              <ProductReview
+                key={review.id}
+                handleDeleteReview={handleDeleteReview}
+                isUsersReview={
+                  review.userId === user?.userID
+                }
+                review={review as reviewPopulatedWithUser}
+              />
+            ))
+          ) : (
+            <div className="py-20 text-3xl">
+              There are no reviews yet
             </div>
-            <div className="w-1/2">
-              {reviewsData.pages >= page && (
-                <button
-                  onClick={handleNextPage}
-                  className={`border sm:hover:bg-neutral-100 sm:dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 rounded-md shadow w-full`}
-                >
-                  Next
-                </button>
-              )}
-            </div>
+          )
+        ) : (
+          <div className="py-80 sm:py-96 text-3xl">
+            <Loading />
           </div>
         )}
       </div>
-    </>
+      {/* Pagination */}
+      {/* TODO - Make this infinity scroll */}
+      {reviewsData && (
+        <div className="flex justify-between items-center space-x-1 pb-6">
+          <div className="w-1/2">
+            {page > 1 && (
+              <button
+                onClick={handlePreviousPage}
+                className={`border sm:hover:bg-neutral-100 sm:dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 rounded-md shadow w-full`}
+              >
+                Previous
+              </button>
+            )}
+          </div>
+          <div className="w-1/2">
+            {reviewsData.pages >= page && (
+              <button
+                onClick={handleNextPage}
+                className={`border sm:hover:bg-neutral-100 sm:dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 rounded-md shadow w-full`}
+              >
+                Next
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
