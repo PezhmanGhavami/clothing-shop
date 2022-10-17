@@ -222,7 +222,7 @@ const FormModal = ({
       {/* Title and close button */}
       <div className="flex justify-between mb-4">
         <h2 className="text-xl md:text-2xl font-medium">
-          Add a review
+          {reviewID ? "Edit your review" : "Add a review"}
         </h2>
         <button
           onClick={closeModal}
