@@ -386,6 +386,7 @@ const ProductReviewsContainer = ({
   };
   const closeModal = () => {
     setOpenModal(false);
+    setReviewID(undefined);
     setFormData(cleanFormData);
   };
   const toggleShowUserReviews = () => {
