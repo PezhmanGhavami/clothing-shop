@@ -427,6 +427,7 @@ const ProductReviewsContainer = ({
       id="reviews-section"
       className="sm:w-3/4 lg:w-2/4 mx-auto p-8 scroll-mt-20"
     >
+      {/* Form modal */}
       {openModal && (
         <>
           <Overlay handleClick={closeModal} />
@@ -445,6 +446,7 @@ const ProductReviewsContainer = ({
       </h2>
       {/* Rating, sort and filter */}
       <div>
+        {/* Rating and filter */}
         <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
           {/* Rating */}
           <AverageRating
@@ -459,7 +461,7 @@ const ProductReviewsContainer = ({
             ratingCounts={ratingCounts}
           />
         </div>
-        {/* Sort and user*/}
+        {/* Sort and user reviews */}
         <div
           id="reviews-sort"
           className="flex justify-between py-2 border-b scroll-mt-20"
@@ -484,7 +486,7 @@ const ProductReviewsContainer = ({
               <option value="oldest">oldest</option>
             </select>
           </div>
-          {/* User */}
+          {/* User reviews */}
           {user?.isLoggedIn && (
             <div>
               <p
