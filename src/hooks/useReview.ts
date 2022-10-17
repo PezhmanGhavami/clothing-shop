@@ -12,7 +12,7 @@ interface IUseReviews {
   showUserReviews: boolean;
 }
 
-const useReviews = ({
+const useReview = ({
   itemID,
   sortBy,
   page,
@@ -34,4 +34,4 @@ const useReviews = ({
   };
 };
 
-export default useReviews;
+export default useReview;

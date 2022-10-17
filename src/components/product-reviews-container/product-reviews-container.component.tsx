@@ -11,7 +11,7 @@ import ReviewStars from "../product-review-stars/product-review-stars.component"
 import Overlay from "../overlay/overlay.component";
 import Loading from "../loading/loading.component";
 import fetcher from "../../utils/fetcher";
-import useReviews from "../../hooks/useReview";
+import useReview from "../../hooks/useReview";
 import useUser from "../../hooks/useUser";
 
 import { reviewPopulatedWithUser } from "../../pages/api/review/index";
@@ -177,7 +177,6 @@ const FormModal = ({
     const headers = new Headers({
       "Content-Type": "application/json",
     });
-    console.log(formData);
     try {
       const res = await fetcher("/api/review", {
         method: "POST",
@@ -185,6 +184,7 @@ const FormModal = ({
         body: JSON.stringify(formData),
       });
       toast.success(res.message);
+      //TODO - revalidate useReview
       closeModal();
     } catch (error) {
       if (error instanceof Error) {
@@ -312,7 +312,7 @@ const ProductReviewsContainer = ({
     sortOptions[
       selectedSortOption as keyof typeof sortOptions
     ];
-  const { reviewsData } = useReviews({
+  const { reviewsData, mutateReviews } = useReview({
     page: page,
     itemID: productID,
     sortBy: sortBy,
@@ -358,6 +358,22 @@ const ProductReviewsContainer = ({
   ) => {
     setPage(1);
     setSelectedSortOption(event.target.value);
+  };
+  const handleDeleteReview = async (reviewID: string) => {
+    try {
+      const res = await fetcher("/api/review/" + reviewID, {
+        method: "DELETE",
+      });
+      mutateReviews();
+      toast.success(res.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Something went wrong.");
+      }
+    } finally {
+    }
   };
 
   return (
@@ -443,6 +459,7 @@ const ProductReviewsContainer = ({
               reviewsData.reviews.map((review) => (
                 <ProductReview
                   key={review.id}
+                  handleDeleteReview={handleDeleteReview}
                   isUsersReview={
                     review.userId === user?.userID
                   }

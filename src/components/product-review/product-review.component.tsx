@@ -1,27 +1,68 @@
 import { useEffect, useState } from "react";
 
 import ReviewStars from "../product-review-stars/product-review-stars.component";
-
+import Overlay from "../overlay/overlay.component";
 import { reviewPopulatedWithUser } from "../../pages/api/review/index";
 
 interface IProductReview {
   review: reviewPopulatedWithUser;
   isUsersReview: boolean;
+  handleDeleteReview: (reviewID: string) => void;
 }
 
 const ProductReview = ({
   review,
   isUsersReview,
+  handleDeleteReview,
 }: IProductReview) => {
-  const [commentDate, setCommentDate] = useState("");
+  const [reviewDate, setReviewDate] = useState("");
+  const [openModal, setOpenModal] = useState(false);
   useEffect(() => {
-    setCommentDate(
+    setReviewDate(
       new Date(review.createdAt).toLocaleDateString("en-GB")
     );
   }, [review.createdAt]);
+
+  const openOpenModal = () => {
+    setOpenModal(true);
+  };
+  const closeModal = () => {
+    setOpenModal(false);
+  };
+
+  const deleteReview = () => {
+    closeModal();
+    handleDeleteReview(review.id);
+  };
+
   return (
     <div className="pt-6 pb-12 sm:flex relative">
-      {/* Name, Rating, Date */}
+      {openModal && (
+        <>
+          <Overlay handleClick={closeModal} />
+          <div className="fixed inset-x-0 bottom-1/2 z-30 border bg-slate-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 pb-6 mx-auto w-11/12 md:w-3/5 xl:w-2/5 h-1/5">
+            <div className="flex flex-col justify-center items-center w-full h-full">
+              <p className="text-center text-xl">
+                Are you sure you want to delete this review?
+              </p>
+              <div className="pt-4 w-full flex justify-center space-x-2">
+                <button
+                  className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-semibold w-2/5 text-white"
+                  onClick={closeModal}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="bg-red-700 hover:bg-red-800 active:bg-red-900 rounded-md h-9 font-semibold w-2/5 text-white"
+                  onClick={deleteReview}
+                >
+                  Delete review
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
       {!review.published && (
         <span
           className={
@@ -31,6 +72,7 @@ const ProductReview = ({
           Under review
         </span>
       )}
+      {/* Name, Rating, Date, edit and delete */}
       <div className="flex flex-col justify-between pr-6 sm:w-1/3 xl:w-1/4 2xl:w-1/5">
         <div>
           <ReviewStars rating={review.rating} />
@@ -39,16 +81,19 @@ const ProductReview = ({
               {review.user.displayName}
             </p>
             <p className="sm:pb-2 text-sm tracking-tighter text-slate-600 dark:text-slate-300">
-              {commentDate}
+              {reviewDate}
             </p>
           </div>
         </div>
         {isUsersReview && (
-          <div className="flex space-x-2">
+          <div className="flex pb-2 sm:p-0 space-x-2">
             <p className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer">
               Edit
             </p>
-            <p className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer">
+            <p
+              onClick={openOpenModal}
+              className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
+            >
               Delete
             </p>
           </div>
