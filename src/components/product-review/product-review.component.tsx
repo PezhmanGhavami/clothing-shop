@@ -3,16 +3,21 @@ import { useEffect, useState } from "react";
 import ReviewStars from "../product-review-stars/product-review-stars.component";
 import Overlay from "../overlay/overlay.component";
 import { reviewPopulatedWithUser } from "../../pages/api/review/index";
-
+import { IReviewFormData } from "../product-reviews-container/product-reviews-container.component";
 interface IProductReview {
   review: reviewPopulatedWithUser;
   isUsersReview: boolean;
   handleDeleteReview: (reviewID: string) => void;
+  handleEditReview: (
+    reviewID: string,
+    formData: IReviewFormData
+  ) => void;
 }
 
 const ProductReview = ({
   review,
   isUsersReview,
+  handleEditReview,
   handleDeleteReview,
 }: IProductReview) => {
   const [reviewDate, setReviewDate] = useState("");
@@ -30,6 +35,14 @@ const ProductReview = ({
     setOpenModal(false);
   };
 
+  const editReview = () => {
+    handleEditReview(review.id, {
+      rating: review.rating,
+      title: review.title,
+      body: review.body,
+    });
+  };
+
   const deleteReview = () => {
     closeModal();
     handleDeleteReview(review.id);
@@ -37,6 +50,7 @@ const ProductReview = ({
 
   return (
     <div className="pt-6 pb-12 sm:flex relative">
+      {/* Confirm delete modal */}
       {openModal && (
         <>
           <Overlay handleClick={closeModal} />
@@ -87,7 +101,10 @@ const ProductReview = ({
         </div>
         {isUsersReview && (
           <div className="flex pb-2 sm:p-0 space-x-2">
-            <p className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer">
+            <p
+              onClick={editReview}
+              className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
+            >
               Edit
             </p>
             <p
@@ -108,8 +125,7 @@ const ProductReview = ({
           {review.body +
             `${
               review.createdAt !== review.updatedAt
-                ? "-----Review edited at " +
-                  review.updatedAt
+                ? "  ----- Edited"
                 : ""
             }`}
         </p>

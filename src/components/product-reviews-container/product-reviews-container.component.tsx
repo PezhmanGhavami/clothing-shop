@@ -1,4 +1,10 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import {
+  useState,
+  ChangeEvent,
+  FormEvent,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { toast } from "react-toastify";
 import {
   AiOutlineClose,
@@ -27,6 +33,11 @@ interface IProductReviewsContainer {
   avgRating: number;
   reviewsCount: number;
   ratingCounts: IRatingCounts;
+}
+export interface IReviewFormData {
+  rating: number;
+  title: string;
+  body: string;
 }
 
 const AverageRating = ({
@@ -130,19 +141,23 @@ const StarFilters = ({
   );
 };
 const FormModal = ({
-  closeModal,
   itemID,
+  reviewID,
+  formData,
+  setFormData,
+  closeModal,
+  mutateReviews,
 }: {
-  closeModal: () => void;
   itemID: string;
+  reviewID?: string;
+  formData: IReviewFormData;
+  setFormData: Dispatch<SetStateAction<IReviewFormData>>;
+  closeModal: () => void;
+  mutateReviews: () => void;
 }) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    body: "",
-    rating: 1,
-    itemID: itemID,
-  });
-  const [ratingShadow, setRatingShadow] = useState(1);
+  const [ratingShadow, setRatingShadow] = useState(
+    formData.rating
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
@@ -178,13 +193,19 @@ const FormModal = ({
       "Content-Type": "application/json",
     });
     try {
-      const res = await fetcher("/api/review", {
-        method: "POST",
+      const apiUrl = reviewID
+        ? `/api/review/${reviewID}`
+        : "/api/review";
+      const payload = reviewID
+        ? { ...formData }
+        : { ...formData, itemID };
+      const res = await fetcher(apiUrl, {
+        method: reviewID ? "PUT" : "POST",
         headers,
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
       toast.success(res.message);
-      //TODO - revalidate useReview
+      mutateReviews();
       closeModal();
     } catch (error) {
       if (error instanceof Error) {
@@ -216,8 +237,12 @@ const FormModal = ({
       </div>
       {/* Form */}
       <form onSubmit={handleSubmit}>
-        <div className="pb-2 space-y-1">
-          <label htmlFor="">Rating: </label>
+        {/* Rating */}
+        <div
+          title={`Rated ${formData.rating} out of 5`}
+          className="pb-2 space-y-1"
+        >
+          <label>Rating: </label>
           <div className="flex items-center text-2xl">
             {[1, 2, 3, 4, 5].map((rating) => (
               <button
@@ -239,6 +264,7 @@ const FormModal = ({
             ))}
           </div>
         </div>
+        {/* Text inputs */}
         <div className="flex flex-col rounded-md overflow-hidden border border-neutral-200 dark:border-slate-600">
           <label htmlFor="review-title" className="sr-only">
             Write a title
@@ -267,6 +293,7 @@ const FormModal = ({
             tabIndex={2}
           />
         </div>
+        {/* Submit */}
         <button
           className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-medium tracking-tight w-full text-white mt-2"
           title={
@@ -294,6 +321,12 @@ const sortOptions = {
 
 Object.freeze(sortOptions);
 
+const cleanFormData = {
+  title: "",
+  body: "",
+  rating: 1,
+};
+
 const ProductReviewsContainer = ({
   productID,
   avgRating,
@@ -307,6 +340,10 @@ const ProductReviewsContainer = ({
   const [page, setPage] = useState(1);
   const [showUserReviews, setShowUserReviews] =
     useState(false);
+  const [reviewID, setReviewID] = useState<
+    string | undefined
+  >(undefined);
+  const [formData, setFormData] = useState(cleanFormData);
 
   const [sortBy, sortMethod] =
     sortOptions[
@@ -349,6 +386,7 @@ const ProductReviewsContainer = ({
   };
   const closeModal = () => {
     setOpenModal(false);
+    setFormData(cleanFormData);
   };
   const toggleShowUserReviews = () => {
     setShowUserReviews((prev) => !prev);
@@ -375,6 +413,14 @@ const ProductReviewsContainer = ({
     } finally {
     }
   };
+  const handleEditReview = (
+    reviewID: string,
+    formData: IReviewFormData
+  ) => {
+    setReviewID(reviewID);
+    setFormData(formData);
+    toggleModal();
+  };
 
   return (
     <div
@@ -385,8 +431,12 @@ const ProductReviewsContainer = ({
         <>
           <Overlay handleClick={closeModal} />
           <FormModal
-            closeModal={closeModal}
             itemID={productID}
+            reviewID={reviewID}
+            formData={formData}
+            setFormData={setFormData}
+            closeModal={closeModal}
+            mutateReviews={mutateReviews}
           />
         </>
       )}
@@ -397,7 +447,6 @@ const ProductReviewsContainer = ({
       <div>
         <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
           {/* Rating */}
-
           <AverageRating
             handleClick={toggleModal}
             avgRating={avgRating}
@@ -458,6 +507,7 @@ const ProductReviewsContainer = ({
             reviewsData.reviews.map((review) => (
               <ProductReview
                 key={review.id}
+                handleEditReview={handleEditReview}
                 handleDeleteReview={handleDeleteReview}
                 isUsersReview={
                   review.userId === user?.userID
