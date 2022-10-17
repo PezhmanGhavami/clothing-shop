@@ -77,6 +77,7 @@ async function reviewRoute(
           rating,
           title,
           body,
+          published: false,
         },
         select: {
           id: true,
