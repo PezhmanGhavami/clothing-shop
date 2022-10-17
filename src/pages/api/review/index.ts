@@ -9,7 +9,6 @@ import { IApiMessage } from "../auth/login";
 export type reviewPopulatedWithUser = Review & {
   user: User;
 };
-export interface IApiSucess {}
 export interface IReviewResponse {
   reviews: Review[];
   pages: number;

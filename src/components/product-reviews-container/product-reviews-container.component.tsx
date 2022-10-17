@@ -11,7 +11,7 @@ import ReviewStars from "../product-review-stars/product-review-stars.component"
 import Overlay from "../overlay/overlay.component";
 import Loading from "../loading/loading.component";
 import fetcher from "../../utils/fetcher";
-import useReviews from "../../hooks/useReviews";
+import useReviews from "../../hooks/useReview";
 import useUser from "../../hooks/useUser";
 
 import { reviewPopulatedWithUser } from "../../pages/api/review/index";
