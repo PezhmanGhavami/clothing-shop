@@ -43,7 +43,6 @@ const navLinks = {
 
 const Navbar = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [openUserModal, setOpenUserModal] = useState(false);
   const { user } = useUser();
   const { cart } = useCart();
 
@@ -55,9 +54,6 @@ const Navbar = () => {
   };
   const closeModal = () => {
     setOpenModal(false);
-  };
-  const toggleUserModal = () => {
-    setOpenUserModal((prev) => !prev);
   };
 
   return (
@@ -103,7 +99,6 @@ const Navbar = () => {
             </a>
           </Link>
           <button
-            onClick={toggleUserModal}
             type="button"
             className={`${navLinks.iconClasses} relative group`}
           >
