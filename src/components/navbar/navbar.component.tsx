@@ -43,6 +43,7 @@ const navLinks = {
 
 const Navbar = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [openUserModal, setOpenUserModal] = useState(false);
   const { user } = useUser();
   const { cart } = useCart();
 
@@ -54,6 +55,9 @@ const Navbar = () => {
   };
   const closeModal = () => {
     setOpenModal(false);
+  };
+  const toggleUserModal = () => {
+    setOpenUserModal((prev) => !prev);
   };
 
   return (
@@ -98,14 +102,16 @@ const Navbar = () => {
               <FaSearch title="Search" />
             </a>
           </Link>
-
-          <div
-            className={`${navLinks.iconClasses} relative`}
+          <button
+            onClick={toggleUserModal}
+            type="button"
+            className={`${navLinks.iconClasses} relative group`}
           >
             <FaUser title="User" />
             {/* Content */}
-            <div className="absolute top-10 w-4 h-4 bg-neutral-50 border border-r-transparent border-b-transparent rotate-45 z-30" />
-            <div className="absolute top-12 flex flex-col bg-neutral-50 shadow-md rounded-lg border px-4 pt-3 pb-4 z-20">
+
+            <div className="invisible absolute top-10 w-4 h-4 bg-neutral-50 border border-r-transparent border-b-transparent rotate-45 z-30 group-focus-within:visible group-active:visible" />
+            <div className="invisible absolute top-12 flex flex-col bg-neutral-50 shadow-md rounded-lg border px-4 pt-3 pb-4 z-20 group-focus-within:visible group-active:visible">
               <Link href={"/auth/signin"}>
                 <a className="border border-transparent hover:border-b-slate-900">
                   Login
@@ -120,7 +126,7 @@ const Navbar = () => {
                 Logout
               </a>
             </div>
-          </div>
+          </button>
           <Link href={"/cart"}>
             <a className={navLinks.iconClasses}>
               <FaShoppingCart title="Cart" />
