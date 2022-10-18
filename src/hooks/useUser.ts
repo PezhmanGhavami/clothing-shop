@@ -20,14 +20,14 @@ export default function useUser() {
       data?.isLoggedIn &&
       redirectRoutes.includes(router.pathname)
     ) {
-      router.replace("/profile");
+      router.replace("/");
     }
-    if (
-      !data?.isLoggedIn &&
-      router.pathname.startsWith("/profile")
-    ) {
-      router.replace("/auth/signin");
-    }
+    // if (
+    //   !data?.isLoggedIn &&
+    //   router.pathname.startsWith("/profile")
+    // ) {
+    //   router.replace("/auth/signin");
+    // }
   }, [data, router]);
 
   return {

@@ -14,11 +14,9 @@ function logoutRoute(
   req: NextApiRequest,
   res: NextApiResponse<IUser | IApiMessage>
 ) {
-  req.session.destroy();
-  if (req.method === "POST") {
-    return res.json({ isLoggedIn: false, userID: "" });
-  } else if (req.method === "GET") {
-    return res.redirect("/auth/signin");
+  if (req.method === "GET") {
+    req.session.destroy();
+    return res.redirect("/");
   }
   return res
     .status(400)

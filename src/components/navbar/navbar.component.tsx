@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, MouseEvent } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import {
@@ -103,23 +103,30 @@ const Navbar = () => {
             className={`${navLinks.iconClasses} relative group`}
           >
             <FaUser title="User" />
-            {/* Content */}
-
+            {/* Triangle */}
             <div className="invisible absolute top-10 w-4 h-4 bg-neutral-50 border border-r-transparent border-b-transparent rotate-45 z-30 group-focus-within:visible group-active:visible" />
+            {/* Content */}
             <div className="invisible absolute top-12 flex flex-col bg-neutral-50 shadow-md rounded-lg border px-4 pt-3 pb-4 z-20 group-focus-within:visible group-active:visible">
-              <Link href={"/auth/signin"}>
-                <a className="border border-transparent hover:border-b-slate-900">
-                  Login
-                </a>
-              </Link>
-              <Link href={"/auth/signup"}>
-                <a className="border border-transparent hover:border-b-slate-900">
-                  Register
-                </a>
-              </Link>
-              <a className="border border-transparent hover:border-b-slate-900">
-                Logout
-              </a>
+              {!user?.isLoggedIn ? (
+                <>
+                  <Link href={"/auth/signin"}>
+                    <a className="border border-transparent hover:border-b-slate-900">
+                      Login
+                    </a>
+                  </Link>
+                  <Link href={"/auth/signup"}>
+                    <a className="border border-transparent hover:border-b-slate-900">
+                      Register
+                    </a>
+                  </Link>
+                </>
+              ) : (
+                <Link href="/api/auth/logout" passHref>
+                  <a className="border border-transparent hover:border-b-slate-900">
+                    Logout
+                  </a>
+                </Link>
+              )}
             </div>
           </button>
           <Link href={"/cart"}>
