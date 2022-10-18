@@ -491,7 +491,11 @@ const ProductReviewsContainer = ({
           {user?.isLoggedIn && (
             <div>
               <p
-                title="Click to see your reviews"
+                title={
+                  showUserReviews
+                    ? "Click to go back to all reviews"
+                    : "Click to see your reviews"
+                }
                 onClick={toggleShowUserReviews}
                 className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
               >
