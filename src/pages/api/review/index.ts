@@ -105,7 +105,32 @@ async function reviewRoute(
 
       if (reviews?.reviews) {
         let pages;
-        if (filter.rating) {
+
+        if (filter.user) {
+          let ratingFilter = {};
+          if (filter.rating) {
+            ratingFilter = { rating: filter.rating };
+          }
+          const userReviews = await prisma.user.findUnique({
+            where: {
+              id: filter.user.id,
+            },
+            select: {
+              reviews: {
+                where: {
+                  itemId: itemID as string,
+                  ...ratingFilter,
+                },
+                select: {
+                  id: true,
+                },
+              },
+            },
+          });
+          pages =
+            (userReviews?.reviews.length || 1) /
+            reviewsPerPage;
+        } else if (filter.rating) {
           pages = pages = Math.floor(
             reviews[
               `reviewsRated${
