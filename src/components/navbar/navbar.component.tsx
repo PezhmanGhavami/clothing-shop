@@ -20,6 +20,8 @@ const navLinks = {
     "block text-lg py-1 w-10/12 md:w-full md:min-w-max text-center border-b border-transparent hover:border-b-slate-900 dark:hover:border-b-white ",
   iconClasses:
     "flex justify-center items-center cursor-pointer p-3 lg:p-4 text-lg",
+  userClasses:
+    "border border-transparent hover:border-b-slate-900 dark:hover:border-b-white",
   links: [
     { name: "Home", to: "/" },
     {
@@ -104,25 +106,25 @@ const Navbar = () => {
           >
             <FaUser title="User" />
             {/* Triangle */}
-            <div className="invisible absolute top-10 w-4 h-4 bg-neutral-50 border border-r-transparent border-b-transparent rotate-45 z-30 group-focus-within:visible group-active:visible" />
+            <div className="invisible absolute top-10 w-4 h-4 bg-neutral-50 dark:bg-slate-800 border dark:border-slate-600 border-r-transparent dark:border-r-transparent border-b-transparent dark:border-b-transparent rotate-45 z-30 group-focus-within:visible group-active:visible" />
             {/* Content */}
-            <div className="invisible absolute top-12 flex flex-col bg-neutral-50 shadow-md rounded-lg border px-4 pt-3 pb-4 z-20 group-focus-within:visible group-active:visible">
+            <div className="invisible absolute top-12 flex flex-col bg-neutral-50 dark:bg-slate-800 shadow-md rounded-lg border dark:border-slate-600 px-4 pt-3 pb-4 z-20 group-focus-within:visible group-active:visible">
               {!user?.isLoggedIn ? (
                 <>
                   <Link href={"/auth/signin"}>
-                    <a className="border border-transparent hover:border-b-slate-900">
+                    <a className={navLinks.userClasses}>
                       Login
                     </a>
                   </Link>
                   <Link href={"/auth/signup"}>
-                    <a className="border border-transparent hover:border-b-slate-900">
+                    <a className={navLinks.userClasses}>
                       Register
                     </a>
                   </Link>
                 </>
               ) : (
                 <Link href="/api/auth/logout" passHref>
-                  <a className="border border-transparent hover:border-b-slate-900">
+                  <a className={navLinks.userClasses}>
                     Logout
                   </a>
                 </Link>
