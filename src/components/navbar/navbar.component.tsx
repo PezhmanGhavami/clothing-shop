@@ -98,15 +98,29 @@ const Navbar = () => {
               <FaSearch title="Search" />
             </a>
           </Link>
-          <Link
-            href={
-              user?.isLoggedIn ? "/profile" : "/auth/signin"
-            }
+
+          <div
+            className={`${navLinks.iconClasses} relative`}
           >
-            <a className={navLinks.iconClasses}>
-              <FaUser title="User" />
-            </a>
-          </Link>
+            <FaUser title="User" />
+            {/* Content */}
+            <div className="absolute top-10 w-4 h-4 bg-neutral-50 border border-r-transparent border-b-transparent rotate-45 z-30" />
+            <div className="absolute top-12 flex flex-col bg-neutral-50 shadow-md rounded-lg border px-4 pt-3 pb-4 z-20">
+              <Link href={"/auth/signin"}>
+                <a className="border border-transparent hover:border-b-slate-900">
+                  Login
+                </a>
+              </Link>
+              <Link href={"/auth/signup"}>
+                <a className="border border-transparent hover:border-b-slate-900">
+                  Register
+                </a>
+              </Link>
+              <a className="border border-transparent hover:border-b-slate-900">
+                Logout
+              </a>
+            </div>
+          </div>
           <Link href={"/cart"}>
             <a className={navLinks.iconClasses}>
               <FaShoppingCart title="Cart" />
