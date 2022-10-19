@@ -277,6 +277,60 @@ const USERS = new Array(100).fill(false).map(() => ({
 const getRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max + 1 - min) + min);
 };
+const getReviewRatings = (ratingType, reviewsLength) => {
+  if (ratingType < 5 && ratingType >= 0) {
+    return {
+      5: Math.floor(reviewsLength * 0.8),
+      4: Math.floor(reviewsLength * 0.05),
+      3: Math.floor(reviewsLength * 0.05),
+      2: Math.floor(reviewsLength * 0.05),
+      1: Math.floor(reviewsLength * 0.05),
+    };
+  } else if (ratingType >= 5 && ratingType < 8) {
+    return {
+      5: Math.floor(reviewsLength * 0.2),
+      4: Math.floor(reviewsLength * 0.55),
+      3: Math.floor(reviewsLength * 0.05),
+      2: Math.floor(reviewsLength * 0.15),
+      1: Math.floor(reviewsLength * 0.05),
+    };
+  } else if (ratingType === 8) {
+    return {
+      5: Math.floor(reviewsLength * 0.05),
+      4: Math.floor(reviewsLength * 0.05),
+      3: Math.floor(reviewsLength * 0.05),
+      2: Math.floor(reviewsLength * 0.3),
+      1: Math.floor(reviewsLength * 0.55),
+    };
+  } else if (ratingType === 9) {
+    return {
+      5: Math.floor(reviewsLength * 0.05),
+      4: Math.floor(reviewsLength * 0.1),
+      3: Math.floor(reviewsLength * 0.4),
+      2: Math.floor(reviewsLength * 0.4),
+      1: Math.floor(reviewsLength * 0.05),
+    };
+  } else {
+    return {
+      5: Math.floor(reviewsLength * 0.1),
+      4: Math.floor(reviewsLength * 0.4),
+      3: Math.floor(reviewsLength * 0.4),
+      2: Math.floor(reviewsLength * 0.05),
+      1: Math.floor(reviewsLength * 0.05),
+    };
+  }
+};
+const getReviewRating = (reviewRatings) => {
+  let finalRating = 1;
+  for (const rating in reviewRatings) {
+    if (reviewRatings[rating] > 0) {
+      reviewRatings[rating] = reviewRatings[rating] - 1;
+      finalRating = parseInt(rating);
+      break;
+    }
+  }
+  return finalRating;
+};
 
 async function seedDB() {
   const deleteItems = prisma.item.deleteMany({});
@@ -330,6 +384,10 @@ async function seedDB() {
         sold = getRandomNumber(0, 1000);
       }
       let reviewsLength = getRandomNumber(0, sold);
+      const reviewRatings = getReviewRatings(
+        getRandomNumber(0, 10),
+        reviewsLength
+      );
 
       await prisma.item.create({
         data: {
@@ -352,7 +410,7 @@ async function seedDB() {
               .map(() => ({
                 title: faker.lorem.sentence(),
                 body: faker.lorem.paragraph(),
-                rating: getRandomNumber(1, 5),
+                rating: getReviewRating(reviewRatings),
                 // votes:
                 //   Math.floor(
                 //     (Math.random() * reviewsLength) / 2
