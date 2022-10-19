@@ -83,13 +83,19 @@ const Cart: NextPageWithLayout = () => {
           </div>
         </div>
         <button
-          disabled={cartIsUpdating}
+          disabled={cartIsUpdating || cart.count === 0}
           className={`bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-10 font-bold w-full text-white mt-4 ${
-            cartIsUpdating &&
+            (cartIsUpdating || cart.count === 0) &&
             "cursor-not-allowed opacity-75"
           }`}
         >
-          {cartIsUpdating ? <Loading /> : "Go to checkout"}
+          {cartIsUpdating ? (
+            <Loading />
+          ) : cart.count === 0 ? (
+            "Cart is empty"
+          ) : (
+            "Go to checkout"
+          )}
         </button>
       </div>
     </div>
