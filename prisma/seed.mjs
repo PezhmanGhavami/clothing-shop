@@ -274,6 +274,10 @@ const USERS = new Array(100).fill(false).map(() => ({
   displayName: faker.name.fullName(),
 }));
 
+const getRandomNumber = (min, max) => {
+  return Math.floor(Math.random() * (max + 1 - min) + min);
+};
+
 async function seedDB() {
   const deleteItems = prisma.item.deleteMany({});
   const deleteCategories = prisma.category.deleteMany({});
@@ -306,25 +310,26 @@ async function seedDB() {
 
   for (const category of SHOP_DATA) {
     for (const itemOfCategory of category.items) {
-      const brandIndex = Math.floor(
-        Math.random() * brands.length
+      const brandIndex = getRandomNumber(
+        0,
+        brands.length - 1
       );
 
-      const discountChance = Math.floor(Math.random() * 10);
+      const discountChance = getRandomNumber(1, 10);
       const discount =
-        discountChance < 3
+        discountChance <= 3
           ? {
               dsicountedPrice: itemOfCategory.price * 0.8,
               offer: true,
             }
           : {};
 
-      const viewed = Math.floor(Math.random() * 10000);
-      let sold = Math.floor(Math.random() * 1000);
+      const viewed = getRandomNumber(0, 10000);
+      let sold = getRandomNumber(0, 1000);
       while (sold > viewed) {
-        sold = Math.floor(Math.random() * 1000);
+        sold = getRandomNumber(0, 1000);
       }
-      let reviewsLength = Math.floor(Math.random() * sold);
+      let reviewsLength = getRandomNumber(0, sold);
 
       await prisma.item.create({
         data: {
@@ -332,7 +337,7 @@ async function seedDB() {
           price: itemOfCategory.price,
           images: [itemOfCategory.imageUrl],
           brand: { connect: { id: brands[brandIndex].id } },
-          currentInventory: Math.floor(Math.random() * 20),
+          currentInventory: getRandomNumber(0, 20),
           viewed,
           sold,
           description: `Test description for ${itemOfCategory.name} that is of brand ${brands[brandIndex].name}`,
@@ -345,11 +350,9 @@ async function seedDB() {
             create: new Array(reviewsLength)
               .fill(false)
               .map(() => ({
-                title: faker.random.word(),
+                title: faker.lorem.sentence(),
                 body: faker.lorem.paragraph(),
-                rating: Math.floor(
-                  Math.random() * (6 - 3) + 3
-                ),
+                rating: getRandomNumber(1, 5),
                 // votes:
                 //   Math.floor(
                 //     (Math.random() * reviewsLength) / 2
@@ -361,9 +364,7 @@ async function seedDB() {
                 user: {
                   connect: {
                     id: users[
-                      Math.floor(
-                        Math.random() * users.length
-                      )
+                      getRandomNumber(0, users.length - 1)
                     ].id,
                   },
                 },
