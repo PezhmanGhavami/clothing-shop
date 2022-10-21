@@ -34,7 +34,6 @@ const ThemeProvider = ({
       ? savedTheme
       : detectBrowserTheme();
     setTheme(initialTheme);
-    console.log(initialTheme);
   }, []);
 
   useEffect(() => {
@@ -53,7 +52,6 @@ const ThemeProvider = ({
     const newTheme = theme === "dark" ? "light" : "dark";
     globalThis.localStorage.setItem("theme", newTheme);
     setTheme(newTheme);
-    console.log(newTheme);
   };
 
   return (
