@@ -368,7 +368,7 @@ const ProductReviewsContainer = ({
   const handlePreviousPage = () => {
     if (page > 1) {
       setPage((prev) => prev - 1);
-      document
+      globalThis.document
         .getElementById("reviews-sort")
         ?.scrollIntoView();
     }
@@ -376,7 +376,7 @@ const ProductReviewsContainer = ({
   const handleNextPage = () => {
     if (reviewsData && reviewsData.pages >= page) {
       setPage((prev) => prev + 1);
-      document
+      globalThis.document
         .getElementById("reviews-sort")
         ?.scrollIntoView();
     }
