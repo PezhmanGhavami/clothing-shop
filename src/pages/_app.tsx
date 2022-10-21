@@ -5,6 +5,8 @@ import type { AppProps } from "next/app";
 import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.min.css";
 
+import ThemeProvider from "../context/theme.context";
+
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<
   P,
   IP
@@ -22,7 +24,11 @@ function MyApp({
 }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  return getLayout(<Component {...pageProps} />);
+  return (
+    <ThemeProvider>
+      {getLayout(<Component {...pageProps} />)}
+    </ThemeProvider>
+  );
 }
 
 export default MyApp;
