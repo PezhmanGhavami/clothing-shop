@@ -25,11 +25,11 @@ const navLinks = {
   links: [
     { name: "Home", to: "/" },
     {
-      name: "Men",
+      name: "Men's",
       to: "/categories/mens",
     },
     {
-      name: "Women",
+      name: "Women's",
       to: "/categories/womens",
     },
     {

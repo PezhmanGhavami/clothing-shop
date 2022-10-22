@@ -165,7 +165,7 @@ const SHOP_DATA = [
     ],
   },
   {
-    title: "Womens",
+    title: "Women's",
     items: [
       {
         id: 23,
@@ -217,7 +217,7 @@ const SHOP_DATA = [
     ],
   },
   {
-    title: "Mens",
+    title: "Men's",
     items: [
       {
         id: 30,
