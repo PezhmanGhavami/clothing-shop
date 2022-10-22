@@ -83,6 +83,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   const relatedProducts: IProductCardContainerData = {
     name: "Related Products",
+    slug: "", //TODO - when you complete search, use it to show a link so that users can continue viewing relevant products
     items: [],
   };
 
