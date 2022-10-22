@@ -471,7 +471,7 @@ const ProductReviewsContainer = ({
           <div className="flex">
             <p>Sort by</p>
             <select
-              className="rounded-md hover:cursor-pointer dark:bg-slate-900 dark:text-white"
+              className="rounded-md hover:cursor-pointer bg-white dark:bg-slate-900 dark:text-white"
               value={selectedSortOption}
               onChange={handleSelectChange}
               name="sortOptionSelector"
