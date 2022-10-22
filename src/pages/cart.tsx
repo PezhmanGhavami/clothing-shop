@@ -59,7 +59,7 @@ const Cart: NextPageWithLayout = () => {
         </div>
       )}
       {/* Order summary */}
-      <div className="bg-slate-50 dark:bg-slate-800 p-4 sm:p-8 border rounded-lg mb-28">
+      <div className="bg-neutral-50 dark:bg-slate-800 p-4 sm:p-8 border rounded-lg mb-28">
         <div className="divide-y">
           <div className="flex h-10 justify-between items-center">
             <p>Subtotal</p>

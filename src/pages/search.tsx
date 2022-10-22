@@ -70,7 +70,7 @@ const Search: NextPageWithLayout = () => {
       />
       {/* Search input */}
       <div className="px-4 lg:px-8">
-        <div className="border bg-slate-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 mx-auto md:w-3/5 xl:w-2/5">
+        <div className="border bg-neutral-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 mx-auto md:w-3/5 xl:w-2/5">
           {/* Heading */}
           <div className="flex items-center justify-between">
             <label

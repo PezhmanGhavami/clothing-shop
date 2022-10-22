@@ -28,11 +28,11 @@ const defaultFormFields = {
 
 export const formInputStyles = {
   container:
-    "border bg-slate-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl flex justify-around p-4 w-3/4 md:w-80 ",
+    "border bg-neutral-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-700 shadow-md rounded-xl flex justify-around p-4 w-3/4 md:w-80 ",
   inputContainerClasses: "mb-4 relative ",
   labelClasses: "block pb-1 ",
   inputClasses:
-    "w-full h-9 rounded-md px-2 dark:bg-slate-900 border dark:border-slate-600 focus:outline-none focus:ring focus:ring-blue-400 ",
+    "w-full h-9 rounded-md px-2 dark:bg-slate-900 border dark:border-slate-700 focus:outline-none focus:ring focus:ring-blue-400 ",
   inputWarnClasses:
     "text-sm text-red-700 dark:text-red-400",
   aTagClasses:
