@@ -57,6 +57,9 @@ export const getStaticProps: GetStaticProps = async ({
           dsicountedPrice: true,
           currentInventory: true,
         },
+        orderBy: {
+          reviewsAvgRating: "desc",
+        },
       },
     },
   });
