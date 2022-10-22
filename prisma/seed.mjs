@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 const SHOP_DATA = [
   {
     title: "Hats",
+    slug: "hats",
     items: [
       {
         id: 1,
@@ -70,6 +71,7 @@ const SHOP_DATA = [
   },
   {
     title: "Sneakers",
+    slug: "sneakers",
     items: [
       {
         id: 10,
@@ -126,6 +128,7 @@ const SHOP_DATA = [
   },
   {
     title: "Jackets",
+    slug: "jackets",
     items: [
       {
         id: 18,
@@ -166,6 +169,7 @@ const SHOP_DATA = [
   },
   {
     title: "Women's",
+    slug: "womens",
     items: [
       {
         id: 23,
@@ -218,6 +222,7 @@ const SHOP_DATA = [
   },
   {
     title: "Men's",
+    slug: "mens",
     items: [
       {
         id: 30,
@@ -434,6 +439,7 @@ async function seedDB() {
               {
                 create: {
                   name: "seed",
+                  slug: "seed",
                 },
                 where: {
                   name: "seed",
@@ -442,6 +448,7 @@ async function seedDB() {
               {
                 create: {
                   name: category.title.toLowerCase(),
+                  slug: category.slug,
                 },
                 where: {
                   name: category.title.toLowerCase(),

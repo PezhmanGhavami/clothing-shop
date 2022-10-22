@@ -13,20 +13,20 @@ interface ICategoryComp {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const categoryNames = await prisma.category.findMany({
+  const categorySlugs = await prisma.category.findMany({
     where: {
       name: {
         not: "seed",
       },
     },
     select: {
-      name: true,
+      slug: true,
     },
   });
 
-  const paths = categoryNames.map(({ name }) => ({
+  const paths = categorySlugs.map(({ slug }) => ({
     params: {
-      category: name,
+      slug: slug,
     },
   }));
 
@@ -39,14 +39,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }) => {
-  const categoryName = params?.category as string;
+  const categorySlug = params?.slug as string;
 
   const category = await prisma.category.findUnique({
     where: {
-      name: categoryName,
+      slug: categorySlug,
     },
     select: {
       name: true,
+      // slug: true,
       items: {
         select: {
           id: true,
