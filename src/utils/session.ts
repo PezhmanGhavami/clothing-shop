@@ -3,7 +3,7 @@ import { ICart } from "../pages/api/cart";
 
 export const sessionOptions: IronSessionOptions = {
   password: process.env.SECRET_COOKIE_PASSWORD as string,
-  cookieName: "seal",
+  cookieName: "clothingShopSeal",
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",
   },
