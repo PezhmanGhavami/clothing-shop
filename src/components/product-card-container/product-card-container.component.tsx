@@ -6,7 +6,7 @@ import ProductCard, {
 
 export interface IProductCardContainerData {
   name: string;
-  slug: string;
+  slug?: string;
   items: IProductCard[];
 }
 interface IProductCardContainer {
@@ -28,7 +28,7 @@ const ProductCardContainer = ({
             {productGroup.name}
           </h2>
         )}
-        {showLink && (
+        {showLink && productGroup.slug && (
           <Link href={"/categories/" + productGroup.slug}>
             <a className="text-blue-700 dark:text-blue-400 hover:underline">
               Shop the collection{" "}
