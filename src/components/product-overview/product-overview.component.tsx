@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillHeart } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 import ReviewStars from "../product-review-stars/product-review-stars.component";
 
@@ -38,6 +39,11 @@ const ProductOverview = ({ product }: IProductOverview) => {
       (itemQuantityInCart || 0) >= product.currentInventory
     );
   };
+
+  const handleWishlist = () => {
+    toast.info("Not implemented yet.");
+  };
+
   return (
     <div className="flex flex-col border-b">
       {/* Breadcrumbs */}
@@ -156,6 +162,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
               type="button"
               aria-label="Like"
               title="Add to wishlist"
+              onClick={handleWishlist}
             >
               <AiFillHeart />
             </button>

@@ -469,7 +469,7 @@ const ProductReviewsContainer = ({
         >
           {/* Sort */}
           <div className="flex">
-            <p>Sort by </p>
+            <p className="mr-1">Sort by</p>
             <select
               className="rounded-md hover:cursor-pointer bg-white dark:bg-slate-900 dark:text-white"
               value={selectedSortOption}

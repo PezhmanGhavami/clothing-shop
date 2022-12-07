@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { NextPageWithLayout } from "./_app";
 import { AiOutlineClose } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 import Layout from "../components/layout/layout.component";
 import CartItemsContainer from "../components/cart-items-container/cart-items-container.component";
@@ -16,6 +17,10 @@ import currencyFormatter from "../utils/currencyFormatter";
 const Cart: NextPageWithLayout = () => {
   const { cart, cartIsUpdating } = useCart();
   const router = useRouter();
+
+  const handleCheckout = () => {
+    toast.info("Not implemented yet.");
+  };
 
   if (!cart) {
     return (
@@ -84,6 +89,7 @@ const Cart: NextPageWithLayout = () => {
         </div>
         <button
           disabled={cartIsUpdating || cart.count === 0}
+          onClick={handleCheckout}
           className={`bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-10 font-bold w-full text-white mt-4 ${
             (cartIsUpdating || cart.count === 0) &&
             "cursor-not-allowed opacity-75"
