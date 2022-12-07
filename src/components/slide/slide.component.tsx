@@ -25,7 +25,7 @@ const Slide = ({ slide }: ISlide) => {
       </div>
       {/* Info box */}
       <Link href={"categories/" + slide.name}>
-        <div className="absolute border h-24 w-32 flex flex-col justify-center items-center cursor-pointer z-10">
+        <div className="absolute rounded-lg border h-24 w-32 flex flex-col justify-center items-center cursor-pointer z-10">
           <h3 className="capitalize">{slide.name}</h3>
           <p>Shop now</p>
         </div>

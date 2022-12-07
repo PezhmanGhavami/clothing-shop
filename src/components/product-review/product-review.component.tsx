@@ -54,7 +54,7 @@ const ProductReview = ({
       {openModal && (
         <>
           <Overlay handleClick={closeModal} />
-          <div className="fixed inset-x-0 bottom-1/2 z-30 border bg-slate-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 pb-6 mx-auto w-11/12 md:w-3/5 xl:w-2/5 h-1/5">
+          <div className="fixed inset-x-0 bottom-1/2 translate-y-1/2 z-30 border bg-slate-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl py-6 mx-auto w-11/12 max-w-md">
             <div className="flex flex-col justify-center items-center w-full h-full">
               <p className="text-center text-xl">
                 Are you sure you want to delete this review?
@@ -67,7 +67,7 @@ const ProductReview = ({
                   Cancel
                 </button>
                 <button
-                  className="bg-red-700 hover:bg-red-800 active:bg-red-900 rounded-md h-9 font-semibold w-2/5 text-white"
+                  className="bg-red-700 hover:bg-red-800 active:bg-red-900 rounded-md h- font-semibold w-2/5 text-white"
                   onClick={deleteReview}
                 >
                   Delete review

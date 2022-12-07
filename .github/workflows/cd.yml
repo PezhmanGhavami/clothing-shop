@@ -1,10 +1,10 @@
-name: Node.js CI/CD
+name: ClothingShop CD
 
 on:
   push:
     branches: ["main"]
-  pull_request:
-    branches: ["main"]
+    paths-ignore:
+      - "**/README.md"
 
 jobs:
   build:
@@ -27,5 +27,4 @@ jobs:
           echo SECRET_COOKIE_PASSWORD=${{ secrets.SECRET_COOKIE_PASSWORD }} >> .env
       - run: npm i
       - run: npm run build --if-present
-      - run: pm2 restart clothing-shop
-#    - run: npm test
+      - run: pm2 restart clothing-shop -s

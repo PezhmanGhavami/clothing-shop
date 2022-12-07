@@ -218,7 +218,7 @@ const FormModal = ({
     }
   };
   return (
-    <div className="fixed inset-x-0 bottom-1/2 z-30 border bg-neutral-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 pb-6 mx-auto w-11/12 md:w-3/5 xl:w-2/5">
+    <div className="fixed inset-x-0 bottom-1/2 translate-y-1/2 z-30 border bg-neutral-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 pb-6 mx-auto w-11/12 md:w-3/5 xl:w-2/5">
       {/* Title and close button */}
       <div className="flex justify-between mb-4">
         <h2 className="text-xl md:text-2xl font-medium">
@@ -469,7 +469,7 @@ const ProductReviewsContainer = ({
         >
           {/* Sort */}
           <div className="flex">
-            <p>Sort by</p>
+            <p>Sort by </p>
             <select
               className="rounded-md hover:cursor-pointer bg-white dark:bg-slate-900 dark:text-white"
               value={selectedSortOption}
