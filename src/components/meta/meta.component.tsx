@@ -72,7 +72,7 @@ Meta.defaultProps = {
   description:
     "A demo clothing shop made for educational purposes",
   oGImageUrl:
-    "https://res.cloudinary.com/drsgyshsf/image/upload/v1665243289/clothing-shop/open-graph/Clothing_Shop_wkzuiy.png",
+    "https://res.cloudinary.com/drsgyshsf/image/upload/v1670486627/clothing-shop/open-graph/Clothing_Shop_vwahh4.png",
 };
 
 export default Meta;
