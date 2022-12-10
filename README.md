@@ -3,13 +3,16 @@ An e-commerce prototype website, made to be a playground for trying out differen
 You can checkout the live version [here](https://clothingshop.pezhmanghavami.com/)
 
 To run locally:
+
 > 1 - run `npm i`
 >
 > 2 - Setup your database as instructed by [prisma docs](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases/connect-your-database-typescript-postgres)
 >
-> 3 - Populate your database by running the seed script  `npx prisma db seed`
+> 3 - Populate your database by running the seed script `npx prisma db seed`
 >
-> 4 - Add the following variable for [iron-session](https://github.com/vvo/iron-session) to your .env file 
+> 4 - Add the following variable for [iron-session](https://github.com/vvo/iron-session) to your .env file
 > `SECRET_COOKIE_PASSWORD="complex_password_at_least_32_characters_long"`
 >
 > 5 - Start the project by running `npm run dev`
+
+All images and product names are from the Crwn Clowthing Project of [ZTM React course](https://www.udemy.com/course/complete-react-developer-zero-to-mastery/)
