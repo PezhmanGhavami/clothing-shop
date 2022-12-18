@@ -1,5 +1,6 @@
-import { useState, MouseEvent } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 import Link from "next/link";
 import {
   FaUser,
@@ -45,11 +46,56 @@ const navLinks = {
 
 const Navbar = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [loaderWidth, setLoaderWidth] = useState<
+    0 | 60 | 100
+  >(0);
+  const [duration, setDuration] = useState<0 | 200 | 3000>(
+    3000
+  );
   const { user } = useUser();
   const { cart } = useCart();
 
   const router = useRouter();
   // NOTE - I'm using router.asPath which might not work because it won't be availble unitle router.isReady
+
+  const startLoading = () => {
+    setLoaderWidth(60);
+    setDuration(3000);
+  };
+  const stopLoading = () => {
+    setLoaderWidth(100);
+    setDuration(200);
+  };
+  const handleLoadingError = () => {
+    setLoaderWidth(100);
+    setDuration(200);
+    toast.error("Coudln't load page; Please try again");
+  };
+
+  useEffect(() => {
+    router.events.on("routeChangeStart", startLoading);
+    router.events.on("routeChangeComplete", stopLoading);
+    router.events.on(
+      "routeChangeError",
+      handleLoadingError
+    );
+
+    return () => {
+      router.events.off("routeChangeStart", startLoading);
+      router.events.off("routeChangeComplete", stopLoading);
+      router.events.off(
+        "routeChangeError",
+        handleLoadingError
+      );
+    };
+  }, [router]);
+
+  const handleTransitionEnd = () => {
+    if (loaderWidth === 100) {
+      setDuration(0);
+      setLoaderWidth(0);
+    }
+  };
 
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
@@ -59,7 +105,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-20 bg-white dark:bg-slate-900 shadow-md flex justify-items-center items-center h-20 py-1">
+    <header className="sticky top-0 z-20 bg-white dark:bg-slate-900 shadow-md h-20 pt-1">
       {openModal && <Overlay handleClick={closeModal} />}
       <Hamburger
         openModal={openModal}
@@ -155,6 +201,17 @@ const Navbar = () => {
           </Link>
         </div>
       </nav>
+
+      <div className="h-[2px]">
+        <div
+          onTransitionEnd={handleTransitionEnd}
+          className="h-full w-0 bg-blue-400 transition-all"
+          style={{
+            width: `${loaderWidth}%`,
+            transitionDuration: `${duration}ms`,
+          }}
+        />
+      </div>
     </header>
   );
 };
