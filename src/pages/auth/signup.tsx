@@ -302,13 +302,12 @@ const SignUp: NextPageWithLayout = () => {
       >
         <p>
           {"Already have an account? "}
-          <Link href={"/auth/signin"}>
-            <a
-              className={formInputStyles.aTagClasses}
-              tabIndex={6}
-            >
-              Login
-            </a>
+          <Link
+            href={"/auth/signin"}
+            className={formInputStyles.aTagClasses}
+            tabIndex={6}
+          >
+            Login
           </Link>
           {"."}
         </p>

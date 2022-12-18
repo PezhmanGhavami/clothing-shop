@@ -202,16 +202,15 @@ const Login: NextPageWithLayout = () => {
               htmlFor={"sign-in-password"}
             >
               Password{" "}
-              <Link href="/forgot-password">
-                <a
-                  tabIndex={5}
-                  className={
-                    formInputStyles.aTagClasses +
-                    "float-right"
-                  }
-                >
-                  Forgot Password?
-                </a>
+              <Link
+                href="/forgot-password"
+                tabIndex={5}
+                className={
+                  formInputStyles.aTagClasses +
+                  "float-right"
+                }
+              >
+                Forgot Password?
               </Link>
             </label>
             <input
@@ -258,14 +257,13 @@ const Login: NextPageWithLayout = () => {
       >
         <p>
           {"New here? "}
-          <Link href={"/auth/signup"}>
-            <a
-              className={formInputStyles.aTagClasses}
-              tabIndex={6}
-            >
-              {" "}
-              Create an account
-            </a>
+          <Link
+            href={"/auth/signup"}
+            className={formInputStyles.aTagClasses}
+            tabIndex={6}
+          >
+            {" "}
+            Create an account
           </Link>
           {"."}
         </p>

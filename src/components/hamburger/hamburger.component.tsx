@@ -9,6 +9,7 @@ const lineClasses =
 function Hamburger({ openModal, handleClick }: IHamburger) {
   return (
     <button
+      title="Click to open Navigation menu"
       onClick={handleClick}
       className="z-50 fixed bottom-32 right-10 md:hidden"
     >

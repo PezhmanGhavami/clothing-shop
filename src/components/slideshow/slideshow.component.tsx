@@ -152,7 +152,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
             onClick={() => {
               handleSlideChange(index + 1);
             }}
-            title={`Click to go to slide ${index + 1}`}
+            title={`Click to go to ${slide.name} slide`}
             className="cursor-pointer py-2 mx-2"
           >
             <div

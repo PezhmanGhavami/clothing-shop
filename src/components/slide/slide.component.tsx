@@ -17,19 +17,24 @@ const Slide = ({ slide }: ISlide) => {
         <Image
           src={slide.imageUrl}
           alt={slide.name}
-          layout="fill"
-          priority
+          fill
+          sizes="100vw"
           quality={100}
           className="object-cover object-center brightness-90 pointer-events-none"
         />
       </div>
       {/* Info box */}
-      <Link href={"categories/" + slide.name}>
-        <div className="absolute rounded-lg border h-24 w-32 flex flex-col justify-center items-center cursor-pointer z-10">
-          <h3 className="capitalize">{slide.name}</h3>
-          <p>Shop now</p>
-        </div>
-      </Link>
+      <div
+        title={"Click to browse " + slide.name}
+        className="absolute"
+      >
+        <Link href={"categories/" + slide.name}>
+          <div className="rounded-lg border h-24 w-32 flex flex-col justify-center items-center cursor-pointer z-10 text-center">
+            <h3 className="capitalize">{slide.name}</h3>
+            <p>Shop now</p>
+          </div>
+        </Link>
+      </div>
     </div>
   );
 };

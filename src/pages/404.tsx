@@ -12,10 +12,11 @@ const NotFound: NextPageWithLayout = () => {
       <p className="text-4xl pb-4">
         There&apos;s nothing here!
       </p>
-      <Link href={"/"}>
-        <a className="pt-4 text-blue-700 dark:text-blue-400 hover:underline">
-          Go Back Home <span aria-hidden="true">→</span>
-        </a>
+      <Link
+        href={"/"}
+        className="pt-4 text-blue-700 dark:text-blue-400 hover:underline"
+      >
+        Go Back Home <span aria-hidden="true">→</span>
       </Link>
     </div>
   );

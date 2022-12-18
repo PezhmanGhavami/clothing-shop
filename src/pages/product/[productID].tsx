@@ -14,7 +14,7 @@ import ProductReviewsContainer from "../../components/product-reviews-container/
 import Meta from "../../components/meta/meta.component";
 
 export type itemPopulatedWithCategoryName = Item & {
-  categories: { name: string }[];
+  categories: { name: string; slug: string }[];
 };
 interface IProduct {
   product: itemPopulatedWithCategoryName;
@@ -59,6 +59,7 @@ export const getStaticProps: GetStaticProps = async ({
         },
         select: {
           name: true,
+          slug: true,
           items: {
             where: {
               NOT: {

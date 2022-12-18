@@ -33,16 +33,17 @@ const CartItem = ({ item }: ICartItemComponent) => {
     >
       {/* Image */}
       <Link href={"/product/" + item.id}>
-        <a className="relative flex-none w-24 sm:w-32 h-24 sm:h-32 rounded-lg overflow-hidden border border-gray-200">
+        <div className="relative flex-none w-24 sm:w-32 h-24 sm:h-32 rounded-lg overflow-hidden border border-gray-200">
           <Image
             src={item.images[0]}
             alt={item.name}
-            layout="fill"
+            fill
+            sizes="(min-width: 640px) 8rem,
+            6rem"
             quality={100}
-            priority
             className="object-cover object-center dark:brightness-90"
           />
-        </a>
+        </div>
       </Link>
 
       {/* Info */}
@@ -50,7 +51,7 @@ const CartItem = ({ item }: ICartItemComponent) => {
         {/* Name and price */}
         <div className="flex justify-between items-center w-full pb-6">
           <Link href={"/product/" + item.id}>
-            <a>{item.name}</a>
+            {item.name}
           </Link>
           <p>
             {" "}

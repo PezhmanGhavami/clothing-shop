@@ -55,11 +55,11 @@ const Cart: NextPageWithLayout = () => {
       ) : (
         <div className="py-12">
           <p className="pb-4">Your cart is empty!</p>
-          <Link href={"/categories"}>
-            <a className="text-blue-700 dark:text-blue-400 hover:underline">
-              Start shopping{" "}
-              <span aria-hidden="true">→</span>
-            </a>
+          <Link
+            href={"/categories"}
+            className="text-blue-700 dark:text-blue-400 hover:underline"
+          >
+            Start shopping <span aria-hidden="true">→</span>
           </Link>
         </div>
       )}

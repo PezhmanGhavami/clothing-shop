@@ -29,11 +29,12 @@ const ProductCardContainer = ({
           </h2>
         )}
         {showLink && productGroup.slug && (
-          <Link href={"/categories/" + productGroup.slug}>
-            <a className="text-blue-700 dark:text-blue-400 hover:underline">
-              Shop the collection{" "}
-              <span aria-hidden="true">→</span>
-            </a>
+          <Link
+            href={"/categories/" + productGroup.slug}
+            className="text-blue-700 dark:text-blue-400 hover:underline"
+          >
+            Shop the collection{" "}
+            <span aria-hidden="true">→</span>
           </Link>
         )}
       </div>

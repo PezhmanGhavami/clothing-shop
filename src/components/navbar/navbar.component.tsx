@@ -68,7 +68,9 @@ const Navbar = () => {
       <nav className="w-full h-full flex justify-between items-center">
         {/* Navbar logo container */}
         <div className="uppercase text-lg tracking-wide font-medium p-2 lg:p-4">
-          <Link href={"/"}>Clothing Shop</Link>
+          <Link title="Click to go home" href={"/"}>
+            Clothing Shop
+          </Link>
         </div>
         {/* Links */}
         <ul
@@ -78,66 +80,78 @@ const Navbar = () => {
         >
           {navLinks.links.map((link, index) => (
             <li key={index} className={navLinks.liClasses}>
-              <Link href={link.to}>
-                <a
-                  onClick={closeModal}
-                  className={`${navLinks.linkClasses}${
-                    router.asPath === link.to
-                      ? "border-b-slate-900 dark:border-b-white"
-                      : ""
-                  }`}
-                >
-                  {link.name}
-                </a>
+              <Link
+                onClick={closeModal}
+                href={link.to}
+                className={`${navLinks.linkClasses}${
+                  router.asPath === link.to
+                    ? "border-b-slate-900 dark:border-b-white"
+                    : ""
+                }`}
+              >
+                {link.name}
               </Link>
             </li>
           ))}
         </ul>
         {/* Icons Search Wishlist Cart Profile */}
         <div className="flex">
-          <Link href={"/search"}>
-            <a className={navLinks.iconClasses}>
-              <FaSearch title="Search" />
-            </a>
+          <Link
+            title="Click to open search"
+            className={navLinks.iconClasses}
+            href={"/search"}
+          >
+            <FaSearch />
           </Link>
           <button
             type="button"
+            title={
+              !user?.isLoggedIn
+                ? "See your sign in options"
+                : "See user options"
+            }
             className={`${navLinks.iconClasses} relative group`}
           >
-            <FaUser title="User" />
+            <FaUser />
             {/* Triangle */}
             <div className="invisible absolute top-10 w-4 h-4 bg-neutral-50 dark:bg-slate-800 border dark:border-slate-600 border-r-transparent dark:border-r-transparent border-b-transparent dark:border-b-transparent rotate-45 z-30 group-focus-within:visible group-active:visible" />
             {/* Content */}
             <div className="invisible absolute top-12 flex flex-col bg-neutral-50 dark:bg-slate-800 shadow-md rounded-lg border dark:border-slate-600 px-4 pt-3 pb-4 z-20 group-focus-within:visible group-active:visible">
               {!user?.isLoggedIn ? (
                 <>
-                  <Link href={"/auth/signin"}>
-                    <a className={navLinks.userClasses}>
-                      Login
-                    </a>
+                  <Link
+                    className={navLinks.userClasses}
+                    href={"/auth/signin"}
+                  >
+                    Login
                   </Link>
-                  <Link href={"/auth/signup"}>
-                    <a className={navLinks.userClasses}>
-                      Register
-                    </a>
+                  <Link
+                    className={navLinks.userClasses}
+                    href={"/auth/signup"}
+                  >
+                    Register
                   </Link>
                 </>
               ) : (
-                <Link href="/api/auth/logout" passHref>
-                  <a className={navLinks.userClasses}>
-                    Logout
-                  </a>
+                <Link
+                  className={navLinks.userClasses}
+                  href="/api/auth/logout"
+                  passHref
+                >
+                  Logout
                 </Link>
               )}
             </div>
           </button>
-          <Link href={"/cart"}>
-            <a className={navLinks.iconClasses}>
-              <FaShoppingCart title="Cart" />
-              <span className="text-xs pl-2">
-                {cart?.count}
-              </span>
-            </a>
+          <Link
+            title="Click to open your shopping cart"
+            className={navLinks.iconClasses}
+            href={"/cart"}
+          >
+            <FaShoppingCart />
+            <span className="text-xs pl-2">
+              {cart?.count}
+            </span>
           </Link>
         </div>
       </nav>

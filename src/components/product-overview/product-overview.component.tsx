@@ -49,23 +49,24 @@ const ProductOverview = ({ product }: IProductOverview) => {
       {/* Breadcrumbs */}
       <div className="p-4 pt-0 sm:p-0 sm:py-4 mx-auto w-full sm:w-11/12 lg:w-3/4 text-sm capitalize order-last sm:order-none">
         <Link
-          href={"/categories/" + product.categories[0].name}
+          href={"/categories/" + product.categories[0].slug}
+          className="text-slate-500 dark:text-slate-400 hover:underline hover:text-slate-900 dark:hover:text-white"
         >
-          <a className="text-slate-500 dark:text-slate-400 hover:underline hover:text-slate-900 dark:hover:text-white">
-            {product.categories[0].name}
-          </a>
+          {product.categories[0].name}
         </Link>
         <span> / </span> {product.name}
       </div>
       {/* Main component */}
       <div className="flex flex-col sm:flex-row sm:w-11/12 lg:w-3/4 sm:mx-auto sm:h-[50vh] lg:h-[70vh] sm:pt-6">
         {/* Image */}
-        <div className="relative sm:w-1/3 2xl:w-3/12 h-[60vh] sm:h-5/6 bg-gray-200">
+        <div className="relative sm:w-1/3 2xl:w-1/4 h-[60vh] sm:h-5/6 bg-gray-200">
           <Image
             src={product.images[0]}
             alt={product.name}
-            layout="fill"
-            priority
+            fill
+            sizes="(min-width: 640px) 33%,
+            (min-width: 1536px) 25%, 
+            100%"
             quality={100}
             className="object-cover object-center dark:brightness-90"
           />
