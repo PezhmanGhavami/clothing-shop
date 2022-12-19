@@ -83,7 +83,7 @@ export const getStaticProps: GetStaticProps = async () => {
         JSON.stringify(groupedOfferedProducts)
       ),
     },
-    revalidate: 10,
+    revalidate: 60,
   };
 };
 

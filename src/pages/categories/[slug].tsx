@@ -69,7 +69,7 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       category: JSON.parse(JSON.stringify(category)),
     },
-    revalidate: 10,
+    revalidate: 60,
   };
 };
 
