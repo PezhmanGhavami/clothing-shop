@@ -46,6 +46,9 @@ const navLinks = {
 
 const Navbar = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [loaderStarted, setLoaderStarted] = useState(false);
+  const [routeChangeCompleted, setRouteChangeCompleted] =
+    useState(false);
   const [loaderWidth, setLoaderWidth] = useState<
     0 | 60 | 100
   >(0);
@@ -58,21 +61,32 @@ const Navbar = () => {
   const router = useRouter();
   // NOTE - I'm using router.asPath which might not work because it won't be availble unitle router.isReady
 
-  const startLoading = () => {
-    setLoaderWidth(60);
-    setDuration(3000);
-  };
-  const stopLoading = () => {
-    setLoaderWidth(100);
-    setDuration(200);
-  };
-  const handleLoadingError = () => {
-    setLoaderWidth(100);
-    setDuration(200);
-    toast.error("Coudln't load page; Please try again");
-  };
-
   useEffect(() => {
+    const startLoading = () => {
+      setRouteChangeCompleted(false);
+      setTimeout(() => {
+        if (!routeChangeCompleted) {
+          setLoaderWidth(60);
+          setDuration(3000);
+          setLoaderStarted(true);
+        }
+      }, 100);
+    };
+    const stopLoading = () => {
+      if (loaderStarted) {
+        setLoaderWidth(100);
+        setDuration(200);
+        setLoaderStarted(false);
+      }
+      setRouteChangeCompleted(true);
+    };
+    const handleLoadingError = () => {
+      setLoaderWidth(100);
+      setDuration(200);
+      toast.error("Coudln't load page; Please try again");
+      setRouteChangeCompleted(true);
+    };
+
     router.events.on("routeChangeStart", startLoading);
     router.events.on("routeChangeComplete", stopLoading);
     router.events.on(
@@ -88,12 +102,14 @@ const Navbar = () => {
         handleLoadingError
       );
     };
-  }, [router]);
+  }, [router, loaderStarted, routeChangeCompleted]);
 
   const handleTransitionEnd = () => {
     if (loaderWidth === 100) {
       setDuration(0);
       setLoaderWidth(0);
+      setLoaderStarted(false);
+      setRouteChangeCompleted(true);
     }
   };
 
