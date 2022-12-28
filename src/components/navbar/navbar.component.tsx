@@ -46,15 +46,6 @@ const navLinks = {
 
 const Navbar = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [loaderStarted, setLoaderStarted] = useState(false);
-  const [routeChangeCompleted, setRouteChangeCompleted] =
-    useState(false);
-  const [loaderWidth, setLoaderWidth] = useState<
-    0 | 60 | 100
-  >(0);
-  const [loaderDuration, setLoaderDuration] = useState<
-    0 | 200 | 3000
-  >(3000);
   const { user } = useUser();
   const { cart } = useCart();
 
@@ -62,56 +53,24 @@ const Navbar = () => {
   // NOTE - I'm using router.asPath which might not work because it won't be availble unitle router.isReady
 
   useEffect(() => {
-    const startLoading = () => {
-      setRouteChangeCompleted(false);
-      setTimeout(() => {
-        if (!routeChangeCompleted) {
-          setLoaderWidth(60);
-          setLoaderDuration(3000);
-          setLoaderStarted(true);
-        }
-      }, 100);
-    };
-    const stopLoading = () => {
-      if (loaderStarted) {
-        setLoaderWidth(100);
-        setLoaderDuration(200);
-        setLoaderStarted(false);
-      }
-      setRouteChangeCompleted(true);
-    };
     const handleLoadingError = () => {
-      setLoaderWidth(100);
-      setLoaderDuration(200);
-      toast.error("Coudln't load page; Please try again");
-      setRouteChangeCompleted(true);
+      toast.error(
+        "Coudln't load the page; Please try again."
+      );
     };
 
-    router.events.on("routeChangeStart", startLoading);
-    router.events.on("routeChangeComplete", stopLoading);
     router.events.on(
       "routeChangeError",
       handleLoadingError
     );
 
     return () => {
-      router.events.off("routeChangeStart", startLoading);
-      router.events.off("routeChangeComplete", stopLoading);
       router.events.off(
         "routeChangeError",
         handleLoadingError
       );
     };
-  }, [router, loaderStarted, routeChangeCompleted]);
-
-  const handleTransitionEnd = () => {
-    if (loaderWidth === 100) {
-      setLoaderDuration(0);
-      setLoaderWidth(0);
-      setLoaderStarted(false);
-      setRouteChangeCompleted(true);
-    }
-  };
+  }, [router]);
 
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
@@ -217,17 +176,6 @@ const Navbar = () => {
           </Link>
         </div>
       </nav>
-
-      <div className="h-[2px]">
-        <div
-          onTransitionEnd={handleTransitionEnd}
-          className="h-full w-0 bg-blue-400 transition-all"
-          style={{
-            width: `${loaderWidth}%`,
-            transitionDuration: `${loaderDuration}ms`,
-          }}
-        />
-      </div>
     </header>
   );
 };
