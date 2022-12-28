@@ -52,9 +52,9 @@ const Navbar = () => {
   const [loaderWidth, setLoaderWidth] = useState<
     0 | 60 | 100
   >(0);
-  const [duration, setDuration] = useState<0 | 200 | 3000>(
-    3000
-  );
+  const [loaderDuration, setLoaderDuration] = useState<
+    0 | 200 | 3000
+  >(3000);
   const { user } = useUser();
   const { cart } = useCart();
 
@@ -67,7 +67,7 @@ const Navbar = () => {
       setTimeout(() => {
         if (!routeChangeCompleted) {
           setLoaderWidth(60);
-          setDuration(3000);
+          setLoaderDuration(3000);
           setLoaderStarted(true);
         }
       }, 100);
@@ -75,14 +75,14 @@ const Navbar = () => {
     const stopLoading = () => {
       if (loaderStarted) {
         setLoaderWidth(100);
-        setDuration(200);
+        setLoaderDuration(200);
         setLoaderStarted(false);
       }
       setRouteChangeCompleted(true);
     };
     const handleLoadingError = () => {
       setLoaderWidth(100);
-      setDuration(200);
+      setLoaderDuration(200);
       toast.error("Coudln't load page; Please try again");
       setRouteChangeCompleted(true);
     };
@@ -106,7 +106,7 @@ const Navbar = () => {
 
   const handleTransitionEnd = () => {
     if (loaderWidth === 100) {
-      setDuration(0);
+      setLoaderDuration(0);
       setLoaderWidth(0);
       setLoaderStarted(false);
       setRouteChangeCompleted(true);
@@ -224,7 +224,7 @@ const Navbar = () => {
           className="h-full w-0 bg-blue-400 transition-all"
           style={{
             width: `${loaderWidth}%`,
-            transitionDuration: `${duration}ms`,
+            transitionDuration: `${loaderDuration}ms`,
           }}
         />
       </div>
