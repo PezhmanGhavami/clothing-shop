@@ -19,7 +19,6 @@ const Slide = ({ slide }: ISlide) => {
           alt={slide.name}
           fill
           sizes="100vw"
-          priority
           quality={100}
           className="object-cover object-center brightness-90 pointer-events-none"
         />
