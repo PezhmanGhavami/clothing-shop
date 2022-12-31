@@ -67,9 +67,13 @@ async function userRoute(
         throw new Error("Passwords should match.");
       }
 
+      const lowerCaseEmail = (
+        email as string
+      ).toLowerCase();
+
       const userExists = await prisma.user.findUnique({
         where: {
-          email,
+          email: lowerCaseEmail,
         },
       });
       if (userExists) {
@@ -85,7 +89,7 @@ async function userRoute(
 
       const newUser = await prisma.user.create({
         data: {
-          email,
+          email: lowerCaseEmail,
           password: hashedPassword,
           displayName,
           cart: {

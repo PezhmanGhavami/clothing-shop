@@ -30,9 +30,13 @@ async function loginRoute(
         throw new Error("All fields are required.");
       }
 
+      const lowerCaseEmail = (
+        email as string
+      ).toLowerCase();
+
       const userExists = await prisma.user.findUnique({
         where: {
-          email,
+          email: lowerCaseEmail,
         },
         include: {
           cart: true,
