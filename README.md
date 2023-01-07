@@ -1,4 +1,6 @@
-An e-commerce prototype website, made to be a playground for trying out different kinds of tech
+An e-commerce prototype website, made to be a playground for trying out different kinds of tech.
+
+It utilizes the best practices of Next.js such as SSG and ISR while taking advantage of the next image and next head modules to deliver lightning fast load times and amazing SEO.
 
 You can checkout the live version [here](https://clothingshop.pezhmanghavami.com/)
 
