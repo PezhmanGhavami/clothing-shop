@@ -5,6 +5,7 @@ interface IMeta {
   keywords: string;
   description: string;
   oGImageUrl: string;
+  tCImageUrl: string;
 }
 
 const Meta = ({
@@ -12,6 +13,7 @@ const Meta = ({
   keywords,
   description,
   oGImageUrl,
+  tCImageUrl,
 }: IMeta) => {
   const correctTitle = `${title} | Clothing Shop - A demo clothing shop`;
   return (
@@ -54,7 +56,7 @@ const Meta = ({
         name="twitter:description"
         content={description}
       />
-      <meta name="twitter:image" content={oGImageUrl} />
+      <meta name="twitter:image" content={tCImageUrl} />
       {/* Open graph tags */}
       <meta property="og:title" content={correctTitle} />
       <meta
@@ -72,7 +74,9 @@ Meta.defaultProps = {
   description:
     "A demo clothing shop made for educational purposes",
   oGImageUrl:
-    "https://res.cloudinary.com/drsgyshsf/image/upload/v1670486627/clothing-shop/open-graph/Clothing_Shop_vwahh4.png",
+    "https://res.cloudinary.com/drsgyshsf/image/upload/v1674136825/clothing-shop/og-and-tc/clothing-shop-mockup-og_pbf8jn.png",
+  tCImageUrl:
+    "https://res.cloudinary.com/drsgyshsf/image/upload/v1674136825/clothing-shop/og-and-tc/clothing-shop-mockup-tc_pndvba.png",
 };
 
 export default Meta;
