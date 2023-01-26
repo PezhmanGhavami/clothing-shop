@@ -9,9 +9,9 @@
   - [] View wishlist
   - [] Orders and invoices
 - [] Improve the sildeshow by using a slideshow library or do it yourself or even maybe both!
-- [] Improve Product card component
-  - [] Improve the product card component price listing when there is an offer going on
-  - [] Improve the color contrast on product status bubble
+- [x] Improve Product card component
+  - [x] Improve the product card component price listing when there is an offer going on
+  - [x] Improve the color contrast on product status bubble
 - [] Improve the Product page
   - [] Improve single product view, especially the image responsiveness
   - [] Make it possible to open the product image and have zoom capabailities
