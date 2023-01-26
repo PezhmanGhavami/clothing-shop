@@ -45,9 +45,14 @@ export const getStaticProps: GetStaticProps = async ({
 }) => {
   const productID = params?.productID as string;
 
-  const product = await prisma.item.findUnique({
+  const product = await prisma.item.update({
     where: {
       id: productID,
+    },
+    data: {
+      viewed: {
+        increment: 1,
+      },
     },
     include: {
       categories: {
