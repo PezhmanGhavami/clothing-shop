@@ -1,0 +1,24 @@
+- [] Tests
+  - [] e2e
+- [] Add stripe payment system
+  - [] Make a checkout page
+  - [] List orders and their status (Invoice)
+- [] Make the wishlist feature (A page to list them, capability to add and remove them, db)
+- [] Make a profile page
+  - [] Edit user data
+  - [] View wishlist
+  - [] Orders and invoices
+- [] Improve the sildeshow by using a slideshow library or do it yourself or even maybe both!
+- [] Improve Product card component
+  - [] Improve the product card component price listing when there is an offer going on
+  - [] Improve the color contrast on product status bubble
+- [] Improve the Product page
+  - [] Improve single product view, especially the image responsiveness
+  - [] Make it possible to open the product image and have zoom capabailities
+  - [] Add multi image support for product info in product page
+  - [] Try to add URI support for the customer review section
+- [] Improve ProductReview component
+  - [] Make a review rating system
+- [] Improve Category page
+  - [] Add the filter and sort bar to category page
+  - [] Improve Category page by adding promo banners on top
