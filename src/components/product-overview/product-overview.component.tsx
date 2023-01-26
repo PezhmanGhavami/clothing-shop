@@ -45,7 +45,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
   };
 
   return (
-    <div className="flex flex-col border-b">
+    <div className="flex flex-col border-b pb-8 sm:pb-16">
       {/* Breadcrumbs */}
       <div className="p-4 pt-0 sm:p-0 sm:py-4 mx-auto w-full sm:w-11/12 lg:w-3/4 text-sm capitalize order-last sm:order-none">
         <Link
@@ -57,22 +57,21 @@ const ProductOverview = ({ product }: IProductOverview) => {
         <span> / </span> {product.name}
       </div>
       {/* Main component */}
-      <div className="flex flex-col sm:flex-row sm:w-11/12 lg:w-3/4 sm:mx-auto sm:h-[50vh] lg:h-[70vh] sm:pt-6">
+      <div className="flex flex-col sm:flex-row sm:gap-10 sm:w-11/12 lg:w-3/4 h-fit sm:mx-auto sm:pt-6">
         {/* Image */}
-        <div className="relative sm:w-1/3 2xl:w-1/4 h-[60vh] sm:h-5/6 bg-gray-200">
+        <div className="relative w-full h-[60vh] sm:max-w-xs sm:h-full sm:aspect-[2/3] bg-gray-200 sm:rounded-md sm:overflow-hidden">
           <Image
             src={product.images[0]}
             alt={product.name}
             fill
-            sizes="(min-width: 640px) 33%,
-            (min-width: 1536px) 25%, 
+            sizes="(min-width: 640px) 20rem,
             100%"
             quality={100}
             className="object-cover object-center dark:brightness-90"
           />
         </div>
         {/* Other */}
-        <div className="flex-auto p-4 sm:p-0 sm:pl-10">
+        <div className="flex-auto p-4 sm:p-0">
           {/* Price, Name, Availablity and Reviews */}
           <div className="flex flex-col">
             {/* Reviews */}

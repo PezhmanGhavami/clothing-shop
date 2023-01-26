@@ -13,7 +13,7 @@
   - [x] Improve the product card component price listing when there is an offer going on
   - [x] Improve the color contrast on product status bubble
 - [] Improve the Product page
-  - [] Improve single product view, especially the image responsiveness
+  - [x] Improve single product view, especially the image responsiveness
   - [] Make it possible to open the product image and have zoom capabailities
   - [] Add multi image support for product info in product page
   - [] Try to add URI support for the customer review section
