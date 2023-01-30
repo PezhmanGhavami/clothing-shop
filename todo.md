@@ -22,3 +22,7 @@
 - [] Improve Category page
   - [] Add the filter and sort bar to category page
   - [] Improve Category page by adding promo banners on top
+- [x] Toast a link to the repo
+- [x] Style react toastify
+- [x] Installed clsx
+- [] Use clsx to organize the classNames
