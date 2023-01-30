@@ -5,3 +5,13 @@
 body {
   @apply bg-white text-slate-900 dark:bg-slate-900 dark:text-white;
 }
+
+.Toastify__toast {
+  @apply bg-neutral-100 dark:bg-slate-800;
+}
+.Toastify__toast-body {
+  @apply text-slate-900 dark:text-white;
+}
+.Toastify__close-button > svg {
+  @apply dark:text-white;
+}
