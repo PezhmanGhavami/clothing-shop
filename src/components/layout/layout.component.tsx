@@ -12,7 +12,7 @@ const CustomToast = () => {
   return (
     <div>
       <p>
-        This a prototype project made for educational
+        This is a prototype project made for educational
         purposes. You can find the source code here:
       </p>
       <a
