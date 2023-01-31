@@ -8,7 +8,7 @@ interface ILayout {
   children: React.ReactNode;
 }
 
-const CustomeToast = () => {
+const CustomToast = () => {
   return (
     <div>
       <p>
@@ -29,7 +29,7 @@ const CustomeToast = () => {
 
 const Layout = ({ children }: ILayout) => {
   useEffect(() => {
-    toast.info(CustomeToast, {
+    toast.info(CustomToast, {
       autoClose: false,
     });
   }, []);

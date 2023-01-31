@@ -26,3 +26,4 @@
 - [x] Style react toastify
 - [] Try clsx to organize the classNames in a new branch
 - [] Try typewind to organize the classNames in a new branch
+- [] Fix browser autofill style change
