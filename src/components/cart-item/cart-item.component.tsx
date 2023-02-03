@@ -53,22 +53,20 @@ const CartItem = ({ item }: ICartItemComponent) => {
           <Link href={"/product/" + item.id}>
             {item.name}
           </Link>
-          <p>
+          <div>
             {" "}
-            <span
-              className={item.offer ? "line-through" : ""}
-            >
+            <p className={item.offer ? "line-through" : ""}>
               {currencyFormatter.format(item.price)}
-            </span>
+            </p>
             {item.dsicountedPrice && (
-              <span className="text-red-700 dark:text-red-400">
+              <p className="text-red-700 dark:text-red-400">
                 {" "}
                 {currencyFormatter.format(
                   item.dsicountedPrice
                 )}
-              </span>
+              </p>
             )}
-          </p>
+          </div>
         </div>
         {/* Qty - Add or remove */}
         <div className="flex justify-between items-center">
