@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, MouseEvent } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { NextPageWithLayout } from "./_app";
@@ -18,8 +18,19 @@ const Cart: NextPageWithLayout = () => {
   const { cart, cartIsUpdating } = useCart();
   const router = useRouter();
 
-  const handleCheckout = () => {
-    toast.info("Not implemented yet.");
+  const handleCheckout = (
+    event: MouseEvent<HTMLAnchorElement>
+  ) => {
+    if (cartIsUpdating || !cart || cart.count === 0) {
+      event.preventDefault();
+      toast.info(
+        cartIsUpdating || !cart
+          ? "Cart is updating please wait."
+          : cart.count === 0
+          ? "Cart is empty."
+          : "Something went wrong..."
+      );
+    }
   };
 
   if (!cart) {
@@ -87,13 +98,13 @@ const Cart: NextPageWithLayout = () => {
             </p>
           </div>
         </div>
-        <button
-          disabled={cartIsUpdating || cart.count === 0}
+        <Link
           onClick={handleCheckout}
-          className={`bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-10 font-bold w-full text-white mt-4 ${
+          className={`flex justify-center items-center bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-10 font-bold w-full text-white mt-4 ${
             (cartIsUpdating || cart.count === 0) &&
             "cursor-not-allowed opacity-75"
           }`}
+          href={"/checkout"}
         >
           {cartIsUpdating ? (
             <Loading />
@@ -102,7 +113,7 @@ const Cart: NextPageWithLayout = () => {
           ) : (
             "Go to checkout"
           )}
-        </button>
+        </Link>
       </div>
     </div>
   );
