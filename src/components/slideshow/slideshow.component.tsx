@@ -105,12 +105,12 @@ const Slideshow = ({ slides }: ISlideshow) => {
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative bg-gray-200 dark:bg-slate-500 text-white h-[65vh] md:h-[80vh] overflow-hidden select-none"
+      className="relative h-[65vh] select-none overflow-hidden bg-gray-200 text-white dark:bg-slate-500 md:h-[80vh]"
     >
       {/* Slides container */}
       <div
         onTransitionEnd={handleTransitionEnd}
-        className="h-full inline-flex"
+        className="inline-flex h-full"
         style={{
           transform: `translateX(-${currentSlide * 100}vw)`,
           transition: `${
@@ -145,7 +145,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
         </span>
       </div>
       {/* Specific slide */}
-      <div className="absolute bottom-0 w-full flex justify-center items-center text-white py-2">
+      <div className="absolute bottom-0 flex w-full items-center justify-center py-2 text-white">
         {slides.map((slide, index) => (
           <div
             key={slide.id}
@@ -153,7 +153,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
               handleSlideChange(index + 1);
             }}
             title={`Click to go to ${slide.name} slide`}
-            className="cursor-pointer py-2 mx-2"
+            className="mx-2 cursor-pointer py-2"
           >
             <div
               className={`w-7 border-b${

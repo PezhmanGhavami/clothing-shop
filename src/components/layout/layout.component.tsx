@@ -16,7 +16,7 @@ const CustomToast = () => {
         purposes. You can find the source code here:
       </p>
       <a
-        className="text-blue-600 dark:text-blue-300 hover:underline"
+        className="text-blue-600 hover:underline dark:text-blue-300"
         href="https://github.com/PejmanG/clothing-shop"
         target="_blank"
         rel="noreferrer"
@@ -37,7 +37,7 @@ const Layout = ({ children }: ILayout) => {
     <div className="min-h-screen">
       <ToastContainer />
       <Navbar />
-      <main className="border-y dark:border-y-slate-700 min-h-[85vh]">
+      <main className="min-h-[85vh] border-y dark:border-y-slate-700">
         {children}
       </main>
       <Footer />

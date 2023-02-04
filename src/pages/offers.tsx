@@ -37,7 +37,7 @@ const Offer: NextPageWithLayout<IOffer> = ({
   return (
     <div className="py-6">
       <Meta title="Special Offers" />
-      <h2 className="capitalize text-4xl font-bold tracking-tight text-center">
+      <h2 className="text-center text-4xl font-bold capitalize tracking-tight">
         {offerListing.name}
       </h2>
       <ProductCardContainer

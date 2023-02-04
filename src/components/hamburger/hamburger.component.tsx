@@ -11,28 +11,28 @@ function Hamburger({ openModal, handleClick }: IHamburger) {
     <button
       title="Click to open Navigation menu"
       onClick={handleClick}
-      className="z-50 fixed bottom-32 right-10 md:hidden"
+      className="fixed bottom-32 right-10 z-50 md:hidden"
     >
       <div
-        className={`flex overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-neutral-200 dark:bg-slate-700 ring-0 ring-slate-900 dark:ring-white shadow-2xl ${
+        className={`flex h-[50px] w-[50px] transform items-center justify-center overflow-hidden rounded-full bg-neutral-200 shadow-2xl ring-0 ring-slate-900 transition-all dark:bg-slate-700 dark:ring-white ${
           openModal &&
-          "ring-4 ring-opacity-60 duration-200 shadow-md"
+          "shadow-md ring-4 ring-opacity-60 duration-200"
         }`}
       >
         <div
-          className={`flex flex-col justify-between w-[20px] h-[20px] transform transition-all duration-500 origin-center overflow-hidden ${
+          className={`flex h-[20px] w-[20px] origin-center transform flex-col justify-between overflow-hidden transition-all duration-500 ${
             openModal && " rotate-180"
           }`}
         >
           <div
             className={`${lineClasses}${
-              openModal && " -rotate-45 -translate-x-1"
+              openModal && " -translate-x-1 -rotate-45"
             }`}
           ></div>
           <div className={lineClasses}></div>
           <div
             className={`${lineClasses}${
-              openModal && " rotate-45 -translate-x-1"
+              openModal && " -translate-x-1 rotate-45"
             }`}
           ></div>
         </div>

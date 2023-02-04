@@ -80,22 +80,22 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-20 bg-white dark:bg-slate-900 shadow-md h-20 pt-1">
+    <header className="sticky top-0 z-20 h-20 bg-white pt-1 shadow-md dark:bg-slate-900">
       {openModal && <Overlay handleClick={closeModal} />}
       <Hamburger
         openModal={openModal}
         handleClick={toggleModal}
       />
-      <nav className="w-full h-full flex justify-between items-center">
+      <nav className="flex h-full w-full items-center justify-between">
         {/* Navbar logo container */}
-        <div className="uppercase text-lg tracking-wide font-medium p-2 lg:p-4">
+        <div className="p-2 text-lg font-medium uppercase tracking-wide lg:p-4">
           <Link title="Click to go home" href={"/"}>
             Clothing Shop
           </Link>
         </div>
         {/* Links */}
         <ul
-          className={`fixed md:static top-0 right-0 z-40 md:z-auto h-screen w-2/4 md:h-auto md:w-auto flex flex-col md:flex-row justify-center items-center bg-neutral-200 dark:bg-slate-700 md:bg-inherit md:dark:bg-inherit shadow-2xl md:shadow-none translate-x-full md:translate-x-0 transition-transform md:transition-none ease-in-out duration-500 ${
+          className={`fixed top-0 right-0 z-40 flex h-screen w-2/4 translate-x-full flex-col items-center justify-center bg-neutral-200 shadow-2xl transition-transform duration-500 ease-in-out dark:bg-slate-700 md:static md:z-auto md:h-auto md:w-auto md:translate-x-0 md:flex-row md:bg-inherit md:shadow-none md:transition-none md:dark:bg-inherit ${
             openModal ? "translate-x-0" : ""
           }`}
         >
@@ -131,13 +131,13 @@ const Navbar = () => {
                 ? "See your sign in options"
                 : "See user options"
             }
-            className={`${navLinks.iconClasses} relative group`}
+            className={`${navLinks.iconClasses} group relative`}
           >
             <FaUser />
             {/* Triangle */}
-            <div className="invisible absolute top-10 w-4 h-4 bg-neutral-50 dark:bg-slate-800 border dark:border-slate-600 border-r-transparent dark:border-r-transparent border-b-transparent dark:border-b-transparent rotate-45 z-30 group-focus-within:visible group-active:visible" />
+            <div className="invisible absolute top-10 z-30 h-4 w-4 rotate-45 border border-r-transparent border-b-transparent bg-neutral-50 group-focus-within:visible group-active:visible dark:border-slate-600 dark:border-r-transparent dark:border-b-transparent dark:bg-slate-800" />
             {/* Content */}
-            <div className="invisible absolute top-12 flex flex-col bg-neutral-50 dark:bg-slate-800 shadow-md rounded-lg border dark:border-slate-600 px-4 pt-3 pb-4 z-20 group-focus-within:visible group-active:visible">
+            <div className="invisible absolute top-12 z-20 flex flex-col rounded-lg border bg-neutral-50 px-4 pt-3 pb-4 shadow-md group-focus-within:visible group-active:visible dark:border-slate-600 dark:bg-slate-800">
               {!user?.isLoggedIn ? (
                 <>
                   <Link
@@ -170,7 +170,7 @@ const Navbar = () => {
             href={"/cart"}
           >
             <FaShoppingCart />
-            <span className="text-xs pl-2">
+            <span className="pl-2 text-xs">
               {cart?.count}
             </span>
           </Link>

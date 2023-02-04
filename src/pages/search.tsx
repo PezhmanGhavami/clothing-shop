@@ -70,12 +70,12 @@ const Search: NextPageWithLayout = () => {
       />
       {/* Search input */}
       <div className="px-4 lg:px-8">
-        <div className="border bg-neutral-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 mx-auto md:w-3/5 xl:w-2/5">
+        <div className="mx-auto rounded-xl border border-neutral-200 bg-neutral-50 p-4 shadow-md dark:border-slate-600 dark:bg-slate-800 md:w-3/5 xl:w-2/5">
           {/* Heading */}
           <div className="flex items-center justify-between">
             <label
               htmlFor="search"
-              className="text-xl md:text-2xl font-medium"
+              className="text-xl font-medium md:text-2xl"
             >
               Search
             </label>
@@ -98,7 +98,7 @@ const Search: NextPageWithLayout = () => {
               type="text"
               name="searchInput"
               id="search"
-              className="w-full h-9 rounded-md px-2 dark:bg-slate-900 border dark:border-slate-600 focus:outline-none focus:ring focus:ring-blue-400"
+              className="h-9 w-full rounded-md border px-2 focus:outline-none focus:ring focus:ring-blue-400 dark:border-slate-600 dark:bg-slate-900"
               placeholder="Search for products"
               value={searchInput}
               onChange={handleChange}
@@ -106,7 +106,7 @@ const Search: NextPageWithLayout = () => {
               autoFocus
             />
             <button
-              className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-medium tracking-tight w-full text-white mt-2"
+              className="mt-2 h-9 w-full rounded-md bg-green-700 font-medium tracking-tight text-white hover:bg-green-800 active:bg-green-900"
               tabIndex={2}
             >
               Search

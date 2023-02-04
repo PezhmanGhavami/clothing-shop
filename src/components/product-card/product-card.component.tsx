@@ -25,11 +25,11 @@ const ProductCard = ({
       <Link href={"/product/" + product.id}>
         <div className="relative h-72 w-full overflow-hidden rounded-md bg-gray-200">
           <span
-            className={`px-2 rounded-md absolute top-1 left-1 z-10 ${
+            className={`absolute top-1 left-1 z-10 rounded-md px-2 ${
               product.currentInventory <= 0
                 ? "bg-red-600 text-white"
                 : product.currentInventory <= 3
-                ? "bg-yellow-400 dark:bg-yellow-500 text-slate-900"
+                ? "bg-yellow-400 text-slate-900 dark:bg-yellow-500"
                 : ""
             }`}
           >
@@ -45,11 +45,11 @@ const ProductCard = ({
             fill
             sizes="100%"
             quality={100}
-            className="object-cover object-center dark:brightness-90 hover:opacity-75"
+            className="object-cover object-center hover:opacity-75 dark:brightness-90"
           />
         </div>
         <div className="mt-4 flex justify-between">
-          <h3 className="text-sm w-2/3">
+          <h3 className="w-2/3 text-sm">
             <span aria-hidden="true" />
             {product.name}
           </h3>

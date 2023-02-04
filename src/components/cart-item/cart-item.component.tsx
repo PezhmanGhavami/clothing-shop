@@ -29,11 +29,11 @@ const CartItem = ({ item }: ICartItemComponent) => {
   return (
     <li
       key={item.id}
-      className="py-8 flex justify-between text-sm"
+      className="flex justify-between py-8 text-sm"
     >
       {/* Image */}
       <Link href={"/product/" + item.id}>
-        <div className="relative flex-none w-24 sm:w-32 h-24 sm:h-32 rounded-lg overflow-hidden border border-gray-200">
+        <div className="relative h-24 w-24 flex-none overflow-hidden rounded-lg border border-gray-200 sm:h-32 sm:w-32">
           <Image
             src={item.images[0]}
             alt={item.name}
@@ -47,9 +47,9 @@ const CartItem = ({ item }: ICartItemComponent) => {
       </Link>
 
       {/* Info */}
-      <div className="flex flex-col justify-between flex-1 pl-4 sm:pl-6 lg:pl-8">
+      <div className="flex flex-1 flex-col justify-between pl-4 sm:pl-6 lg:pl-8">
         {/* Name and price */}
-        <div className="flex justify-between items-center w-full pb-6">
+        <div className="flex w-full items-center justify-between pb-6">
           <Link href={"/product/" + item.id}>
             {item.name}
           </Link>
@@ -69,7 +69,7 @@ const CartItem = ({ item }: ICartItemComponent) => {
           </div>
         </div>
         {/* Qty - Add or remove */}
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <p>
             Quantity: {item.quantity}
             {item.quantity >= item.currentInventory && (
@@ -81,7 +81,7 @@ const CartItem = ({ item }: ICartItemComponent) => {
           {/* Buttons */}
           <div className="w-20">
             {/* Add or minus */}
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <button
                 onClick={handleDeduct}
                 title={
@@ -89,7 +89,7 @@ const CartItem = ({ item }: ICartItemComponent) => {
                     ? "Remove this item from your cart"
                     : "Reduce the quantity of this item"
                 }
-                className="w-6 h-6 border rounded-md hover:bg-neutral-100 dark:hover:bg-slate-700"
+                className="h-6 w-6 rounded-md border hover:bg-neutral-100 dark:hover:bg-slate-700"
               >
                 {item.quantity === 1 ? (
                   <span>&#128465;</span>
@@ -110,7 +110,7 @@ const CartItem = ({ item }: ICartItemComponent) => {
                     ? "Max inventory reached"
                     : "Add to the quantity of this item"
                 }
-                className={`w-6 h-6 border rounded-md hover:bg-neutral-100 dark:hover:bg-slate-700 ${
+                className={`h-6 w-6 rounded-md border hover:bg-neutral-100 dark:hover:bg-slate-700 ${
                   item.quantity >= item.currentInventory &&
                   "cursor-not-allowed opacity-50"
                 }`}
@@ -122,7 +122,7 @@ const CartItem = ({ item }: ICartItemComponent) => {
             <button
               onClick={handleRemove}
               title="Remove this item from your cart"
-              className="w-full mt-3 text-center text-blue-700 dark:text-blue-400 hover:underline"
+              className="mt-3 w-full text-center text-blue-700 hover:underline dark:text-blue-400"
             >
               Remove
             </button>

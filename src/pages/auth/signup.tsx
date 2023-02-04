@@ -298,7 +298,7 @@ const SignUp: NextPageWithLayout = () => {
       </form>
       {/* Link to login */}
       <div
-        className={`${formInputStyles.container} h-12 mt-4 items-center`}
+        className={`${formInputStyles.container} mt-4 h-12 items-center`}
       >
         <p>
           {"Already have an account? "}

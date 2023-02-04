@@ -41,11 +41,11 @@ const Cart: NextPageWithLayout = () => {
     );
   }
   return (
-    <div className="mx-auto md:w-3/5 xl:w-2/5 py-6 sm:py-10 px-5 lg:px-8">
+    <div className="mx-auto py-6 px-5 sm:py-10 md:w-3/5 lg:px-8 xl:w-2/5">
       <Meta title="Cart" />
       {/* Heading */}
       <div className="flex items-center justify-between">
-        <h2 className="text-xl md:text-2xl font-medium">
+        <h2 className="text-xl font-medium md:text-2xl">
           Shopping Cart
         </h2>
         <button
@@ -68,20 +68,20 @@ const Cart: NextPageWithLayout = () => {
           <p className="pb-4">Your cart is empty!</p>
           <Link
             href={"/categories"}
-            className="text-blue-700 dark:text-blue-400 hover:underline"
+            className="text-blue-700 hover:underline dark:text-blue-400"
           >
             Start shopping <span aria-hidden="true">→</span>
           </Link>
         </div>
       )}
       {/* Order summary */}
-      <div className="bg-neutral-50 dark:bg-slate-800 p-4 sm:p-8 border rounded-lg mb-28">
+      <div className="mb-28 rounded-lg border bg-neutral-50 p-4 dark:bg-slate-800 sm:p-8">
         <div className="divide-y">
-          <div className="flex h-10 justify-between items-center">
+          <div className="flex h-10 items-center justify-between">
             <p>Subtotal</p>
             <p>{currencyFormatter.format(cart.total)}</p>
           </div>
-          <div className="flex h-10 justify-between items-center">
+          <div className="flex h-10 items-center justify-between">
             <p>You are saving</p>
             <p>
               {currencyFormatter.format(
@@ -89,7 +89,7 @@ const Cart: NextPageWithLayout = () => {
               )}
             </p>
           </div>
-          <div className="flex h-10 justify-between items-center">
+          <div className="flex h-10 items-center justify-between">
             <p>Order total</p>
             <p>
               {currencyFormatter.format(
@@ -100,7 +100,7 @@ const Cart: NextPageWithLayout = () => {
         </div>
         <Link
           onClick={handleCheckout}
-          className={`flex justify-center items-center bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-10 font-bold w-full text-white mt-4 ${
+          className={`mt-4 flex h-10 w-full items-center justify-center rounded-md bg-green-700 font-bold text-white hover:bg-green-800 active:bg-green-900 ${
             (cartIsUpdating || cart.count === 0) &&
             "cursor-not-allowed opacity-75"
           }`}

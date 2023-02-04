@@ -47,19 +47,19 @@ const ProductOverview = ({ product }: IProductOverview) => {
   return (
     <div className="flex flex-col border-b pb-8 sm:pb-16">
       {/* Breadcrumbs */}
-      <div className="p-4 pt-0 sm:p-0 sm:py-4 mx-auto w-full sm:w-11/12 lg:w-3/4 text-sm capitalize order-last sm:order-none">
+      <div className="order-last mx-auto w-full p-4 pt-0 text-sm capitalize sm:order-none sm:w-11/12 sm:p-0 sm:py-4 lg:w-3/4">
         <Link
           href={"/categories/" + product.categories[0].slug}
-          className="text-slate-500 dark:text-slate-400 hover:underline hover:text-slate-900 dark:hover:text-white"
+          className="text-slate-500 hover:text-slate-900 hover:underline dark:text-slate-400 dark:hover:text-white"
         >
           {product.categories[0].name}
         </Link>
         <span> / </span> {product.name}
       </div>
       {/* Main component */}
-      <div className="flex flex-col sm:flex-row sm:gap-10 sm:w-11/12 lg:w-3/4 h-fit sm:mx-auto sm:pt-6">
+      <div className="flex h-fit flex-col sm:mx-auto sm:w-11/12 sm:flex-row sm:gap-10 sm:pt-6 lg:w-3/4">
         {/* Image */}
-        <div className="relative w-full h-[60vh] sm:max-w-xs sm:h-full sm:aspect-[2/3] bg-gray-200 sm:rounded-md sm:overflow-hidden">
+        <div className="relative h-[60vh] w-full bg-gray-200 sm:aspect-[2/3] sm:h-full sm:max-w-xs sm:overflow-hidden sm:rounded-md">
           <Image
             src={product.images[0]}
             alt={product.name}
@@ -82,7 +82,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
               <a
                 title="Click to see all reviews"
                 href="#reviews-section"
-                className="ml-3 text-sm font-medium underline text-blue-700 dark:text-blue-400"
+                className="ml-3 text-sm font-medium text-blue-700 underline dark:text-blue-400"
               >
                 {product.reviewsCount} reviews
               </a>
@@ -113,7 +113,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
               </p>
             </div>
             {/* Availablity */}
-            <p className="w-full flex-none text-sm font-medium text-slate-500 dark:text-slate-400 mt-2">
+            <p className="mt-2 w-full flex-none text-sm font-medium text-slate-500 dark:text-slate-400">
               {product.currentInventory > 3 ? (
                 <span>In stock</span>
               ) : product.currentInventory > 0 &&
@@ -129,18 +129,18 @@ const ProductOverview = ({ product }: IProductOverview) => {
             </p>
           </div>
           {/* Description and seperator */}
-          <div className="flex mt-4 mb-6 pb-6 border-b border-b-slate-200">
+          <div className="mt-4 mb-6 flex border-b border-b-slate-200 pb-6">
             <p>{product.description}</p>
           </div>
           {/* Buttons (Add to cart and wishlist) */}
-          <div className="flex space-x-4 mb-6">
+          <div className="mb-6 flex space-x-4">
             <button
               disabled={
                 product.currentInventory === 0 ||
                 maxInventoryReached()
               }
               onClick={handleAddItemToCart}
-              className={`bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium tracking-tight h-9 w-full rounded-md shadow-md ${
+              className={`h-9 w-full rounded-md bg-slate-100 text-sm font-medium tracking-tight shadow-md hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 ${
                 maxInventoryReached() &&
                 "cursor-not-allowed opacity-75"
               }`}
@@ -158,7 +158,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
             </button>
             {/* Wishlist */}
             <button
-              className="flex-none flex items-center justify-center w-9 h-9 rounded-md border text-slate-400 hover:text-slate-500 dark:hover:text-slate-300 text-lg shadow"
+              className="flex h-9 w-9 flex-none items-center justify-center rounded-md border text-lg text-slate-400 shadow hover:text-slate-500 dark:hover:text-slate-300"
               type="button"
               aria-label="Like"
               title="Add to wishlist"

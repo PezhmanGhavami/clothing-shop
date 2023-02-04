@@ -21,17 +21,17 @@ const ProductCardContainer = ({
   showName,
 }: IProductCardContainer) => {
   return (
-    <div className="mx-auto max-w-2xl py-6 sm:pt-10 px-4 lg:px-8 lg:max-w-7xl">
-      <div className="flex justify-between items-center">
+    <div className="mx-auto max-w-2xl py-6 px-4 sm:pt-10 lg:max-w-7xl lg:px-8">
+      <div className="flex items-center justify-between">
         {showName && (
-          <h2 className="capitalize text-2xl font-bold tracking-tight">
+          <h2 className="text-2xl font-bold capitalize tracking-tight">
             {productGroup.name}
           </h2>
         )}
         {showLink && productGroup.slug && (
           <Link
             href={"/categories/" + productGroup.slug}
-            className="text-blue-700 dark:text-blue-400 hover:underline"
+            className="text-blue-700 hover:underline dark:text-blue-400"
           >
             Shop the collection{" "}
             <span aria-hidden="true">→</span>

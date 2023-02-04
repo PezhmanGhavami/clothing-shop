@@ -228,7 +228,7 @@ const Login: NextPageWithLayout = () => {
             {/* Show password button */}
             <span
               tabIndex={3}
-              className="absolute cursor-pointer top-8 right-1 p-1"
+              className="absolute top-8 right-1 cursor-pointer p-1"
               onClick={toggleShowPassword}
               title={`Click to ${
                 showPassword ? "Hide" : "Show"
@@ -253,7 +253,7 @@ const Login: NextPageWithLayout = () => {
       </form>
       {/* Link to sign up */}
       <div
-        className={`${formInputStyles.container} h-12 mt-4 items-center`}
+        className={`${formInputStyles.container} mt-4 h-12 items-center`}
       >
         <p>
           {"New here? "}

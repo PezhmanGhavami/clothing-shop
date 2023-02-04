@@ -79,7 +79,7 @@ const Category: NextPageWithLayout<ICategoryComp> = ({
   return (
     <div className="py-6">
       <Meta title={category.name} />
-      <h2 className="capitalize text-4xl font-bold tracking-tight text-center">
+      <h2 className="text-center text-4xl font-bold capitalize tracking-tight">
         {category.name}
       </h2>
       <ProductCardContainer

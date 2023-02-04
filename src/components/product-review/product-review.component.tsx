@@ -49,25 +49,25 @@ const ProductReview = ({
   };
 
   return (
-    <div className="pt-6 pb-12 sm:flex relative">
+    <div className="relative pt-6 pb-12 sm:flex">
       {/* Confirm delete modal */}
       {openModal && (
         <>
           <Overlay handleClick={closeModal} />
-          <div className="fixed inset-x-0 bottom-1/2 translate-y-1/2 z-30 border bg-slate-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl py-6 mx-auto w-11/12 max-w-md">
-            <div className="flex flex-col justify-center items-center w-full h-full">
+          <div className="fixed inset-x-0 bottom-1/2 z-30 mx-auto w-11/12 max-w-md translate-y-1/2 rounded-xl border border-neutral-200 bg-slate-50 py-6 shadow-md dark:border-slate-600 dark:bg-slate-800">
+            <div className="flex h-full w-full flex-col items-center justify-center">
               <p className="text-center text-xl">
                 Are you sure you want to delete this review?
               </p>
-              <div className="pt-4 w-full flex justify-center space-x-2">
+              <div className="flex w-full justify-center space-x-2 pt-4">
                 <button
-                  className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-semibold w-2/5 text-white"
+                  className="h-9 w-2/5 rounded-md bg-green-700 font-semibold text-white hover:bg-green-800 active:bg-green-900"
                   onClick={closeModal}
                 >
                   Cancel
                 </button>
                 <button
-                  className="bg-red-700 hover:bg-red-800 active:bg-red-900 rounded-md h- font-semibold w-2/5 text-white"
+                  className="h- w-2/5 rounded-md bg-red-700 font-semibold text-white hover:bg-red-800 active:bg-red-900"
                   onClick={deleteReview}
                 >
                   Delete review
@@ -80,7 +80,7 @@ const ProductReview = ({
       {!review.published && (
         <span
           className={
-            "px-2 rounded-md absolute top-1 right-0 z-10 text-white bg-yellow-600"
+            "absolute top-1 right-0 z-10 rounded-md bg-yellow-600 px-2 text-white"
           }
         >
           Under review
@@ -90,26 +90,26 @@ const ProductReview = ({
       <div className="flex flex-col justify-between pr-6 sm:w-1/3 xl:w-1/4 2xl:w-1/5">
         <div>
           <ReviewStars rating={review.rating} />
-          <div className="flex sm:flex-col items-center sm:items-start space-x-2 sm:space-x-0 ">
+          <div className="flex items-center space-x-2 sm:flex-col sm:items-start sm:space-x-0 ">
             <p className="py-2 font-medium capitalize">
               {review.user.displayName}
             </p>
-            <p className="sm:pb-2 text-sm tracking-tighter text-slate-600 dark:text-slate-300">
+            <p className="text-sm tracking-tighter text-slate-600 dark:text-slate-300 sm:pb-2">
               {reviewDate}
             </p>
           </div>
         </div>
         {isUsersReview && (
-          <div className="flex pb-2 sm:p-0 space-x-2">
+          <div className="flex space-x-2 pb-2 sm:p-0">
             <p
               onClick={editReview}
-              className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
+              className="cursor-pointer text-blue-700 hover:underline dark:text-blue-400"
             >
               Edit
             </p>
             <p
               onClick={openOpenModal}
-              className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
+              className="cursor-pointer text-blue-700 hover:underline dark:text-blue-400"
             >
               Delete
             </p>
@@ -117,7 +117,7 @@ const ProductReview = ({
         )}
       </div>
       {/* Title and Body */}
-      <div className="sm:w-2/3 xl:w-3/4 2xl:4/5 break-words">
+      <div className="2xl:4/5 break-words sm:w-2/3 xl:w-3/4">
         <h3 className="text-lg leading-none">
           {review.title}
         </h3>

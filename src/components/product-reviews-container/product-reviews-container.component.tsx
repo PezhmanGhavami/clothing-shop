@@ -51,7 +51,7 @@ const AverageRating = ({
 }) => {
   return (
     <div className="w-full pb-6 sm:pb-0 sm:pr-6">
-      <div className="text-3xl flex justify-center sm:justify-end">
+      <div className="flex justify-center text-3xl sm:justify-end">
         <span className="pr-1 font-medium">
           {avgRating.toFixed(1)}
         </span>
@@ -63,7 +63,7 @@ const AverageRating = ({
       <div className="flex justify-center sm:justify-end">
         <button
           onClick={handleClick}
-          className={`border hover:bg-neutral-100 dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 w-3/5 rounded-md shadow mt-2`}
+          className={`mt-2 h-9 w-3/5 rounded-md border text-sm font-medium tracking-tight shadow hover:bg-neutral-100 dark:hover:bg-slate-800`}
         >
           Write a review
         </button>
@@ -87,12 +87,12 @@ const StarFilters = ({
   };
   type ratingCountKeys = keyof typeof ratingCounts;
   return (
-    <div className="w-5/6 sm:w-full text-lg sm:pl-6">
+    <div className="w-5/6 text-lg sm:w-full sm:pl-6">
       <div className="flex justify-between">
         <p className="mb-2">Filter by stars</p>
         {selectedFilter !== 0 && (
           <span
-            className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
+            className="cursor-pointer text-blue-700 hover:underline dark:text-blue-400"
             onClick={() => selectNewFilter(0)}
           >
             Reset
@@ -115,7 +115,7 @@ const StarFilters = ({
             }`}
           >
             <ReviewStars rating={rating} />
-            <div className="bg-neutral-200 dark:bg-slate-700 h-3 w-1/2 rounded-md overflow-hidden ml-4 mr-2">
+            <div className="ml-4 mr-2 h-3 w-1/2 overflow-hidden rounded-md bg-neutral-200 dark:bg-slate-700">
               <div
                 className="h-full bg-slate-900 dark:bg-white"
                 style={{
@@ -129,7 +129,7 @@ const StarFilters = ({
                 }}
               />
             </div>
-            <span className="text-sm basis-8">{`(${
+            <span className="basis-8 text-sm">{`(${
               ratingCounts[
                 `rated${rating}` as ratingCountKeys
               ]
@@ -218,10 +218,10 @@ const FormModal = ({
     }
   };
   return (
-    <div className="fixed inset-x-0 bottom-1/2 translate-y-1/2 z-30 border bg-neutral-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-600 shadow-md rounded-xl p-4 pb-6 mx-auto w-11/12 md:w-3/5 xl:w-2/5">
+    <div className="fixed inset-x-0 bottom-1/2 z-30 mx-auto w-11/12 translate-y-1/2 rounded-xl border border-neutral-200 bg-neutral-50 p-4 pb-6 shadow-md dark:border-slate-600 dark:bg-slate-800 md:w-3/5 xl:w-2/5">
       {/* Title and close button */}
-      <div className="flex justify-between mb-4">
-        <h2 className="text-xl md:text-2xl font-medium">
+      <div className="mb-4 flex justify-between">
+        <h2 className="text-xl font-medium md:text-2xl">
           {reviewID ? "Edit your review" : "Add a review"}
         </h2>
         <button
@@ -240,7 +240,7 @@ const FormModal = ({
         {/* Rating */}
         <div
           title={`Rated ${formData.rating} out of 5`}
-          className="pb-2 space-y-1"
+          className="space-y-1 pb-2"
         >
           <label>Rating: </label>
           <div className="flex items-center text-2xl">
@@ -265,7 +265,7 @@ const FormModal = ({
           </div>
         </div>
         {/* Text inputs */}
-        <div className="flex flex-col rounded-md overflow-hidden border border-neutral-200 dark:border-slate-600">
+        <div className="flex flex-col overflow-hidden rounded-md border border-neutral-200 dark:border-slate-600">
           <label htmlFor="review-title" className="sr-only">
             Write a title
           </label>
@@ -276,7 +276,7 @@ const FormModal = ({
             value={formData.title}
             onChange={handleChange}
             placeholder="Title"
-            className="h-9 p-2 dark:bg-slate-900 border-2 border-transparent rounded-t-md focus-within:outline-none focus-within:border-blue-400 placeholder:text-slate-500 dark:placeholder:text-slate-300 placeholder:text-xl"
+            className="h-9 rounded-t-md border-2 border-transparent p-2 placeholder:text-xl placeholder:text-slate-500 focus-within:border-blue-400 focus-within:outline-none dark:bg-slate-900 dark:placeholder:text-slate-300"
             tabIndex={1}
             autoFocus
           />
@@ -289,13 +289,13 @@ const FormModal = ({
             value={formData.body}
             onChange={handleChange}
             placeholder="Write your review..."
-            className="h-24 p-2 dark:bg-slate-900 border-2 border-transparent rounded-b-md focus-within:outline-none focus-within:border-blue-400 resize-none placeholder:text-slate-500 dark:placeholder:text-slate-300 placeholder:text-base"
+            className="h-24 resize-none rounded-b-md border-2 border-transparent p-2 placeholder:text-base placeholder:text-slate-500 focus-within:border-blue-400 focus-within:outline-none dark:bg-slate-900 dark:placeholder:text-slate-300"
             tabIndex={2}
           />
         </div>
         {/* Submit */}
         <button
-          className="bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-medium tracking-tight w-full text-white mt-2"
+          className="mt-2 h-9 w-full rounded-md bg-green-700 font-medium tracking-tight text-white hover:bg-green-800 active:bg-green-900"
           title={
             isLoading
               ? "Submitting your review..."
@@ -426,7 +426,7 @@ const ProductReviewsContainer = ({
   return (
     <div
       id="reviews-section"
-      className="sm:w-3/4 lg:w-2/4 mx-auto p-8 scroll-mt-20"
+      className="mx-auto scroll-mt-20 p-8 sm:w-3/4 lg:w-2/4"
     >
       {/* Form modal */}
       {openModal && (
@@ -442,13 +442,13 @@ const ProductReviewsContainer = ({
           />
         </>
       )}
-      <h2 className="text-3xl text-center p-4 pb-12">
+      <h2 className="p-4 pb-12 text-center text-3xl">
         Customer Reviews
       </h2>
       {/* Rating, sort and filter */}
       <div>
         {/* Rating and filter */}
-        <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:divide-x border-b pb-12">
+        <div className="flex flex-col items-center border-b pb-12 sm:flex-row sm:items-start sm:justify-center sm:divide-x">
           {/* Rating */}
           <AverageRating
             handleClick={toggleModal}
@@ -465,13 +465,13 @@ const ProductReviewsContainer = ({
         {/* Sort and user reviews */}
         <div
           id="reviews-sort"
-          className="flex justify-between py-2 border-b scroll-mt-20"
+          className="flex scroll-mt-20 justify-between border-b py-2"
         >
           {/* Sort */}
           <div className="flex">
             <p className="mr-1">Sort by</p>
             <select
-              className="rounded-md hover:cursor-pointer bg-white dark:bg-slate-900 dark:text-white"
+              className="rounded-md bg-white hover:cursor-pointer dark:bg-slate-900 dark:text-white"
               value={selectedSortOption}
               onChange={handleSelectChange}
               name="sortOptionSelector"
@@ -497,7 +497,7 @@ const ProductReviewsContainer = ({
                     : "Click to see your reviews"
                 }
                 onClick={toggleShowUserReviews}
-                className="text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
+                className="cursor-pointer text-blue-700 hover:underline dark:text-blue-400"
               >
                 {showUserReviews
                   ? "Back to all reviews"
@@ -528,7 +528,7 @@ const ProductReviewsContainer = ({
             </div>
           )
         ) : (
-          <div className="py-80 sm:py-96 text-3xl">
+          <div className="py-80 text-3xl sm:py-96">
             <Loading />
           </div>
         )}
@@ -536,12 +536,12 @@ const ProductReviewsContainer = ({
       {/* Pagination */}
       {/* TODO - Make this infinity scroll */}
       {reviewsData && (
-        <div className="flex justify-between items-center space-x-1 pb-6">
+        <div className="flex items-center justify-between space-x-1 pb-6">
           <div className="w-1/2">
             {page > 1 && (
               <button
                 onClick={handlePreviousPage}
-                className={`border sm:hover:bg-neutral-100 sm:dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 rounded-md shadow w-full`}
+                className={`h-9 w-full rounded-md border text-sm font-medium tracking-tight shadow sm:hover:bg-neutral-100 sm:dark:hover:bg-slate-800`}
               >
                 Previous
               </button>
@@ -551,7 +551,7 @@ const ProductReviewsContainer = ({
             {reviewsData.pages >= page && (
               <button
                 onClick={handleNextPage}
-                className={`border sm:hover:bg-neutral-100 sm:dark:hover:bg-slate-800 text-sm font-medium tracking-tight h-9 rounded-md shadow w-full`}
+                className={`h-9 w-full rounded-md border text-sm font-medium tracking-tight shadow sm:hover:bg-neutral-100 sm:dark:hover:bg-slate-800`}
               >
                 Next
               </button>
