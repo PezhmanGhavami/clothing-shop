@@ -77,10 +77,10 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       newestProducts: JSON.parse(
-        JSON.stringify(groupedNewestProducts)
+        JSON.stringify(groupedNewestProducts),
       ),
       specialOffers: JSON.parse(
-        JSON.stringify(groupedOfferedProducts)
+        JSON.stringify(groupedOfferedProducts),
       ),
     },
     revalidate: 60,

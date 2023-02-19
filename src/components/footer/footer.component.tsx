@@ -11,7 +11,7 @@ function Footer() {
         <span>
           © {new Date().getFullYear() + " "}
           <a
-            href="http://127.0.0.1:5173/"
+            href="/"
             target="_blank"
             className="hover:text-slate-900 hover:underline dark:hover:text-white"
             rel="noreferrer"
