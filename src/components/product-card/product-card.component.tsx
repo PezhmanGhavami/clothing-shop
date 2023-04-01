@@ -25,7 +25,7 @@ const ProductCard = ({
       <Link href={"/product/" + product.id}>
         <div className="relative h-72 w-full overflow-hidden rounded-md bg-gray-200">
           <span
-            className={`absolute top-1 left-1 z-10 rounded-md px-2 ${
+            className={`absolute left-1 top-1 z-10 rounded-md px-2 ${
               product.currentInventory <= 0
                 ? "bg-red-600 text-white"
                 : product.currentInventory <= 3
@@ -65,7 +65,7 @@ const ProductCard = ({
               <p className="text-red-700 dark:text-red-400">
                 {" "}
                 {currencyFormatter.format(
-                  product.dsicountedPrice
+                  product.dsicountedPrice,
                 )}
               </p>
             )}

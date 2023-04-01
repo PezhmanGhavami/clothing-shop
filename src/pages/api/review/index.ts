@@ -16,12 +16,12 @@ export interface IReviewResponse {
 
 export default withIronSessionApiRoute(
   reviewRoute,
-  sessionOptions
+  sessionOptions,
 );
 
 async function reviewRoute(
   req: NextApiRequest,
-  res: NextApiResponse<IReviewResponse | IApiMessage>
+  res: NextApiResponse<IReviewResponse | IApiMessage>,
 ) {
   try {
     if (req.method === "GET") {
@@ -56,7 +56,7 @@ async function reviewRoute(
         if (!user) {
           res.status(401);
           throw new Error(
-            "You need to be logged in to see your own reviews."
+            "You need to be logged in to see your own reviews.",
           );
         }
         filter = {
@@ -136,11 +136,11 @@ async function reviewRoute(
               `reviewsRated${
                 filter.rating as 1 | 2 | 3 | 4 | 5
               }Count`
-            ] / reviewsPerPage
+            ] / reviewsPerPage,
           );
         } else {
           pages = Math.floor(
-            reviews.reviewsCount / reviewsPerPage
+            reviews.reviewsCount / reviewsPerPage,
           );
         }
 
@@ -152,14 +152,14 @@ async function reviewRoute(
 
       res.status(404);
       throw new Error(
-        "The resource you are looking for doesn not exist."
+        "The resource you are looking for doesn not exist.",
       );
     } else if (req.method === "POST") {
       const user = req.session.user;
       if (!user) {
         res.status(401);
         throw new Error(
-          "You need to be logged in before you can post a review."
+          "You need to be logged in before you can post a review.",
         );
       }
 
@@ -179,7 +179,7 @@ async function reviewRoute(
       if (!item) {
         res.status(400);
         throw new Error(
-          "The product you are trying to review does not exist."
+          "The product you are trying to review does not exist.",
         );
       }
 

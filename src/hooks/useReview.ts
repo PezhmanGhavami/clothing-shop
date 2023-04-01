@@ -25,7 +25,7 @@ const useReview = ({
   }&showUserReviews=${showUserReviews}${selectedFilter}`;
   const { data, mutate } = useSWR<IReviewResponse>(
     "/api/review?" + query,
-    fetcher
+    fetcher,
   );
 
   return {

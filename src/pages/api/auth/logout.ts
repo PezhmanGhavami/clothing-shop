@@ -7,12 +7,12 @@ import { sessionOptions } from "../../../utils/session";
 
 export default withIronSessionApiRoute(
   logoutRoute,
-  sessionOptions
+  sessionOptions,
 );
 
 function logoutRoute(
   req: NextApiRequest,
-  res: NextApiResponse<IUser | IApiMessage>
+  res: NextApiResponse<IUser | IApiMessage>,
 ) {
   if (req.method === "GET") {
     req.session.destroy();

@@ -24,7 +24,7 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       offerListing: JSON.parse(
-        JSON.stringify(offerListing)
+        JSON.stringify(offerListing),
       ),
     },
     revalidate: 60,

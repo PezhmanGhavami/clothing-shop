@@ -6,7 +6,7 @@ import { ThemeContext } from "../../context/theme.context";
 function Footer() {
   const { theme, changeTheme } = useContext(ThemeContext);
   return (
-    <footer className="flex h-14 items-center justify-between py-4 px-2 text-sm text-slate-600 dark:text-slate-400">
+    <footer className="flex h-14 items-center justify-between px-2 py-4 text-sm text-slate-600 dark:text-slate-400">
       <p className="flex flex-col sm:flex-row">
         <span>
           © {new Date().getFullYear() + " "}

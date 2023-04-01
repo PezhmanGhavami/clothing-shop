@@ -95,7 +95,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   if (product?.categories[0]) {
     relatedProducts.items = product.categories[0].items.map(
-      (item) => item
+      (item) => item,
     );
   }
 
@@ -103,7 +103,7 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       product: JSON.parse(JSON.stringify(product)),
       relatedProducts: JSON.parse(
-        JSON.stringify(relatedProducts)
+        JSON.stringify(relatedProducts),
       ),
     },
     revalidate: 60,

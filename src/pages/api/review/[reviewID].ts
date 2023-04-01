@@ -8,12 +8,12 @@ import { IApiMessage } from "../auth/login";
 
 export default withIronSessionApiRoute(
   reviewRoute,
-  sessionOptions
+  sessionOptions,
 );
 
 async function reviewRoute(
   req: NextApiRequest,
-  res: NextApiResponse<IApiMessage>
+  res: NextApiResponse<IApiMessage>,
 ) {
   try {
     const { reviewID } = req.query;
@@ -35,7 +35,7 @@ async function reviewRoute(
     if (!user) {
       res.status(401);
       throw new Error(
-        `You need to be logged in before you can ${verb} a review.`
+        `You need to be logged in before you can ${verb} a review.`,
       );
     }
 
@@ -51,14 +51,14 @@ async function reviewRoute(
     if (!review) {
       res.status(404);
       throw new Error(
-        `The review you are trying to ${verb} does not exist.`
+        `The review you are trying to ${verb} does not exist.`,
       );
     }
 
     if (review.userId !== user.userID) {
       res.status(403);
       throw new Error(
-        `You don't have permission to ${verb} this review.`
+        `You don't have permission to ${verb} this review.`,
       );
     }
 

@@ -62,7 +62,7 @@ const CartItem = ({ item }: ICartItemComponent) => {
               <p className="text-red-700 dark:text-red-400">
                 {" "}
                 {currencyFormatter.format(
-                  item.dsicountedPrice
+                  item.dsicountedPrice,
                 )}
               </p>
             )}

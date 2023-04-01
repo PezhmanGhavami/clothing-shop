@@ -13,12 +13,12 @@ export interface IUser {
 
 export default withIronSessionApiRoute(
   userRoute,
-  sessionOptions
+  sessionOptions,
 );
 
 async function userRoute(
   req: NextApiRequest,
-  res: NextApiResponse<IUser | IApiMessage>
+  res: NextApiResponse<IUser | IApiMessage>,
 ) {
   if (req.method === "GET") {
     const user = req.session.user;
@@ -84,7 +84,7 @@ async function userRoute(
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(
         password,
-        salt
+        salt,
       );
 
       const newUser = await prisma.user.create({

@@ -26,7 +26,7 @@ function AuthLayout({ children }: IAuthLayout) {
       <ToastContainer theme="colored" />
       <div className="flex h-full flex-col justify-between">
         <div className="flex flex-col items-center justify-start pt-8">
-          <div className="pt-8 pb-6 text-3xl font-medium uppercase tracking-wide lg:p-4">
+          <div className="pb-6 pt-8 text-3xl font-medium uppercase tracking-wide lg:p-4">
             <Link href={"/"}>Clothing Shop</Link>
           </div>
           {children}

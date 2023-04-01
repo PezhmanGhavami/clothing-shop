@@ -8,7 +8,7 @@ const Checkout: NextPageWithLayout = () => {
 };
 
 Checkout.getLayout = function getLayout(
-  page: ReactElement
+  page: ReactElement,
 ) {
   return <Layout>{page}</Layout>;
 };

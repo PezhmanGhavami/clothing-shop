@@ -16,7 +16,7 @@ const ReviewStars = ({ rating }: IReviewStars) => {
           <AiFillStar key={rating} />
         ) : (
           <AiOutlineStar key={rating} />
-        )
+        ),
       )}
     </div>
   );

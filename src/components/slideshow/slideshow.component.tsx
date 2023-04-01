@@ -130,7 +130,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
         <span
           onClick={handlePreviousSlide}
           title={"Click to go to the previous slide"}
-          className="cursor-pointer py-4 px-7 text-2xl"
+          className="cursor-pointer px-7 py-4 text-2xl"
         >
           &#10094;
         </span>
@@ -139,7 +139,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
         <span
           onClick={handleNextSlide}
           title={"Click to go to the next slide"}
-          className="cursor-pointer py-4 px-7 text-2xl"
+          className="cursor-pointer px-7 py-4 text-2xl"
         >
           &#10095;
         </span>

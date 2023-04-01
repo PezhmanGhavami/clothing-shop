@@ -156,14 +156,14 @@ const FormModal = ({
   mutateReviews: () => void;
 }) => {
   const [ratingShadow, setRatingShadow] = useState(
-    formData.rating
+    formData.rating,
   );
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
     event: ChangeEvent<
       HTMLTextAreaElement | HTMLInputElement
-    >
+    >,
   ) => {
     setFormData((prev) => ({
       ...prev,
@@ -184,7 +184,7 @@ const FormModal = ({
     setRatingShadow(formData.rating);
   };
   const handleSubmit = async (
-    event: FormEvent<HTMLFormElement>
+    event: FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
     setIsLoading(true);
@@ -393,7 +393,7 @@ const ProductReviewsContainer = ({
     setShowUserReviews((prev) => !prev);
   };
   const handleSelectChange = (
-    event: ChangeEvent<HTMLSelectElement>
+    event: ChangeEvent<HTMLSelectElement>,
   ) => {
     setPage(1);
     setSelectedSortOption(event.target.value);
@@ -416,7 +416,7 @@ const ProductReviewsContainer = ({
   };
   const handleEditReview = (
     reviewID: string,
-    formData: IReviewFormData
+    formData: IReviewFormData,
   ) => {
     setReviewID(reviewID);
     setFormData(formData);

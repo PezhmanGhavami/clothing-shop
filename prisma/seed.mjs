@@ -371,7 +371,7 @@ async function seedDB() {
     for (const itemOfCategory of category.items) {
       const brandIndex = getRandomNumber(
         0,
-        brands.length - 1
+        brands.length - 1,
       );
 
       const discountChance = getRandomNumber(1, 10);
@@ -391,7 +391,7 @@ async function seedDB() {
       let reviewsLength = getRandomNumber(0, sold);
       const reviewRatings = getReviewRatings(
         getRandomNumber(0, 10),
-        reviewsLength
+        reviewsLength,
       );
 
       await prisma.item.create({
@@ -479,9 +479,9 @@ async function seedDB() {
                 (
                   item.reviews.reduce(
                     (acc, { rating }) => acc + rating,
-                    0
+                    0,
                   ) / item.reviews.length
-                ).toFixed(1)
+                ).toFixed(1),
               )
             : 0,
       },

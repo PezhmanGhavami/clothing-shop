@@ -71,7 +71,7 @@ const Categories: NextPageWithLayout<ICategories> = ({
 };
 
 Categories.getLayout = function getLayout(
-  page: ReactElement
+  page: ReactElement,
 ) {
   return <Layout>{page}</Layout>;
 };

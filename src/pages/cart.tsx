@@ -19,7 +19,7 @@ const Cart: NextPageWithLayout = () => {
   const router = useRouter();
 
   const handleCheckout = (
-    event: MouseEvent<HTMLAnchorElement>
+    event: MouseEvent<HTMLAnchorElement>,
   ) => {
     if (cartIsUpdating || !cart || cart.count === 0) {
       event.preventDefault();
@@ -28,7 +28,7 @@ const Cart: NextPageWithLayout = () => {
           ? "Cart is updating please wait."
           : cart.count === 0
           ? "Cart is empty."
-          : "Something went wrong..."
+          : "Something went wrong...",
       );
     }
   };
@@ -41,7 +41,7 @@ const Cart: NextPageWithLayout = () => {
     );
   }
   return (
-    <div className="mx-auto py-6 px-5 sm:py-10 md:w-3/5 lg:px-8 xl:w-2/5">
+    <div className="mx-auto px-5 py-6 sm:py-10 md:w-3/5 lg:px-8 xl:w-2/5">
       <Meta title="Cart" />
       {/* Heading */}
       <div className="flex items-center justify-between">
@@ -85,7 +85,7 @@ const Cart: NextPageWithLayout = () => {
             <p>You are saving</p>
             <p>
               {currencyFormatter.format(
-                cart.total - cart.discountedTotal
+                cart.total - cart.discountedTotal,
               )}
             </p>
           </div>
@@ -93,7 +93,7 @@ const Cart: NextPageWithLayout = () => {
             <p>Order total</p>
             <p>
               {currencyFormatter.format(
-                cart.discountedTotal
+                cart.discountedTotal,
               )}
             </p>
           </div>

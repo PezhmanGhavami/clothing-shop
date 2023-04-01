@@ -48,7 +48,7 @@ const SignUp: NextPageWithLayout = () => {
     formFields;
 
   const handleChange = (
-    event: ChangeEvent<HTMLInputElement>
+    event: ChangeEvent<HTMLInputElement>,
   ) => {
     setFormFields((prev) => ({
       ...prev,
@@ -83,7 +83,7 @@ const SignUp: NextPageWithLayout = () => {
         toast.error(
           emailStatus === inputStatus.EMPTY
             ? "You should provide an email address."
-            : "Invalid email address."
+            : "Invalid email address.",
         );
     }
 
@@ -116,7 +116,7 @@ const SignUp: NextPageWithLayout = () => {
   };
 
   const handleSubmit = async (
-    event: FormEvent<HTMLFormElement>
+    event: FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
 
@@ -143,7 +143,7 @@ const SignUp: NextPageWithLayout = () => {
           headers,
           body: JSON.stringify(userData),
         }),
-        false
+        false,
       );
       //TODO - maybe add a prop to redirect to the corrct page after login
     } catch (error) {

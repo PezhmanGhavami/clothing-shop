@@ -9,7 +9,7 @@ import type { IUser } from "./index";
 
 export default withIronSessionApiRoute(
   loginRoute,
-  sessionOptions
+  sessionOptions,
 );
 
 export interface IApiMessage {
@@ -19,7 +19,7 @@ export interface IApiMessage {
 
 async function loginRoute(
   req: NextApiRequest,
-  res: NextApiResponse<IUser | IApiMessage>
+  res: NextApiResponse<IUser | IApiMessage>,
 ) {
   if (req.method === "POST") {
     try {
@@ -49,7 +49,7 @@ async function loginRoute(
 
       const passwordIsCorrect = await bcrypt.compare(
         password,
-        userExists.password
+        userExists.password,
       );
       if (!passwordIsCorrect) {
         res.status(401);

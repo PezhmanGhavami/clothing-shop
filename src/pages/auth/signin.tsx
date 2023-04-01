@@ -60,7 +60,7 @@ const Login: NextPageWithLayout = () => {
   const { email, password } = formFields;
 
   const handleChange = (
-    event: ChangeEvent<HTMLInputElement>
+    event: ChangeEvent<HTMLInputElement>,
   ) => {
     setFormFields((prev) => ({
       ...prev,
@@ -89,7 +89,7 @@ const Login: NextPageWithLayout = () => {
         toast.error(
           emailStatus === inputStatus.EMPTY
             ? "You should provide an email address."
-            : "Invalid email address."
+            : "Invalid email address.",
         );
     }
 
@@ -104,7 +104,7 @@ const Login: NextPageWithLayout = () => {
   };
 
   const handleSubmit = async (
-    event: FormEvent<HTMLFormElement>
+    event: FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
 
@@ -129,7 +129,7 @@ const Login: NextPageWithLayout = () => {
           headers,
           body: JSON.stringify(userData),
         }),
-        false
+        false,
       );
       //TODO - maybe add a prop to redirect to the corrct page after login
     } catch (error) {
@@ -228,7 +228,7 @@ const Login: NextPageWithLayout = () => {
             {/* Show password button */}
             <span
               tabIndex={3}
-              className="absolute top-8 right-1 cursor-pointer p-1"
+              className="absolute right-1 top-8 cursor-pointer p-1"
               onClick={toggleShowPassword}
               title={`Click to ${
                 showPassword ? "Hide" : "Show"

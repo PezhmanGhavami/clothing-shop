@@ -55,19 +55,19 @@ const Navbar = () => {
   useEffect(() => {
     const handleLoadingError = () => {
       toast.error(
-        "Coudln't load the page; Please try again."
+        "Coudln't load the page; Please try again.",
       );
     };
 
     router.events.on(
       "routeChangeError",
-      handleLoadingError
+      handleLoadingError,
     );
 
     return () => {
       router.events.off(
         "routeChangeError",
-        handleLoadingError
+        handleLoadingError,
       );
     };
   }, [router]);
@@ -95,8 +95,8 @@ const Navbar = () => {
         </div>
         {/* Links */}
         <ul
-          className={`fixed top-0 right-0 z-40 flex h-screen w-2/4 translate-x-full flex-col items-center justify-center bg-neutral-200 shadow-2xl transition-transform duration-500 ease-in-out dark:bg-slate-700 md:static md:z-auto md:h-auto md:w-auto md:translate-x-0 md:flex-row md:bg-inherit md:shadow-none md:transition-none md:dark:bg-inherit ${
-            openModal ? "translate-x-0" : ""
+          className={`fixed right-0 top-0 z-40 flex h-screen w-2/4 flex-col items-center justify-center bg-neutral-200 shadow-2xl transition-transform duration-500 ease-in-out dark:bg-slate-700 md:static md:z-auto md:h-auto md:w-auto md:translate-x-0 md:flex-row md:bg-inherit md:shadow-none md:transition-none md:dark:bg-inherit ${
+            openModal ? "translate-x-0" : "translate-x-full"
           }`}
         >
           {navLinks.links.map((link, index) => (
@@ -135,9 +135,9 @@ const Navbar = () => {
           >
             <FaUser />
             {/* Triangle */}
-            <div className="invisible absolute top-10 z-30 h-4 w-4 rotate-45 border border-r-transparent border-b-transparent bg-neutral-50 group-focus-within:visible group-active:visible dark:border-slate-600 dark:border-r-transparent dark:border-b-transparent dark:bg-slate-800" />
+            <div className="invisible absolute top-10 z-30 h-4 w-4 rotate-45 border border-b-transparent border-r-transparent bg-neutral-50 group-focus-within:visible group-active:visible dark:border-slate-600 dark:border-b-transparent dark:border-r-transparent dark:bg-slate-800" />
             {/* Content */}
-            <div className="invisible absolute top-12 z-20 flex flex-col rounded-lg border bg-neutral-50 px-4 pt-3 pb-4 shadow-md group-focus-within:visible group-active:visible dark:border-slate-600 dark:bg-slate-800">
+            <div className="invisible absolute top-12 z-20 flex flex-col rounded-lg border bg-neutral-50 px-4 pb-4 pt-3 shadow-md group-focus-within:visible group-active:visible dark:border-slate-600 dark:bg-slate-800">
               {!user?.isLoggedIn ? (
                 <>
                   <Link

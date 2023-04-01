@@ -8,7 +8,7 @@ export default async function searchHandler(
   req: NextApiRequest,
   res: NextApiResponse<
     IProductCardContainerData | IApiMessage
-  >
+  >,
 ) {
   if (req.method === "GET") {
     try {
@@ -20,7 +20,7 @@ export default async function searchHandler(
       if (searchQuery.length < 3) {
         res.status(400);
         throw new Error(
-          "Search query needs to be bigger than 3 characters."
+          "Search query needs to be bigger than 3 characters.",
         );
       }
       const itemQuery = await prisma.item.findMany({
@@ -75,8 +75,8 @@ export default async function searchHandler(
         (item, index, self) =>
           index ===
           self.findIndex(
-            (nestedItem) => nestedItem.id === item.id
-          )
+            (nestedItem) => nestedItem.id === item.id,
+          ),
       );
       if (queryResponse.items.length === 0) {
         return res.status(404).json({

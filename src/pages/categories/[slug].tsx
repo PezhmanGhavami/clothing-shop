@@ -92,7 +92,7 @@ const Category: NextPageWithLayout<ICategoryComp> = ({
 };
 
 Category.getLayout = function getLayout(
-  page: ReactElement
+  page: ReactElement,
 ) {
   return <Layout>{page}</Layout>;
 };

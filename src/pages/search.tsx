@@ -27,12 +27,12 @@ const Search: NextPageWithLayout = () => {
   const router = useRouter();
 
   const handleChange = (
-    event: ChangeEvent<HTMLInputElement>
+    event: ChangeEvent<HTMLInputElement>,
   ) => {
     setSearchInput(event.target.value);
   };
   const handleSubmit = (
-    event: FormEvent<HTMLFormElement>
+    event: FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
     if (searchInput.length >= 3) {
@@ -54,7 +54,7 @@ const Search: NextPageWithLayout = () => {
         .finally(() => setIsLoading(false));
     } else {
       setError(
-        "Your serach needs to atleast be 3 characters"
+        "Your serach needs to atleast be 3 characters",
       );
     }
   };

@@ -9,7 +9,7 @@ import { IProductCard } from "../../../components/product-card/product-card.comp
 
 export default withIronSessionApiRoute(
   cartRoute,
-  sessionOptions
+  sessionOptions,
 );
 
 export interface ICartItem extends IProductCard {
@@ -33,12 +33,12 @@ const emptyCart: ICart = {
 const checkForItemInCartThenChangeItAccordingly = (
   cartItems: ICartItem[],
   product: IProductCard,
-  changeValue: number
+  changeValue: number,
 ) => {
   const localCartItems = [...cartItems];
 
   const productIndex = cartItems.findIndex(
-    (item) => item.id === product.id
+    (item) => item.id === product.id,
   );
 
   if (productIndex !== -1) {
@@ -68,7 +68,7 @@ const checkForItemInCartThenChangeItAccordingly = (
 
     if (localCartItems[productIndex].quantity === 0) {
       return localCartItems.filter(
-        (item) => item.id !== product.id
+        (item) => item.id !== product.id,
       );
     }
 
@@ -81,22 +81,22 @@ const checkForItemInCartThenChangeItAccordingly = (
 
 const cartItemsUpdatePayloadMaker = (
   newCartItems: ICartItem[],
-  cart: ICart
+  cart: ICart,
 ): ICart => {
   const newTotal = newCartItems.reduce(
     (acc, item) => (acc += item.quantity * item.price),
-    0
+    0,
   );
   const newCount = newCartItems.reduce(
     (acc, item) => (acc += item.quantity),
-    0
+    0,
   );
   const newDiscountedTotal = newCartItems.reduce(
     (acc, item) =>
       item.dsicountedPrice
         ? (acc += item.quantity * item.dsicountedPrice)
         : (acc += item.quantity * item.price),
-    0
+    0,
   );
   const payload = {
     ...cart,
@@ -111,7 +111,7 @@ const cartItemsUpdatePayloadMaker = (
 
 async function cartRoute(
   req: NextApiRequest,
-  res: NextApiResponse<ICart | IApiMessage>
+  res: NextApiResponse<ICart | IApiMessage>,
 ) {
   if (req.method === "GET") {
     const cart = req.session.cart;
@@ -136,7 +136,7 @@ async function cartRoute(
         // Remove an item
         if (operation === 0) {
           const cartItems = cart.items.filter(
-            (item) => item.id !== product.id
+            (item) => item.id !== product.id,
           );
           const newCart = {
             ...cartItemsUpdatePayloadMaker(cartItems, cart),
@@ -166,7 +166,7 @@ async function cartRoute(
             checkForItemInCartThenChangeItAccordingly(
               cart.items,
               product,
-              operation
+              operation,
             );
           const newCart = {
             ...cartItemsUpdatePayloadMaker(cartItems, cart),

@@ -30,7 +30,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
   };
   const itemIsInCart = () => {
     return cart?.items.find(
-      (item) => item.id === product.id
+      (item) => item.id === product.id,
     );
   };
   const maxInventoryReached = () => {
@@ -106,7 +106,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
                   <span className="text-red-700 dark:text-red-400">
                     {" "}
                     {currencyFormatter.format(
-                      product.dsicountedPrice
+                      product.dsicountedPrice,
                     )}
                   </span>
                 )}
@@ -129,7 +129,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
             </p>
           </div>
           {/* Description and seperator */}
-          <div className="mt-4 mb-6 flex border-b border-b-slate-200 pb-6">
+          <div className="mb-6 mt-4 flex border-b border-b-slate-200 pb-6">
             <p>{product.description}</p>
           </div>
           {/* Buttons (Add to cart and wishlist) */}

@@ -10,7 +10,7 @@ interface IProductReview {
   handleDeleteReview: (reviewID: string) => void;
   handleEditReview: (
     reviewID: string,
-    formData: IReviewFormData
+    formData: IReviewFormData,
   ) => void;
 }
 
@@ -24,7 +24,9 @@ const ProductReview = ({
   const [openModal, setOpenModal] = useState(false);
   useEffect(() => {
     setReviewDate(
-      new Date(review.createdAt).toLocaleDateString("en-GB")
+      new Date(review.createdAt).toLocaleDateString(
+        "en-GB",
+      ),
     );
   }, [review.createdAt]);
 
@@ -49,7 +51,7 @@ const ProductReview = ({
   };
 
   return (
-    <div className="relative pt-6 pb-12 sm:flex">
+    <div className="relative pb-12 pt-6 sm:flex">
       {/* Confirm delete modal */}
       {openModal && (
         <>
@@ -80,7 +82,7 @@ const ProductReview = ({
       {!review.published && (
         <span
           className={
-            "absolute top-1 right-0 z-10 rounded-md bg-yellow-600 px-2 text-white"
+            "absolute right-0 top-1 z-10 rounded-md bg-yellow-600 px-2 text-white"
           }
         >
           Under review

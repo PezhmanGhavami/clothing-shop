@@ -23,7 +23,7 @@ const NotFound: NextPageWithLayout = () => {
 };
 
 NotFound.getLayout = function getLayout(
-  page: ReactElement
+  page: ReactElement,
 ) {
   return <Layout>{page}</Layout>;
 };
