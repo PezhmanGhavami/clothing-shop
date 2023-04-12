@@ -13,6 +13,7 @@ interface ISlideshow {
 
 const Slideshow = ({ slides }: ISlideshow) => {
   const [currentSlide, setCurrentSlide] = useState(1);
+  const [slideDiff, setSlideDiff] = useState(0.0);
   const [touchPosition, setTouchPosition] = useState<
     number | null
   >(null);
@@ -40,6 +41,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
     setCurrentSlide(index);
   };
 
+  // Slideshow auto swipe timer
   useEffect(() => {
     const timer = setInterval(() => {
       //console.log("interval");
@@ -51,12 +53,16 @@ const Slideshow = ({ slides }: ISlideshow) => {
   }, [autoSwipe, pausingEvent, handleNextSlide]);
 
   const handleTouchStart = (event: TouchEvent) => {
-    //console.log("onTouchStart");
+    // console.log("onTouchStart");
     const touchDown = event.touches[0].clientX;
     setTouchPosition(touchDown);
+    setAutoSwipe(false);
   };
   const handleTouchEnd = (event: TouchEvent) => {
-    //console.log("onTouchEnd");
+    const { clientWidth } =
+      globalThis.document.documentElement;
+
+    // console.log("onTouchEnd");
     const touchDown = touchPosition;
 
     if (touchDown === null) {
@@ -66,14 +72,27 @@ const Slideshow = ({ slides }: ISlideshow) => {
     const currentTouch = event.changedTouches[0].clientX;
     const diff = touchDown - currentTouch;
 
-    if (diff > 5) {
+    if (diff > clientWidth / 4) {
       handleNextSlide();
     }
-    if (diff < -5) {
+    if (diff < -(clientWidth / 4)) {
       handlePreviousSlide();
     }
 
+    setAutoSwipe(true);
+    setAnimateSlides(true);
+    setSlideDiff(0.0);
     setTouchPosition(null);
+  };
+  const handleTouchMove = (event: TouchEvent) => {
+    const { clientWidth } =
+      globalThis.document.documentElement;
+
+    setAnimateSlides(false);
+    setSlideDiff(
+      ((touchPosition || 0) - event.touches[0].clientX) /
+        clientWidth,
+    );
   };
 
   const handleMouseOver = () => {
@@ -105,6 +124,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
+      onTouchMove={handleTouchMove}
       className="relative h-[65vh] select-none overflow-hidden bg-gray-200 text-white dark:bg-slate-500 md:h-[80vh]"
     >
       {/* Slides container */}
@@ -112,7 +132,9 @@ const Slideshow = ({ slides }: ISlideshow) => {
         onTransitionEnd={handleTransitionEnd}
         className="inline-flex h-full"
         style={{
-          transform: `translateX(-${currentSlide * 100}vw)`,
+          transform: `translateX(-${
+            (currentSlide + slideDiff) * 100
+          }vw)`,
           transition: `${
             animateSlides ? "transform" : "none"
           } 500ms ease`,

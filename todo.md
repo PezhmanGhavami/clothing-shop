@@ -8,7 +8,7 @@
   - [] Edit user data
   - [] View wishlist
   - [] Orders and invoices
-- [] Improve the sildeshow by using a slideshow library or do it yourself or even maybe both!
+- [x] Improve the sildeshow by using a slideshow library or do it yourself or even maybe both!
 - [x] Improve Product card component
   - [x] Improve the product card component price listing when there is an offer going on
   - [x] Improve the color contrast on product status bubble
@@ -27,4 +27,4 @@
 - [] Try clsx to organize the classNames in a new branch
 - [] Try typewind to organize the classNames in a new branch
 - [] Fix browser autofill style change
-- [] Add .env.example
+- [x] Add .env.example
