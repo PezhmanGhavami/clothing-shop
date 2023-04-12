@@ -124,7 +124,7 @@ const Checkout: NextPageWithLayout = () => {
             <div
               className={
                 formInputStyles.inputContainerClasses +
-                "flex justify-between"
+                "flex flex-col justify-between space-y-4 sm:flex-row sm:space-y-0"
               }
             >
               <div>
