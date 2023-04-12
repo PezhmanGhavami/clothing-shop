@@ -59,6 +59,17 @@ const Slideshow = ({ slides }: ISlideshow) => {
     setPointerPosition(touchDown);
     setAutoSwipe(false);
   };
+  const handleTouchMove = (event: TouchEvent) => {
+    if (!pointerPosition) return;
+
+    const { clientWidth } =
+      globalThis.document.documentElement;
+
+    setSlideDiff(
+      (pointerPosition - event.touches[0].clientX) /
+        clientWidth,
+    );
+  };
   const handleTouchEnd = (event: TouchEvent) => {
     const { clientWidth } =
       globalThis.document.documentElement;
@@ -78,21 +89,8 @@ const Slideshow = ({ slides }: ISlideshow) => {
     }
 
     setAutoSwipe(true);
-    setAnimateSlides(true);
     setSlideDiff(0.0);
     setPointerPosition(null);
-  };
-  const handleTouchMove = (event: TouchEvent) => {
-    if (!pointerPosition) return;
-
-    const { clientWidth } =
-      globalThis.document.documentElement;
-
-    setAnimateSlides(false);
-    setSlideDiff(
-      (pointerPosition - event.touches[0].clientX) /
-        clientWidth,
-    );
   };
 
   const handleMouseOver = () => {
@@ -106,6 +104,17 @@ const Slideshow = ({ slides }: ISlideshow) => {
   const handleMouseDown = (event: MouseEvent) => {
     setMouseDown(true);
     setPointerPosition(event.clientX);
+  };
+  const handlePointerMove = (event: PointerEvent) => {
+    if (event.pointerType !== "mouse") return;
+    if (!mouseDown || !pointerPosition) return;
+
+    const { clientWidth } =
+      globalThis.document.documentElement;
+
+    setSlideDiff(
+      (pointerPosition - event.clientX) / clientWidth,
+    );
   };
   const handleMouseUp = (event: MouseEvent) => {
     const { clientWidth } =
@@ -125,21 +134,8 @@ const Slideshow = ({ slides }: ISlideshow) => {
     }
 
     setMouseDown(false);
-    setAnimateSlides(true);
     setSlideDiff(0.0);
     setPointerPosition(null);
-  };
-  const handlePointerMove = (event: PointerEvent) => {
-    if (event.pointerType !== "mouse") return;
-    if (!mouseDown || !pointerPosition) return;
-
-    const { clientWidth } =
-      globalThis.document.documentElement;
-
-    setAnimateSlides(false);
-    setSlideDiff(
-      (pointerPosition - event.clientX) / clientWidth,
-    );
   };
 
   const handleTransitionEnd = () => {
@@ -177,7 +173,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
           }vw)`,
           transition: `${
             animateSlides ? "transform" : "none"
-          } 500ms ease`,
+          } ${pointerPosition ? "0ms" : "500ms"} ease`,
         }}
       >
         <Slide slide={slides[slides.length - 1]} />
