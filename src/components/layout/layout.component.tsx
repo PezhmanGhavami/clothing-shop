@@ -34,10 +34,10 @@ const Layout = ({ children }: ILayout) => {
     });
   }, []);
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <ToastContainer />
       <Navbar />
-      <main className="min-h-[85vh] border-y dark:border-y-slate-700">
+      <main className="h-full grow border-y dark:border-y-slate-700">
         {children}
       </main>
       <Footer />
