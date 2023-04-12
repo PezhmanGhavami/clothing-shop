@@ -3,6 +3,8 @@ import {
   useEffect,
   useCallback,
   TouchEvent,
+  MouseEvent,
+  PointerEvent,
 } from "react";
 
 import Slide, { slide } from "../slide/slide.component";
@@ -14,9 +16,10 @@ interface ISlideshow {
 const Slideshow = ({ slides }: ISlideshow) => {
   const [currentSlide, setCurrentSlide] = useState(1);
   const [slideDiff, setSlideDiff] = useState(0.0);
-  const [touchPosition, setTouchPosition] = useState<
+  const [pointerPosition, setPointerPosition] = useState<
     number | null
   >(null);
+  const [mouseDown, setMouseDown] = useState(false);
   const [animateSlides, setAnimateSlides] = useState(true);
   const [autoSwipe, setAutoSwipe] = useState(true);
   const [pausingEvent, setPausingEvent] = useState(0);
@@ -44,7 +47,6 @@ const Slideshow = ({ slides }: ISlideshow) => {
   // Slideshow auto swipe timer
   useEffect(() => {
     const timer = setInterval(() => {
-      //console.log("interval");
       if (autoSwipe && Date.now() - pausingEvent >= 2500) {
         handleNextSlide();
       }
@@ -53,24 +55,20 @@ const Slideshow = ({ slides }: ISlideshow) => {
   }, [autoSwipe, pausingEvent, handleNextSlide]);
 
   const handleTouchStart = (event: TouchEvent) => {
-    // console.log("onTouchStart");
     const touchDown = event.touches[0].clientX;
-    setTouchPosition(touchDown);
+    setPointerPosition(touchDown);
     setAutoSwipe(false);
   };
   const handleTouchEnd = (event: TouchEvent) => {
     const { clientWidth } =
       globalThis.document.documentElement;
 
-    // console.log("onTouchEnd");
-    const touchDown = touchPosition;
-
-    if (touchDown === null) {
+    if (pointerPosition === null) {
       return;
     }
 
     const currentTouch = event.changedTouches[0].clientX;
-    const diff = touchDown - currentTouch;
+    const diff = pointerPosition - currentTouch;
 
     if (diff > clientWidth / 4) {
       handleNextSlide();
@@ -82,37 +80,73 @@ const Slideshow = ({ slides }: ISlideshow) => {
     setAutoSwipe(true);
     setAnimateSlides(true);
     setSlideDiff(0.0);
-    setTouchPosition(null);
+    setPointerPosition(null);
   };
   const handleTouchMove = (event: TouchEvent) => {
+    if (!pointerPosition) return;
+
     const { clientWidth } =
       globalThis.document.documentElement;
 
     setAnimateSlides(false);
     setSlideDiff(
-      ((touchPosition || 0) - event.touches[0].clientX) /
+      (pointerPosition - event.touches[0].clientX) /
         clientWidth,
     );
   };
 
   const handleMouseOver = () => {
-    //console.log("mouseOver");
     setPausingEvent(Date.now());
     setAutoSwipe(false);
   };
   const handleMouseLeave = () => {
-    //console.log("mouseLeave");
     setPausingEvent(Date.now());
     setAutoSwipe(true);
+  };
+  const handleMouseDown = (event: MouseEvent) => {
+    setMouseDown(true);
+    setPointerPosition(event.clientX);
+  };
+  const handleMouseUp = (event: MouseEvent) => {
+    const { clientWidth } =
+      globalThis.document.documentElement;
+
+    if (pointerPosition === null) {
+      return;
+    }
+
+    const diff = pointerPosition - event.clientX;
+
+    if (diff > clientWidth / 4) {
+      handleNextSlide();
+    }
+    if (diff < -(clientWidth / 4)) {
+      handlePreviousSlide();
+    }
+
+    setMouseDown(false);
+    setAnimateSlides(true);
+    setSlideDiff(0.0);
+    setPointerPosition(null);
+  };
+  const handlePointerMove = (event: PointerEvent) => {
+    if (event.pointerType !== "mouse") return;
+    if (!mouseDown || !pointerPosition) return;
+
+    const { clientWidth } =
+      globalThis.document.documentElement;
+
+    setAnimateSlides(false);
+    setSlideDiff(
+      (pointerPosition - event.clientX) / clientWidth,
+    );
   };
 
   const handleTransitionEnd = () => {
     if (currentSlide <= 0) {
-      // console.log("currentSlide <= 0");
       setAnimateSlides(false);
       setCurrentSlide(slides.length);
     } else if (currentSlide >= slides.length + 1) {
-      // console.log("currentSlide >= slides.length + 1");
       setAnimateSlides(false);
       setCurrentSlide(1);
     }
@@ -122,10 +156,16 @@ const Slideshow = ({ slides }: ISlideshow) => {
     <div
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onPointerMove={handlePointerMove}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onTouchMove={handleTouchMove}
       className="relative h-[65vh] select-none overflow-hidden bg-gray-200 text-white dark:bg-slate-500 md:h-[80vh]"
+      style={{
+        cursor: mouseDown ? "grabbing" : "grab",
+      }}
     >
       {/* Slides container */}
       <div
