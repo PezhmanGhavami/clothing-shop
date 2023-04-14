@@ -72,6 +72,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const groupedOfferedProducts = {
     name: "Special offers",
     items: specialOffers,
+    slug: "offers",
   };
 
   return {
@@ -97,7 +98,8 @@ const Home: NextPageWithLayout<IHome> = ({
       <Slideshow slides={landingDir} />
       <ProductCardContainer
         showName={true}
-        showLink={false}
+        showLink={true}
+        linkIsCategory={false}
         productGroup={specialOffers}
       />
       <ProductCardContainer

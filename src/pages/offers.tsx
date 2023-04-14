@@ -43,6 +43,7 @@ const Offer: NextPageWithLayout<IOffer> = ({
       <ProductCardContainer
         showName={false}
         showLink={false}
+        gridOnMobile={true}
         productGroup={offerListing}
       />
     </div>

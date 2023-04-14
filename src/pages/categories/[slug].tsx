@@ -85,6 +85,7 @@ const Category: NextPageWithLayout<ICategoryComp> = ({
       <ProductCardContainer
         showName={false}
         showLink={false}
+        gridOnMobile={true}
         productGroup={category}
       />
     </div>

@@ -13,12 +13,16 @@ interface IProductCardContainer {
   productGroup: IProductCardContainerData;
   showName: boolean;
   showLink: boolean;
+  linkIsCategory?: boolean;
+  gridOnMobile?: boolean;
 }
 
 const ProductCardContainer = ({
   productGroup,
   showLink,
   showName,
+  linkIsCategory = true,
+  gridOnMobile = false,
 }: IProductCardContainer) => {
   return (
     <div className="mx-auto max-w-2xl px-4 py-6 sm:pt-10 lg:max-w-7xl lg:px-8">
@@ -30,7 +34,11 @@ const ProductCardContainer = ({
         )}
         {showLink && productGroup.slug && (
           <Link
-            href={"/categories/" + productGroup.slug}
+            href={
+              linkIsCategory
+                ? `/categories/${productGroup.slug}`
+                : `/${productGroup.slug}`
+            }
             className="text-blue-700 hover:underline dark:text-blue-400"
           >
             Shop the collection{" "}
@@ -38,11 +46,22 @@ const ProductCardContainer = ({
           </Link>
         )}
       </div>
-
-      <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-6 xl:gap-x-8">
-        {productGroup.items.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+      <div className="overflow-x-scroll sm:overflow-auto">
+        <div
+          className={`mt-6 gap-x-6 gap-y-10 sm:grid sm:grid-cols-3 lg:grid-cols-6 xl:gap-x-8 ${
+            gridOnMobile
+              ? "grid grid-cols-2"
+              : "inline-flex"
+          }`}
+        >
+          {productGroup.items.map((product) => (
+            <ProductCard
+              key={product.id}
+              gridOnMobile={gridOnMobile}
+              product={product}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

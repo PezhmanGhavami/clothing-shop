@@ -15,13 +15,17 @@ export interface IProductCard {
 
 interface IProductCardComponent {
   product: IProductCard;
+  gridOnMobile: boolean;
 }
 
 const ProductCard = ({
   product,
+  gridOnMobile,
 }: IProductCardComponent) => {
   return (
-    <div>
+    <div
+      className={gridOnMobile ? "" : "w-[50vw] sm:w-auto"}
+    >
       <Link href={"/product/" + product.id}>
         <div className="relative h-72 w-full overflow-hidden rounded-md bg-gray-200">
           <span

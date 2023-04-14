@@ -130,6 +130,7 @@ const Search: NextPageWithLayout = () => {
             productGroup={foundProducts}
             showLink={false}
             showName={true}
+            gridOnMobile={true}
           />
         ) : (
           ""
