@@ -17,11 +17,11 @@ const CustomToast = () => {
       </p>
       <a
         className="text-blue-600 hover:underline dark:text-blue-300"
-        href="https://github.com/PejmanG/clothing-shop"
+        href="https://github.com/PezhmanGhavami/clothing-shop"
         target="_blank"
         rel="noreferrer"
       >
-        https://github.com/PejmanG/clothing-shop
+        https://github.com/PezhmanGhavami/clothing-shop
       </a>
     </div>
   );
