@@ -72,7 +72,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const groupedOfferedProducts = {
     name: "Special offers",
     items: specialOffers,
-    slug: "offers",
+    slug: "/offers",
   };
 
   return {

@@ -37,7 +37,7 @@ const ProductCardContainer = ({
             href={
               linkIsCategory
                 ? `/categories/${productGroup.slug}`
-                : `/${productGroup.slug}`
+                : productGroup.slug
             }
             className="text-blue-700 hover:underline dark:text-blue-400"
           >
