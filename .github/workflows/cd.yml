@@ -21,6 +21,8 @@ jobs:
           echo SECRET_COOKIE_PASSWORD=${{ secrets.SECRET_COOKIE_PASSWORD }} >> .env
       - name: Installing dependencies
         run: npm ci
+      - name: Installing sharp
+        run: npm i sharp
       - name: Buillding a production version
         run: npm run build
       - name: Restarting the server
