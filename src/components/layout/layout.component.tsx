@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 import Navbar from "../navbar/navbar.component";
 import Footer from "../footer/footer.component";
+
+import { ThemeContext } from "../../context/theme.context";
 
 interface ILayout {
   children: React.ReactNode;
@@ -28,11 +30,18 @@ const CustomToast = () => {
 };
 
 const Layout = ({ children }: ILayout) => {
+  const { theme } = useContext(ThemeContext);
+
   useEffect(() => {
     toast.info(CustomToast, {
       autoClose: false,
     });
   }, []);
+
+  if (!theme) {
+    return <div></div>;
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <ToastContainer />
