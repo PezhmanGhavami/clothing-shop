@@ -2,18 +2,18 @@ import Head from "next/head";
 
 interface IMeta {
   title: string;
-  keywords: string;
-  description: string;
-  oGImageUrl: string;
-  tCImageUrl: string;
+  keywords?: string;
+  description?: string;
+  oGImageUrl?: string;
+  tCImageUrl?: string;
 }
 
 const Meta = ({
   title,
-  keywords,
-  description,
-  oGImageUrl,
-  tCImageUrl,
+  keywords = "cloth, clothing, shop, clothing shop, mens clothing, womens clothing, demo",
+  description = "A demo clothing shop made for educational purposes",
+  oGImageUrl = "https://res.cloudinary.com/drsgyshsf/image/upload/v1674136825/clothing-shop/og-and-tc/clothing-shop-mockup-og_pbf8jn.png",
+  tCImageUrl = "https://res.cloudinary.com/drsgyshsf/image/upload/v1674136825/clothing-shop/og-and-tc/clothing-shop-mockup-tc_pndvba.png",
 }: IMeta) => {
   const correctTitle = `${title} | Clothing Shop - A demo clothing shop`;
   return (
@@ -54,16 +54,6 @@ const Meta = ({
       <meta property="og:image" content={oGImageUrl} />
     </Head>
   );
-};
-
-Meta.defaultProps = {
-  keywords:
-    "clothe, clothing, shop, clothing shop, mens clothing, womens clothing, demo",
-  description: "A demo clothing shop made for educational purposes",
-  oGImageUrl:
-    "https://res.cloudinary.com/drsgyshsf/image/upload/v1674136825/clothing-shop/og-and-tc/clothing-shop-mockup-og_pbf8jn.png",
-  tCImageUrl:
-    "https://res.cloudinary.com/drsgyshsf/image/upload/v1674136825/clothing-shop/og-and-tc/clothing-shop-mockup-tc_pndvba.png",
 };
 
 export default Meta;
