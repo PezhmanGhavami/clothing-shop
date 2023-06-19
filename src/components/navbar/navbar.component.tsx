@@ -111,6 +111,7 @@ const Navbar = () => {
           </Link>
           <button
             type="button"
+            onClick={(e) => e.currentTarget.focus()}
             title={
               !user?.isLoggedIn
                 ? "See your sign in options"
