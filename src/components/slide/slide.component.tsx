@@ -8,11 +8,7 @@ interface ISlide {
 
 const Slide = ({ slide }: ISlide) => {
   return (
-    <div
-      className={
-        "flex h-full w-screen items-center justify-center"
-      }
-    >
+    <div className={"flex h-full w-screen items-center justify-center"}>
       <div className="relative h-full w-full">
         <Image
           src={slide.imageUrl}
@@ -24,10 +20,7 @@ const Slide = ({ slide }: ISlide) => {
         />
       </div>
       {/* Info box */}
-      <div
-        title={"Click to browse " + slide.name}
-        className="absolute"
-      >
+      <div title={"Click to browse " + slide.name} className="absolute">
         <Link href={"categories/" + slide.name}>
           <div className="z-10 flex h-24 w-32 cursor-pointer flex-col items-center justify-center rounded-lg border text-center">
             <h3 className="capitalize">{slide.name}</h3>

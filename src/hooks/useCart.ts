@@ -13,9 +13,7 @@ const checkForItemInCartThenChangeItAccordingly = (
 ) => {
   const localCartItems = [...cartItems];
 
-  const productIndex = cartItems.findIndex(
-    (item) => item.id === product.id,
-  );
+  const productIndex = cartItems.findIndex((item) => item.id === product.id);
 
   if (productIndex !== -1) {
     if (
@@ -29,8 +27,7 @@ const checkForItemInCartThenChangeItAccordingly = (
       ) {
         localCartItems[productIndex] = {
           ...localCartItems[productIndex],
-          quantity:
-            localCartItems[productIndex].currentInventory,
+          quantity: localCartItems[productIndex].currentInventory,
         };
       }
       return localCartItems;
@@ -38,14 +35,11 @@ const checkForItemInCartThenChangeItAccordingly = (
 
     localCartItems[productIndex] = {
       ...localCartItems[productIndex],
-      quantity:
-        localCartItems[productIndex].quantity + changeValue,
+      quantity: localCartItems[productIndex].quantity + changeValue,
     };
 
     if (localCartItems[productIndex].quantity === 0) {
-      return localCartItems.filter(
-        (item) => item.id !== product.id,
-      );
+      return localCartItems.filter((item) => item.id !== product.id);
     }
 
     return localCartItems;
@@ -85,10 +79,7 @@ const cartItemsUpdatePayloadMaker = (
   return payload;
 };
 
-const updateFunction = (
-  product: IProductCard,
-  operation: number,
-) => {
+const updateFunction = (product: IProductCard, operation: number) => {
   const headers = new Headers({
     "Content-Type": "application/json",
   });
@@ -100,10 +91,7 @@ const updateFunction = (
 };
 
 export default function useCart() {
-  const { data, isValidating, mutate } = useSWR<ICart>(
-    "/api/cart",
-    fetcher,
-  );
+  const { data, isValidating, mutate } = useSWR<ICart>("/api/cart", fetcher);
 
   const mutateCart = async (
     product: IProductCard,
@@ -120,21 +108,18 @@ export default function useCart() {
         alert(error.message);
         toast.error(`${error.message}`);
       } else {
-        toast.error(
-          "Something went wrong while updating the cart.",
-        );
+        toast.error("Something went wrong while updating the cart.");
       }
     }
   };
 
   const addItemToCart = (product: IProductCard) => {
     if (data) {
-      const newCartItems =
-        checkForItemInCartThenChangeItAccordingly(
-          data.items,
-          product,
-          1,
-        );
+      const newCartItems = checkForItemInCartThenChangeItAccordingly(
+        data.items,
+        product,
+        1,
+      );
       const newData = {
         ...cartItemsUpdatePayloadMaker(newCartItems, data),
       };
@@ -144,12 +129,11 @@ export default function useCart() {
 
   const deductItemFromCart = (product: IProductCard) => {
     if (data) {
-      const newCartItems =
-        checkForItemInCartThenChangeItAccordingly(
-          data.items,
-          product,
-          -1,
-        );
+      const newCartItems = checkForItemInCartThenChangeItAccordingly(
+        data.items,
+        product,
+        -1,
+      );
       const newData = {
         ...cartItemsUpdatePayloadMaker(newCartItems, data),
       };
@@ -159,9 +143,7 @@ export default function useCart() {
 
   const removeItemFromCart = (product: IProductCard) => {
     if (data) {
-      const newCartItems = data.items.filter(
-        (item) => item.id !== product.id,
-      );
+      const newCartItems = data.items.filter((item) => item.id !== product.id);
       const newData = {
         ...cartItemsUpdatePayloadMaker(newCartItems, data),
       };

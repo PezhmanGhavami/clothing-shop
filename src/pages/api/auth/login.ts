@@ -7,10 +7,7 @@ import { prisma } from "../../../utils/prisma-client";
 
 import type { IUser } from "./index";
 
-export default withIronSessionApiRoute(
-  loginRoute,
-  sessionOptions,
-);
+export default withIronSessionApiRoute(loginRoute, sessionOptions);
 
 export interface IApiMessage {
   status: "ERROR" | "SUCCESS";
@@ -30,9 +27,7 @@ async function loginRoute(
         throw new Error("All fields are required.");
       }
 
-      const lowerCaseEmail = (
-        email as string
-      ).toLowerCase();
+      const lowerCaseEmail = (email as string).toLowerCase();
 
       const userExists = await prisma.user.findUnique({
         where: {
@@ -103,7 +98,5 @@ async function loginRoute(
       });
     }
   }
-  return res
-    .status(400)
-    .json({ status: "ERROR", message: "Bad Request." });
+  return res.status(400).json({ status: "ERROR", message: "Bad Request." });
 }

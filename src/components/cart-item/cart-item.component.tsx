@@ -12,11 +12,7 @@ interface ICartItemComponent {
 }
 
 const CartItem = ({ item }: ICartItemComponent) => {
-  const {
-    addItemToCart,
-    deductItemFromCart,
-    removeItemFromCart,
-  } = useCart();
+  const { addItemToCart, deductItemFromCart, removeItemFromCart } = useCart();
   const handleAdd = () => {
     addItemToCart(item);
   };
@@ -27,10 +23,7 @@ const CartItem = ({ item }: ICartItemComponent) => {
     removeItemFromCart(item);
   };
   return (
-    <li
-      key={item.id}
-      className="flex justify-between py-8 text-sm"
-    >
+    <li key={item.id} className="flex justify-between py-8 text-sm">
       {/* Image */}
       <Link href={"/product/" + item.id}>
         <div className="relative h-24 w-24 flex-none overflow-hidden rounded-lg border border-gray-200 sm:h-32 sm:w-32">
@@ -50,9 +43,7 @@ const CartItem = ({ item }: ICartItemComponent) => {
       <div className="flex flex-1 flex-col justify-between pl-4 sm:pl-6 lg:pl-8">
         {/* Name and price */}
         <div className="flex w-full items-center justify-between pb-6">
-          <Link href={"/product/" + item.id}>
-            {item.name}
-          </Link>
+          <Link href={"/product/" + item.id}>{item.name}</Link>
           <div>
             {" "}
             <p className={item.offer ? "line-through" : ""}>
@@ -61,9 +52,7 @@ const CartItem = ({ item }: ICartItemComponent) => {
             {item.dsicountedPrice && (
               <p className="text-red-700 dark:text-red-400">
                 {" "}
-                {currencyFormatter.format(
-                  item.dsicountedPrice,
-                )}
+                {currencyFormatter.format(item.dsicountedPrice)}
               </p>
             )}
           </div>
@@ -91,20 +80,12 @@ const CartItem = ({ item }: ICartItemComponent) => {
                 }
                 className="h-6 w-6 rounded-md border hover:bg-neutral-100 dark:hover:bg-slate-700"
               >
-                {item.quantity === 1 ? (
-                  <span>&#128465;</span>
-                ) : (
-                  <span>-</span>
-                )}
+                {item.quantity === 1 ? <span>&#128465;</span> : <span>-</span>}
               </button>
-              <span className="text-xs">
-                {item.quantity}
-              </span>
+              <span className="text-xs">{item.quantity}</span>
               <button
                 onClick={handleAdd}
-                disabled={
-                  item.quantity >= item.currentInventory
-                }
+                disabled={item.quantity >= item.currentInventory}
                 title={
                   item.quantity >= item.currentInventory
                     ? "Max inventory reached"

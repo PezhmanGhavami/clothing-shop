@@ -18,14 +18,9 @@ interface IProductCardComponent {
   gridOnMobile: boolean;
 }
 
-const ProductCard = ({
-  product,
-  gridOnMobile,
-}: IProductCardComponent) => {
+const ProductCard = ({ product, gridOnMobile }: IProductCardComponent) => {
   return (
-    <div
-      className={gridOnMobile ? "" : "w-[50vw] sm:w-auto"}
-    >
+    <div className={gridOnMobile ? "" : "w-[50vw] sm:w-auto"}>
       <Link href={"/product/" + product.id}>
         <div className="relative h-72 w-full overflow-hidden rounded-md bg-gray-200">
           <span
@@ -58,19 +53,13 @@ const ProductCard = ({
             {product.name}
           </h3>
           <div className="text-sm font-medium">
-            <p
-              className={
-                product.offer ? "line-through" : ""
-              }
-            >
+            <p className={product.offer ? "line-through" : ""}>
               {currencyFormatter.format(product.price)}
             </p>
             {product.dsicountedPrice && (
               <p className="text-red-700 dark:text-red-400">
                 {" "}
-                {currencyFormatter.format(
-                  product.dsicountedPrice,
-                )}
+                {currencyFormatter.format(product.dsicountedPrice)}
               </p>
             )}
           </div>

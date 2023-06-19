@@ -1,9 +1,4 @@
-import {
-  useState,
-  ReactElement,
-  ChangeEvent,
-  FormEvent,
-} from "react";
+import { useState, ReactElement, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/router";
 import { NextPageWithLayout } from "./_app";
 import { AiOutlineClose } from "react-icons/ai";
@@ -26,14 +21,10 @@ const Search: NextPageWithLayout = () => {
     useState<IProductCardContainerData | null>(null);
   const router = useRouter();
 
-  const handleChange = (
-    event: ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
   };
-  const handleSubmit = (
-    event: FormEvent<HTMLFormElement>,
-  ) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (searchInput.length >= 3) {
       setIsLoading(true);
@@ -53,30 +44,21 @@ const Search: NextPageWithLayout = () => {
         })
         .finally(() => setIsLoading(false));
     } else {
-      setError(
-        "Your serach needs to atleast be 3 characters",
-      );
+      setError("Your serach needs to atleast be 3 characters");
     }
   };
   // FIXME - The Html stucture is bad
   return (
     <div className="mx-auto py-6 sm:py-10">
       <Meta
-        title={
-          foundProducts
-            ? "Search results for " + searchInput
-            : "Search"
-        }
+        title={foundProducts ? "Search results for " + searchInput : "Search"}
       />
       {/* Search input */}
       <div className="px-4 lg:px-8">
         <div className="mx-auto rounded-xl border border-neutral-200 bg-neutral-50 p-4 shadow-md dark:border-slate-600 dark:bg-slate-800 md:w-3/5 xl:w-2/5">
           {/* Heading */}
           <div className="flex items-center justify-between">
-            <label
-              htmlFor="search"
-              className="text-xl font-medium md:text-2xl"
-            >
+            <label htmlFor="search" className="text-xl font-medium md:text-2xl">
               Search
             </label>
             <button
@@ -85,10 +67,7 @@ const Search: NextPageWithLayout = () => {
               className="hover:text-slate-600 dark:hover:text-slate-300"
               onClick={() => router.back()}
             >
-              <AiOutlineClose
-                className="h-6 w-6"
-                aria-hidden="true"
-              />
+              <AiOutlineClose className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
 

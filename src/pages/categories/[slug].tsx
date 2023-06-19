@@ -36,9 +36,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({
-  params,
-}) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const categorySlug = params?.slug as string;
 
   const category = await prisma.category.findUnique({
@@ -73,9 +71,7 @@ export const getStaticProps: GetStaticProps = async ({
   };
 };
 
-const Category: NextPageWithLayout<ICategoryComp> = ({
-  category,
-}) => {
+const Category: NextPageWithLayout<ICategoryComp> = ({ category }) => {
   return (
     <div className="py-6">
       <Meta title={category.name} />
@@ -92,9 +88,7 @@ const Category: NextPageWithLayout<ICategoryComp> = ({
   );
 };
 
-Category.getLayout = function getLayout(
-  page: ReactElement,
-) {
+Category.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
 

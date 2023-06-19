@@ -6,9 +6,7 @@ import { IApiMessage } from "./auth/login";
 
 export default async function searchHandler(
   req: NextApiRequest,
-  res: NextApiResponse<
-    IProductCardContainerData | IApiMessage
-  >,
+  res: NextApiResponse<IProductCardContainerData | IApiMessage>,
 ) {
   if (req.method === "GET") {
     try {
@@ -19,9 +17,7 @@ export default async function searchHandler(
       }
       if (searchQuery.length < 3) {
         res.status(400);
-        throw new Error(
-          "Search query needs to be bigger than 3 characters.",
-        );
+        throw new Error("Search query needs to be bigger than 3 characters.");
       }
       const itemQuery = await prisma.item.findMany({
         where: {
@@ -66,17 +62,11 @@ export default async function searchHandler(
         items: itemQuery,
       };
       categoryQuery.map((category) => {
-        queryResponse.items = [
-          ...queryResponse.items,
-          ...category.items,
-        ];
+        queryResponse.items = [...queryResponse.items, ...category.items];
       });
       queryResponse.items = queryResponse.items.filter(
         (item, index, self) =>
-          index ===
-          self.findIndex(
-            (nestedItem) => nestedItem.id === item.id,
-          ),
+          index === self.findIndex((nestedItem) => nestedItem.id === item.id),
       );
       if (queryResponse.items.length === 0) {
         return res.status(404).json({
@@ -92,7 +82,5 @@ export default async function searchHandler(
       });
     }
   }
-  return res
-    .status(400)
-    .json({ status: "ERROR", message: "Bad Request." });
+  return res.status(400).json({ status: "ERROR", message: "Bad Request." });
 }

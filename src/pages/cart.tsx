@@ -18,9 +18,7 @@ const Cart: NextPageWithLayout = () => {
   const { cart, cartIsUpdating } = useCart();
   const router = useRouter();
 
-  const handleCheckout = (
-    event: MouseEvent<HTMLAnchorElement>,
-  ) => {
+  const handleCheckout = (event: MouseEvent<HTMLAnchorElement>) => {
     if (cartIsUpdating || !cart || cart.count === 0) {
       event.preventDefault();
       toast.info(
@@ -45,19 +43,14 @@ const Cart: NextPageWithLayout = () => {
       <Meta title="Cart" />
       {/* Heading */}
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-medium md:text-2xl">
-          Shopping Cart
-        </h2>
+        <h2 className="text-xl font-medium md:text-2xl">Shopping Cart</h2>
         <button
           type="button"
           title="Close"
           className="hover:text-slate-600 dark:hover:text-slate-300"
           onClick={() => router.back()}
         >
-          <AiOutlineClose
-            className="h-6 w-6"
-            aria-hidden="true"
-          />
+          <AiOutlineClose className="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
       {/* Cart Items */}
@@ -83,19 +76,11 @@ const Cart: NextPageWithLayout = () => {
           </div>
           <div className="flex h-10 items-center justify-between">
             <p>You are saving</p>
-            <p>
-              {currencyFormatter.format(
-                cart.total - cart.discountedTotal,
-              )}
-            </p>
+            <p>{currencyFormatter.format(cart.total - cart.discountedTotal)}</p>
           </div>
           <div className="flex h-10 items-center justify-between">
             <p>Order total</p>
-            <p>
-              {currencyFormatter.format(
-                cart.discountedTotal,
-              )}
-            </p>
+            <p>{currencyFormatter.format(cart.discountedTotal)}</p>
           </div>
         </div>
         <Link

@@ -16,9 +16,7 @@ interface ISlideshow {
 const Slideshow = ({ slides }: ISlideshow) => {
   const [currentSlide, setCurrentSlide] = useState(1);
   const [slideDiff, setSlideDiff] = useState(0.0);
-  const [pointerPosition, setPointerPosition] = useState<
-    number | null
-  >(null);
+  const [pointerPosition, setPointerPosition] = useState<number | null>(null);
   const [mouseDown, setMouseDown] = useState(false);
   const [animateSlides, setAnimateSlides] = useState(true);
   const [autoSwipe, setAutoSwipe] = useState(true);
@@ -62,17 +60,12 @@ const Slideshow = ({ slides }: ISlideshow) => {
   const handleTouchMove = (event: TouchEvent) => {
     if (!pointerPosition) return;
 
-    const { clientWidth } =
-      globalThis.document.documentElement;
+    const { clientWidth } = globalThis.document.documentElement;
 
-    setSlideDiff(
-      (pointerPosition - event.touches[0].clientX) /
-        clientWidth,
-    );
+    setSlideDiff((pointerPosition - event.touches[0].clientX) / clientWidth);
   };
   const handleTouchEnd = (event: TouchEvent) => {
-    const { clientWidth } =
-      globalThis.document.documentElement;
+    const { clientWidth } = globalThis.document.documentElement;
 
     if (pointerPosition === null) {
       return;
@@ -109,16 +102,12 @@ const Slideshow = ({ slides }: ISlideshow) => {
     if (event.pointerType !== "mouse") return;
     if (!mouseDown || !pointerPosition) return;
 
-    const { clientWidth } =
-      globalThis.document.documentElement;
+    const { clientWidth } = globalThis.document.documentElement;
 
-    setSlideDiff(
-      (pointerPosition - event.clientX) / clientWidth,
-    );
+    setSlideDiff((pointerPosition - event.clientX) / clientWidth);
   };
   const handleMouseUp = (event: MouseEvent) => {
-    const { clientWidth } =
-      globalThis.document.documentElement;
+    const { clientWidth } = globalThis.document.documentElement;
 
     if (pointerPosition === null) {
       return;
@@ -168,12 +157,10 @@ const Slideshow = ({ slides }: ISlideshow) => {
         onTransitionEnd={handleTransitionEnd}
         className="inline-flex h-full"
         style={{
-          transform: `translateX(-${
-            (currentSlide + slideDiff) * 100
-          }vw)`,
-          transition: `${
-            animateSlides ? "transform" : "none"
-          } ${pointerPosition ? "0ms" : "500ms"} ease`,
+          transform: `translateX(-${(currentSlide + slideDiff) * 100}vw)`,
+          transition: `${animateSlides ? "transform" : "none"} ${
+            pointerPosition ? "0ms" : "500ms"
+          } ease`,
         }}
       >
         <Slide slide={slides[slides.length - 1]} />
@@ -215,9 +202,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
           >
             <div
               className={`w-7 border-b${
-                index + 1 === currentSlide
-                  ? " border-b-2"
-                  : ""
+                index + 1 === currentSlide ? " border-b-2" : ""
               }`}
             />
           </div>

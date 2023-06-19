@@ -11,10 +11,7 @@ export interface IUser {
   userID: string;
 }
 
-export default withIronSessionApiRoute(
-  userRoute,
-  sessionOptions,
-);
+export default withIronSessionApiRoute(userRoute, sessionOptions);
 
 async function userRoute(
   req: NextApiRequest,
@@ -23,10 +20,7 @@ async function userRoute(
   if (req.method === "GET") {
     const user = req.session.user;
     if (user) {
-      if (
-        Date.now() - user.dateCreated >
-        1000 * 60 * 60 * 24
-      ) {
+      if (Date.now() - user.dateCreated > 1000 * 60 * 60 * 24) {
         const newUser = {
           ...user,
           dateCreated: Date.now(),
@@ -45,19 +39,9 @@ async function userRoute(
     });
   } else if (req.method === "POST") {
     try {
-      const {
-        email,
-        password,
-        displayName,
-        confirmPassword,
-      } = await req.body;
+      const { email, password, displayName, confirmPassword } = await req.body;
 
-      if (
-        !email ||
-        !password ||
-        !displayName ||
-        !confirmPassword
-      ) {
+      if (!email || !password || !displayName || !confirmPassword) {
         res.status(400);
         throw new Error("All fields are required.");
       }
@@ -67,9 +51,7 @@ async function userRoute(
         throw new Error("Passwords should match.");
       }
 
-      const lowerCaseEmail = (
-        email as string
-      ).toLowerCase();
+      const lowerCaseEmail = (email as string).toLowerCase();
 
       const userExists = await prisma.user.findUnique({
         where: {
@@ -82,10 +64,7 @@ async function userRoute(
       }
 
       const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(
-        password,
-        salt,
-      );
+      const hashedPassword = await bcrypt.hash(password, salt);
 
       const newUser = await prisma.user.create({
         data: {
@@ -128,7 +107,5 @@ async function userRoute(
       });
     }
   }
-  return res
-    .status(400)
-    .json({ status: "ERROR", message: "Bad Request." });
+  return res.status(400).json({ status: "ERROR", message: "Bad Request." });
 }

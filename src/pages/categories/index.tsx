@@ -52,9 +52,7 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const Categories: NextPageWithLayout<ICategories> = ({
-  categories,
-}) => {
+const Categories: NextPageWithLayout<ICategories> = ({ categories }) => {
   return (
     <>
       <Meta title="Categories" />
@@ -70,9 +68,7 @@ const Categories: NextPageWithLayout<ICategories> = ({
   );
 };
 
-Categories.getLayout = function getLayout(
-  page: ReactElement,
-) {
+Categories.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
 

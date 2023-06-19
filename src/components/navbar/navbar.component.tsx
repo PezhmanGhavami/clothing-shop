@@ -2,11 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import Link from "next/link";
-import {
-  FaUser,
-  FaSearch,
-  FaShoppingCart,
-} from "react-icons/fa";
+import { FaUser, FaSearch, FaShoppingCart } from "react-icons/fa";
 
 import Hamburger from "../hamburger/hamburger.component";
 import Overlay from "../overlay/overlay.component";
@@ -54,21 +50,13 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleLoadingError = () => {
-      toast.error(
-        "Coudln't load the page; Please try again.",
-      );
+      toast.error("Coudln't load the page; Please try again.");
     };
 
-    router.events.on(
-      "routeChangeError",
-      handleLoadingError,
-    );
+    router.events.on("routeChangeError", handleLoadingError);
 
     return () => {
-      router.events.off(
-        "routeChangeError",
-        handleLoadingError,
-      );
+      router.events.off("routeChangeError", handleLoadingError);
     };
   }, [router]);
 
@@ -82,10 +70,7 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-20 h-20 bg-white pt-1 shadow-md dark:bg-slate-900">
       {openModal && <Overlay handleClick={closeModal} />}
-      <Hamburger
-        openModal={openModal}
-        handleClick={toggleModal}
-      />
+      <Hamburger openModal={openModal} handleClick={toggleModal} />
       <nav className="flex h-full w-full items-center justify-between">
         {/* Navbar logo container */}
         <div className="p-2 text-lg font-medium uppercase tracking-wide lg:p-4">
@@ -140,16 +125,10 @@ const Navbar = () => {
             <div className="invisible absolute top-12 z-20 flex flex-col rounded-lg border bg-neutral-50 px-4 pb-4 pt-3 shadow-md group-focus-within:visible group-active:visible dark:border-slate-600 dark:bg-slate-800">
               {!user?.isLoggedIn ? (
                 <>
-                  <Link
-                    className={navLinks.userClasses}
-                    href={"/auth/signin"}
-                  >
+                  <Link className={navLinks.userClasses} href={"/auth/signin"}>
                     Login
                   </Link>
-                  <Link
-                    className={navLinks.userClasses}
-                    href={"/auth/signup"}
-                  >
+                  <Link className={navLinks.userClasses} href={"/auth/signup"}>
                     Register
                   </Link>
                 </>
@@ -170,9 +149,7 @@ const Navbar = () => {
             href={"/cart"}
           >
             <FaShoppingCart />
-            <span className="pl-2 text-xs">
-              {cart?.count}
-            </span>
+            <span className="pl-2 text-xs">{cart?.count}</span>
           </Link>
         </div>
       </nav>

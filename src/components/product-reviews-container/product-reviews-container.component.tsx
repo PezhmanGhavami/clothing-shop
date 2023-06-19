@@ -6,11 +6,7 @@ import {
   SetStateAction,
 } from "react";
 import { toast } from "react-toastify";
-import {
-  AiOutlineClose,
-  AiFillStar,
-  AiOutlineStar,
-} from "react-icons/ai";
+import { AiOutlineClose, AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 import ProductReview from "../product-review/product-review.component";
 import ReviewStars from "../product-review-stars/product-review-stars.component";
@@ -52,9 +48,7 @@ const AverageRating = ({
   return (
     <div className="w-full pb-6 sm:pb-0 sm:pr-6">
       <div className="flex justify-center text-3xl sm:justify-end">
-        <span className="pr-1 font-medium">
-          {avgRating.toFixed(1)}
-        </span>
+        <span className="pr-1 font-medium">{avgRating.toFixed(1)}</span>
         <ReviewStars rating={avgRating} />
       </div>
       <p className="pt-2 text-center sm:text-right">
@@ -108,8 +102,7 @@ const StarFilters = ({
             key={rating}
             title={`only show ${rating} star reviews`}
             className={`flex items-center justify-center sm:hover:opacity-75 cursor-pointer${
-              selectedFilter !== 0 &&
-              selectedFilter !== rating
+              selectedFilter !== 0 && selectedFilter !== rating
                 ? " opacity-60"
                 : ""
             }`}
@@ -120,19 +113,14 @@ const StarFilters = ({
                 className="h-full bg-slate-900 dark:bg-white"
                 style={{
                   width: `${(
-                    (ratingCounts[
-                      `rated${rating}` as ratingCountKeys
-                    ] *
-                      100) /
+                    (ratingCounts[`rated${rating}` as ratingCountKeys] * 100) /
                     reviewsCount
                   ).toFixed(2)}%`,
                 }}
               />
             </div>
             <span className="basis-8 text-sm">{`(${
-              ratingCounts[
-                `rated${rating}` as ratingCountKeys
-              ]
+              ratingCounts[`rated${rating}` as ratingCountKeys]
             })`}</span>
           </div>
         ))}
@@ -155,15 +143,11 @@ const FormModal = ({
   closeModal: () => void;
   mutateReviews: () => void;
 }) => {
-  const [ratingShadow, setRatingShadow] = useState(
-    formData.rating,
-  );
+  const [ratingShadow, setRatingShadow] = useState(formData.rating);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
-    event: ChangeEvent<
-      HTMLTextAreaElement | HTMLInputElement
-    >,
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
     setFormData((prev) => ({
       ...prev,
@@ -183,9 +167,7 @@ const FormModal = ({
   const handleMouseLeave = () => {
     setRatingShadow(formData.rating);
   };
-  const handleSubmit = async (
-    event: FormEvent<HTMLFormElement>,
-  ) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
 
@@ -193,12 +175,8 @@ const FormModal = ({
       "Content-Type": "application/json",
     });
     try {
-      const apiUrl = reviewID
-        ? `/api/review/${reviewID}`
-        : "/api/review";
-      const payload = reviewID
-        ? { ...formData }
-        : { ...formData, itemID };
+      const apiUrl = reviewID ? `/api/review/${reviewID}` : "/api/review";
+      const payload = reviewID ? { ...formData } : { ...formData, itemID };
       const res = await fetcher(apiUrl, {
         method: reviewID ? "PUT" : "POST",
         headers,
@@ -229,10 +207,7 @@ const FormModal = ({
           title="Click to close modal"
           className="hover:text-slate-600 dark:hover:text-slate-300"
         >
-          <AiOutlineClose
-            className="h-6 w-6"
-            aria-hidden="true"
-          />
+          <AiOutlineClose className="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
       {/* Form */}
@@ -247,19 +222,13 @@ const FormModal = ({
             {[1, 2, 3, 4, 5].map((rating) => (
               <button
                 type="button"
-                title={`${rating} ${
-                  rating === 1 ? "star" : "stars"
-                }`}
+                title={`${rating} ${rating === 1 ? "star" : "stars"}`}
                 onClick={() => handleRatingChange(rating)}
                 onMouseOver={() => handleMouseOver(rating)}
                 onMouseLeave={handleMouseLeave}
                 key={rating}
               >
-                {ratingShadow >= rating ? (
-                  <AiFillStar />
-                ) : (
-                  <AiOutlineStar />
-                )}
+                {ratingShadow >= rating ? <AiFillStar /> : <AiOutlineStar />}
               </button>
             ))}
           </div>
@@ -334,21 +303,15 @@ const ProductReviewsContainer = ({
   ratingCounts,
 }: IProductReviewsContainer) => {
   const [openModal, setOpenModal] = useState(false);
-  const [selectedSortOption, setSelectedSortOption] =
-    useState("newest");
+  const [selectedSortOption, setSelectedSortOption] = useState("newest");
   const [filter, setFilter] = useState("");
   const [page, setPage] = useState(1);
-  const [showUserReviews, setShowUserReviews] =
-    useState(false);
-  const [reviewID, setReviewID] = useState<
-    string | undefined
-  >(undefined);
+  const [showUserReviews, setShowUserReviews] = useState(false);
+  const [reviewID, setReviewID] = useState<string | undefined>(undefined);
   const [formData, setFormData] = useState(cleanFormData);
 
   const [sortBy, sortMethod] =
-    sortOptions[
-      selectedSortOption as keyof typeof sortOptions
-    ];
+    sortOptions[selectedSortOption as keyof typeof sortOptions];
   const { reviewsData, mutateReviews } = useReview({
     page: page,
     itemID: productID,
@@ -360,25 +323,20 @@ const ProductReviewsContainer = ({
   const { user } = useUser();
 
   const handleSetFilter = (rating: number) => {
-    const newFilter =
-      rating !== 0 ? `&selectedFilter=${rating}` : "";
+    const newFilter = rating !== 0 ? `&selectedFilter=${rating}` : "";
     setPage(1);
     setFilter(newFilter);
   };
   const handlePreviousPage = () => {
     if (page > 1) {
       setPage((prev) => prev - 1);
-      globalThis.document
-        .getElementById("reviews-sort")
-        ?.scrollIntoView();
+      globalThis.document.getElementById("reviews-sort")?.scrollIntoView();
     }
   };
   const handleNextPage = () => {
     if (reviewsData && reviewsData.pages >= page) {
       setPage((prev) => prev + 1);
-      globalThis.document
-        .getElementById("reviews-sort")
-        ?.scrollIntoView();
+      globalThis.document.getElementById("reviews-sort")?.scrollIntoView();
     }
   };
   const toggleModal = () => {
@@ -392,9 +350,7 @@ const ProductReviewsContainer = ({
   const toggleShowUserReviews = () => {
     setShowUserReviews((prev) => !prev);
   };
-  const handleSelectChange = (
-    event: ChangeEvent<HTMLSelectElement>,
-  ) => {
+  const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setPage(1);
     setSelectedSortOption(event.target.value);
   };
@@ -414,10 +370,7 @@ const ProductReviewsContainer = ({
     } finally {
     }
   };
-  const handleEditReview = (
-    reviewID: string,
-    formData: IReviewFormData,
-  ) => {
+  const handleEditReview = (reviewID: string, formData: IReviewFormData) => {
     setReviewID(reviewID);
     setFormData(formData);
     toggleModal();
@@ -442,9 +395,7 @@ const ProductReviewsContainer = ({
           />
         </>
       )}
-      <h2 className="p-4 pb-12 text-center text-3xl">
-        Customer Reviews
-      </h2>
+      <h2 className="p-4 pb-12 text-center text-3xl">Customer Reviews</h2>
       {/* Rating, sort and filter */}
       <div>
         {/* Rating and filter */}
@@ -499,9 +450,7 @@ const ProductReviewsContainer = ({
                 onClick={toggleShowUserReviews}
                 className="cursor-pointer text-blue-700 hover:underline dark:text-blue-400"
               >
-                {showUserReviews
-                  ? "Back to all reviews"
-                  : "See your reviews"}
+                {showUserReviews ? "Back to all reviews" : "See your reviews"}
               </p>
             </div>
           )}
@@ -516,16 +465,12 @@ const ProductReviewsContainer = ({
                 key={review.id}
                 handleEditReview={handleEditReview}
                 handleDeleteReview={handleDeleteReview}
-                isUsersReview={
-                  review.userId === user?.userID
-                }
+                isUsersReview={review.userId === user?.userID}
                 review={review as reviewPopulatedWithUser}
               />
             ))
           ) : (
-            <div className="py-20 text-3xl">
-              There are no reviews yet
-            </div>
+            <div className="py-20 text-3xl">There are no reviews yet</div>
           )
         ) : (
           <div className="py-80 text-3xl sm:py-96">

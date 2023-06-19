@@ -29,15 +29,11 @@ const ProductOverview = ({ product }: IProductOverview) => {
     });
   };
   const itemIsInCart = () => {
-    return cart?.items.find(
-      (item) => item.id === product.id,
-    );
+    return cart?.items.find((item) => item.id === product.id);
   };
   const maxInventoryReached = () => {
     const itemQuantityInCart = itemIsInCart()?.quantity;
-    return (
-      (itemQuantityInCart || 0) >= product.currentInventory
-    );
+    return (itemQuantityInCart || 0) >= product.currentInventory;
   };
 
   const handleWishlist = () => {
@@ -76,9 +72,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
           <div className="flex flex-col">
             {/* Reviews */}
             <div className="flex">
-              <ReviewStars
-                rating={product.reviewsAvgRating}
-              />
+              <ReviewStars rating={product.reviewsAvgRating} />
               <a
                 title="Click to see all reviews"
                 href="#reviews-section"
@@ -90,24 +84,16 @@ const ProductOverview = ({ product }: IProductOverview) => {
             {/* Price and name */}
             <div className="flex justify-between">
               {/* Product Name */}
-              <h1 className="text-lg font-semibold">
-                {product.name}
-              </h1>
+              <h1 className="text-lg font-semibold">{product.name}</h1>
               {/* Price */}
               <p className="text-lg font-semibold text-slate-600 dark:text-slate-300">
-                <span
-                  className={
-                    product.offer ? "line-through" : ""
-                  }
-                >
+                <span className={product.offer ? "line-through" : ""}>
                   {currencyFormatter.format(product.price)}
                 </span>
                 {product.dsicountedPrice && (
                   <span className="text-red-700 dark:text-red-400">
                     {" "}
-                    {currencyFormatter.format(
-                      product.dsicountedPrice,
-                    )}
+                    {currencyFormatter.format(product.dsicountedPrice)}
                   </span>
                 )}
               </p>
@@ -122,9 +108,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
                   *Last {product.currentInventory} in stock
                 </span>
               ) : (
-                <span className="text-red-500">
-                  *Out of stock
-                </span>
+                <span className="text-red-500">*Out of stock</span>
               )}
             </p>
           </div>
@@ -135,14 +119,10 @@ const ProductOverview = ({ product }: IProductOverview) => {
           {/* Buttons (Add to cart and wishlist) */}
           <div className="mb-6 flex space-x-4">
             <button
-              disabled={
-                product.currentInventory === 0 ||
-                maxInventoryReached()
-              }
+              disabled={product.currentInventory === 0 || maxInventoryReached()}
               onClick={handleAddItemToCart}
               className={`h-9 w-full rounded-md bg-slate-100 text-sm font-medium tracking-tight shadow-md hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 ${
-                maxInventoryReached() &&
-                "cursor-not-allowed opacity-75"
+                maxInventoryReached() && "cursor-not-allowed opacity-75"
               }`}
             >
               {product.currentInventory > 0
@@ -150,9 +130,7 @@ const ProductOverview = ({ product }: IProductOverview) => {
                   ? "Max inventory reached - " +
                     `${itemIsInCart()?.quantity} in cart`
                   : itemIsInCart()
-                  ? `Add to cart - ${
-                      itemIsInCart()?.quantity
-                    } in cart`
+                  ? `Add to cart - ${itemIsInCart()?.quantity} in cart`
                   : "Add to cart"
                 : "Out of stock"}
             </button>

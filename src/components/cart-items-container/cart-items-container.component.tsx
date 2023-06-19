@@ -6,9 +6,7 @@ interface ICartItemContainer {
   cartItems: ICartItem[];
 }
 
-const CartItemsContainer = ({
-  cartItems,
-}: ICartItemContainer) => {
+const CartItemsContainer = ({ cartItems }: ICartItemContainer) => {
   return (
     <ul className="divide-y">
       {cartItems.map((item) => (

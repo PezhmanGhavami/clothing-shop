@@ -1,9 +1,4 @@
-import {
-  useState,
-  ChangeEvent,
-  FormEvent,
-  ReactElement,
-} from "react";
+import { useState, ChangeEvent, FormEvent, ReactElement } from "react";
 import Link from "next/link";
 import { NextPageWithLayout } from "../_app";
 import { BiShow, BiHide } from "react-icons/bi";
@@ -33,10 +28,8 @@ export const formInputStyles = {
   labelClasses: "block pb-1 ",
   inputClasses:
     "w-full h-9 rounded-md px-2 dark:bg-slate-900 border dark:border-slate-700 focus:outline-none focus:ring focus:ring-blue-400 ",
-  inputWarnClasses:
-    "text-sm text-red-700 dark:text-red-400",
-  aTagClasses:
-    "text-blue-700 dark:text-blue-400 hover:underline ",
+  inputWarnClasses: "text-sm text-red-700 dark:text-red-400",
+  aTagClasses: "text-blue-700 dark:text-blue-400 hover:underline ",
   successButtonClasses:
     "bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-bold w-full text-white ",
 };
@@ -59,9 +52,7 @@ const Login: NextPageWithLayout = () => {
 
   const { email, password } = formFields;
 
-  const handleChange = (
-    event: ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFormFields((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -82,9 +73,7 @@ const Login: NextPageWithLayout = () => {
     if (email === "" || !email || !emailRegex.test(email)) {
       formIsValid = false;
       emailStatus =
-        email === "" || !email
-          ? inputStatus.EMPTY
-          : inputStatus.INVALID;
+        email === "" || !email ? inputStatus.EMPTY : inputStatus.INVALID;
       onSubmit &&
         toast.error(
           emailStatus === inputStatus.EMPTY
@@ -94,8 +83,7 @@ const Login: NextPageWithLayout = () => {
     }
 
     if (password === "" || !password) {
-      onSubmit &&
-        toast.error("You should provide a password.");
+      onSubmit && toast.error("You should provide a password.");
       formIsValid = false;
       passwordStatus = inputStatus.EMPTY;
     }
@@ -103,9 +91,7 @@ const Login: NextPageWithLayout = () => {
     return { formIsValid, emailStatus, passwordStatus };
   };
 
-  const handleSubmit = async (
-    event: FormEvent<HTMLFormElement>,
-  ) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!validateForm(true).formIsValid) {
@@ -147,9 +133,7 @@ const Login: NextPageWithLayout = () => {
     <>
       <Meta title="Sign in" />
       {/* Page title */}
-      <p className="pb-4 text-lg">
-        Sign in to Clothing Shop
-      </p>
+      <p className="pb-4 text-lg">Sign in to Clothing Shop</p>
       <form
         onSubmit={handleSubmit}
         noValidate
@@ -159,11 +143,7 @@ const Login: NextPageWithLayout = () => {
         <div>
           {/* Email container */}
           {/* NOTE - Made the autocomplete off because of input bg color change whenver an autocomplete value is used; TODO - Figure out how to solve the bg change and remove autoComplete=off */}
-          <div
-            className={
-              formInputStyles.inputContainerClasses
-            }
-          >
+          <div className={formInputStyles.inputContainerClasses}>
             <label
               className={formInputStyles.labelClasses}
               htmlFor={"sign-in-email"}
@@ -182,21 +162,14 @@ const Login: NextPageWithLayout = () => {
               autoFocus
               required
             />
-            {validateForm().emailStatus ===
-              inputStatus.INVALID && (
-              <span
-                className={formInputStyles.inputWarnClasses}
-              >
+            {validateForm().emailStatus === inputStatus.INVALID && (
+              <span className={formInputStyles.inputWarnClasses}>
                 *Please enter a correct email address
               </span>
             )}
           </div>
           {/* Password container */}
-          <div
-            className={
-              formInputStyles.inputContainerClasses
-            }
-          >
+          <div className={formInputStyles.inputContainerClasses}>
             <label
               className={formInputStyles.labelClasses}
               htmlFor={"sign-in-password"}
@@ -205,18 +178,13 @@ const Login: NextPageWithLayout = () => {
               <Link
                 href="/forgot-password"
                 tabIndex={5}
-                className={
-                  formInputStyles.aTagClasses +
-                  "float-right"
-                }
+                className={formInputStyles.aTagClasses + "float-right"}
               >
                 Forgot Password?
               </Link>
             </label>
             <input
-              className={
-                formInputStyles.inputClasses + " pr-8"
-              }
+              className={formInputStyles.inputClasses + " pr-8"}
               type={`${showPassword ? "text" : "password"}`}
               name="password"
               id="sign-in-password"
@@ -230,9 +198,7 @@ const Login: NextPageWithLayout = () => {
               tabIndex={3}
               className="absolute right-1 top-8 cursor-pointer p-1"
               onClick={toggleShowPassword}
-              title={`Click to ${
-                showPassword ? "Hide" : "Show"
-              } Password`}
+              title={`Click to ${showPassword ? "Hide" : "Show"} Password`}
             >
               {showPassword ? (
                 <BiShow className="text-lg" />
@@ -252,9 +218,7 @@ const Login: NextPageWithLayout = () => {
         </button>
       </form>
       {/* Link to sign up */}
-      <div
-        className={`${formInputStyles.container} mt-4 h-12 items-center`}
-      >
+      <div className={`${formInputStyles.container} mt-4 h-12 items-center`}>
         <p>
           {"New here? "}
           <Link

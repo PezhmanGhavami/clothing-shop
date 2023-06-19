@@ -7,10 +7,7 @@ interface IReviewStars {
 const ReviewStars = ({ rating }: IReviewStars) => {
   const roundedRating = Math.round(rating);
   return (
-    <div
-      title={`Rated ${rating} out of 5`}
-      className="flex items-center"
-    >
+    <div title={`Rated ${rating} out of 5`} className="flex items-center">
       {[1, 2, 3, 4, 5].map((rating) =>
         roundedRating >= rating ? (
           <AiFillStar key={rating} />

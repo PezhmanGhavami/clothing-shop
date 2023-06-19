@@ -24,9 +24,7 @@ function Footer() {
       </p>
       <div
         className="flex items-center space-x-1 rounded-md p-2 hover:cursor-pointer hover:bg-neutral-100 dark:hover:bg-slate-800"
-        title={`Click to switch to ${
-          theme === "dark" ? "light" : "dark"
-        } mode`}
+        title={`Click to switch to ${theme === "dark" ? "light" : "dark"} mode`}
         onClick={changeTheme}
       >
         {theme === "dark" ? (

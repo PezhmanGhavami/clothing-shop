@@ -6,10 +6,7 @@ import { prisma } from "../../../utils/prisma-client";
 
 import { IApiMessage } from "../auth/login";
 
-export default withIronSessionApiRoute(
-  reviewRoute,
-  sessionOptions,
-);
+export default withIronSessionApiRoute(reviewRoute, sessionOptions);
 
 async function reviewRoute(
   req: NextApiRequest,
@@ -20,11 +17,7 @@ async function reviewRoute(
     console.log(reviewID);
 
     const verb =
-      req.method === "PUT"
-        ? "edit"
-        : req.method === "DELETE"
-        ? "delete"
-        : "";
+      req.method === "PUT" ? "edit" : req.method === "DELETE" ? "delete" : "";
 
     if (verb === "") {
       res.status(400);
@@ -50,16 +43,12 @@ async function reviewRoute(
 
     if (!review) {
       res.status(404);
-      throw new Error(
-        `The review you are trying to ${verb} does not exist.`,
-      );
+      throw new Error(`The review you are trying to ${verb} does not exist.`);
     }
 
     if (review.userId !== user.userID) {
       res.status(403);
-      throw new Error(
-        `You don't have permission to ${verb} this review.`,
-      );
+      throw new Error(`You don't have permission to ${verb} this review.`);
     }
 
     if (req.method === "PUT") {

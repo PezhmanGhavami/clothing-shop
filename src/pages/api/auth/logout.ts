@@ -5,10 +5,7 @@ import { IUser } from "./index";
 import { IApiMessage } from "./login";
 import { sessionOptions } from "../../../utils/session";
 
-export default withIronSessionApiRoute(
-  logoutRoute,
-  sessionOptions,
-);
+export default withIronSessionApiRoute(logoutRoute, sessionOptions);
 
 function logoutRoute(
   req: NextApiRequest,
@@ -18,7 +15,5 @@ function logoutRoute(
     req.session.destroy();
     return res.redirect("/");
   }
-  return res
-    .status(400)
-    .json({ status: "ERROR", message: "Bad Request." });
+  return res.status(400).json({ status: "ERROR", message: "Bad Request." });
 }

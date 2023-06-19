@@ -15,8 +15,7 @@ function Hamburger({ openModal, handleClick }: IHamburger) {
     >
       <div
         className={`flex h-[50px] w-[50px] transform items-center justify-center overflow-hidden rounded-full bg-neutral-200 shadow-2xl ring-0 ring-slate-900 transition-all dark:bg-slate-700 dark:ring-white ${
-          openModal &&
-          "shadow-md ring-4 ring-opacity-60 duration-200"
+          openModal && "shadow-md ring-4 ring-opacity-60 duration-200"
         }`}
       >
         <div

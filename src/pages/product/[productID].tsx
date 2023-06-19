@@ -40,9 +40,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({
-  params,
-}) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const productID = params?.productID as string;
 
   const product = await prisma.item.update({
@@ -94,17 +92,13 @@ export const getStaticProps: GetStaticProps = async ({
   };
 
   if (product?.categories[0]) {
-    relatedProducts.items = product.categories[0].items.map(
-      (item) => item,
-    );
+    relatedProducts.items = product.categories[0].items.map((item) => item);
   }
 
   return {
     props: {
       product: JSON.parse(JSON.stringify(product)),
-      relatedProducts: JSON.parse(
-        JSON.stringify(relatedProducts),
-      ),
+      relatedProducts: JSON.parse(JSON.stringify(relatedProducts)),
     },
     revalidate: 60,
   };

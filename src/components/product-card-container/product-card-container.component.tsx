@@ -41,17 +41,14 @@ const ProductCardContainer = ({
             }
             className="text-blue-700 hover:underline dark:text-blue-400"
           >
-            Shop the collection{" "}
-            <span aria-hidden="true">→</span>
+            Shop the collection <span aria-hidden="true">→</span>
           </Link>
         )}
       </div>
       <div className="overflow-x-scroll sm:overflow-auto">
         <div
           className={`mt-6 gap-x-6 gap-y-10 sm:grid sm:grid-cols-3 lg:grid-cols-6 xl:gap-x-8 ${
-            gridOnMobile
-              ? "grid grid-cols-2"
-              : "inline-flex"
+            gridOnMobile ? "grid grid-cols-2" : "inline-flex"
           }`}
         >
           {productGroup.items.map((product) => (

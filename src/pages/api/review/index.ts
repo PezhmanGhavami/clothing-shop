@@ -14,10 +14,7 @@ export interface IReviewResponse {
   pages: number;
 }
 
-export default withIronSessionApiRoute(
-  reviewRoute,
-  sessionOptions,
-);
+export default withIronSessionApiRoute(reviewRoute, sessionOptions);
 
 async function reviewRoute(
   req: NextApiRequest,
@@ -55,9 +52,7 @@ async function reviewRoute(
         const user = req.session.user;
         if (!user) {
           res.status(401);
-          throw new Error(
-            "You need to be logged in to see your own reviews.",
-          );
+          throw new Error("You need to be logged in to see your own reviews.");
         }
         filter = {
           ...filter,
@@ -94,8 +89,7 @@ async function reviewRoute(
               },
             },
             orderBy: {
-              [sortBy as string]:
-                sortMethod as Prisma.SortOrder,
+              [sortBy as string]: sortMethod as Prisma.SortOrder,
             },
             ...skip,
             take: reviewsPerPage,
@@ -127,21 +121,14 @@ async function reviewRoute(
               },
             },
           });
-          pages =
-            (userReviews?.reviews.length || 1) /
-            reviewsPerPage;
+          pages = (userReviews?.reviews.length || 1) / reviewsPerPage;
         } else if (filter.rating) {
           pages = pages = Math.floor(
-            reviews[
-              `reviewsRated${
-                filter.rating as 1 | 2 | 3 | 4 | 5
-              }Count`
-            ] / reviewsPerPage,
+            reviews[`reviewsRated${filter.rating as 1 | 2 | 3 | 4 | 5}Count`] /
+              reviewsPerPage,
           );
         } else {
-          pages = Math.floor(
-            reviews.reviewsCount / reviewsPerPage,
-          );
+          pages = Math.floor(reviews.reviewsCount / reviewsPerPage);
         }
 
         return res.json({
@@ -151,9 +138,7 @@ async function reviewRoute(
       }
 
       res.status(404);
-      throw new Error(
-        "The resource you are looking for doesn not exist.",
-      );
+      throw new Error("The resource you are looking for doesn not exist.");
     } else if (req.method === "POST") {
       const user = req.session.user;
       if (!user) {
@@ -163,8 +148,7 @@ async function reviewRoute(
         );
       }
 
-      const { title, body, rating, itemID } =
-        await req.body;
+      const { title, body, rating, itemID } = await req.body;
       if (!title || !body || !rating || !itemID) {
         res.status(400);
         throw new Error("All fields are required.");
@@ -178,9 +162,7 @@ async function reviewRoute(
 
       if (!item) {
         res.status(400);
-        throw new Error(
-          "The product you are trying to review does not exist.",
-        );
+        throw new Error("The product you are trying to review does not exist.");
       }
 
       const updatedItem = await prisma.item.update({

@@ -36,20 +36,13 @@ const Checkout: NextPageWithLayout = () => {
       <Meta title="Checkout" />
       {/* Form */}
       <div className="w-full p-4">
-        <form
-          onSubmit={handleSubmit}
-          className={`flex flex-col space-y-4`}
-        >
+        <form onSubmit={handleSubmit} className={`flex flex-col space-y-4`}>
           {/* Contact info */}
           <div>
             <h2 className="mb-4 text-xl font-medium md:text-2xl">
               Contact information
             </h2>
-            <div
-              className={
-                formInputStyles.inputContainerClasses
-              }
-            >
+            <div className={formInputStyles.inputContainerClasses}>
               <label
                 className={formInputStyles.labelClasses}
                 htmlFor={"contact-email"}
@@ -72,14 +65,8 @@ const Checkout: NextPageWithLayout = () => {
           </div>
           {/* Payment info */}
           <div className="pt-4">
-            <h2 className="mb-4 text-xl font-medium md:text-2xl">
-              Payment
-            </h2>
-            <div
-              className={
-                formInputStyles.inputContainerClasses
-              }
-            >
+            <h2 className="mb-4 text-xl font-medium md:text-2xl">Payment</h2>
+            <div className={formInputStyles.inputContainerClasses}>
               <label
                 className={formInputStyles.labelClasses}
                 htmlFor={"card-number"}
@@ -98,11 +85,7 @@ const Checkout: NextPageWithLayout = () => {
                 required
               />
             </div>
-            <div
-              className={
-                formInputStyles.inputContainerClasses
-              }
-            >
+            <div className={formInputStyles.inputContainerClasses}>
               <label
                 className={formInputStyles.labelClasses}
                 htmlFor={"name-on-card"}
@@ -147,10 +130,7 @@ const Checkout: NextPageWithLayout = () => {
                 />
               </div>
               <div>
-                <label
-                  className={formInputStyles.labelClasses}
-                  htmlFor={"cvc"}
-                >
+                <label className={formInputStyles.labelClasses} htmlFor={"cvc"}>
                   CVC
                 </label>
                 <input
@@ -171,9 +151,7 @@ const Checkout: NextPageWithLayout = () => {
       </div>
       {/* Order Summary */}
       <div className="w-full p-4">
-        <h2 className="text-xl font-medium md:text-2xl">
-          Order Summary
-        </h2>
+        <h2 className="text-xl font-medium md:text-2xl">Order Summary</h2>
         <div>
           {cart.count > 0 ? (
             <CartItemsContainer cartItems={cart.items} />
@@ -184,8 +162,7 @@ const Checkout: NextPageWithLayout = () => {
                 href={"/categories"}
                 className="text-blue-700 hover:underline dark:text-blue-400"
               >
-                Start shopping{" "}
-                <span aria-hidden="true">→</span>
+                Start shopping <span aria-hidden="true">→</span>
               </Link>
             </div>
           )}
@@ -199,18 +176,12 @@ const Checkout: NextPageWithLayout = () => {
             <div className="flex h-10 items-center justify-between">
               <p>You are saving</p>
               <p>
-                {currencyFormatter.format(
-                  cart.total - cart.discountedTotal,
-                )}
+                {currencyFormatter.format(cart.total - cart.discountedTotal)}
               </p>
             </div>
             <div className="flex h-10 items-center justify-between">
               <p>Order total</p>
-              <p>
-                {currencyFormatter.format(
-                  cart.discountedTotal,
-                )}
-              </p>
+              <p>{currencyFormatter.format(cart.discountedTotal)}</p>
             </div>
           </div>
           <button
@@ -234,9 +205,7 @@ const Checkout: NextPageWithLayout = () => {
   );
 };
 
-Checkout.getLayout = function getLayout(
-  page: ReactElement,
-) {
+Checkout.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
 

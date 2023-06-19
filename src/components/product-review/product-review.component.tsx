@@ -8,10 +8,7 @@ interface IProductReview {
   review: reviewPopulatedWithUser;
   isUsersReview: boolean;
   handleDeleteReview: (reviewID: string) => void;
-  handleEditReview: (
-    reviewID: string,
-    formData: IReviewFormData,
-  ) => void;
+  handleEditReview: (reviewID: string, formData: IReviewFormData) => void;
 }
 
 const ProductReview = ({
@@ -23,11 +20,7 @@ const ProductReview = ({
   const [reviewDate, setReviewDate] = useState("");
   const [openModal, setOpenModal] = useState(false);
   useEffect(() => {
-    setReviewDate(
-      new Date(review.createdAt).toLocaleDateString(
-        "en-GB",
-      ),
-    );
+    setReviewDate(new Date(review.createdAt).toLocaleDateString("en-GB"));
   }, [review.createdAt]);
 
   const openOpenModal = () => {
@@ -120,16 +113,10 @@ const ProductReview = ({
       </div>
       {/* Title and Body */}
       <div className="2xl:4/5 break-words sm:w-2/3 xl:w-3/4">
-        <h3 className="text-lg leading-none">
-          {review.title}
-        </h3>
+        <h3 className="text-lg leading-none">{review.title}</h3>
         <p className="mt-2 font-light dark:text-slate-200">
           {review.body +
-            `${
-              review.createdAt !== review.updatedAt
-                ? "  ----- Edited"
-                : ""
-            }`}
+            `${review.createdAt !== review.updatedAt ? "  ----- Edited" : ""}`}
         </p>
       </div>
     </div>

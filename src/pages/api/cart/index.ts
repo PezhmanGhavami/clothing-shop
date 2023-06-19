@@ -7,10 +7,7 @@ import { prisma } from "../../../utils/prisma-client";
 import { IApiMessage } from "../auth/login";
 import { IProductCard } from "../../../components/product-card/product-card.component";
 
-export default withIronSessionApiRoute(
-  cartRoute,
-  sessionOptions,
-);
+export default withIronSessionApiRoute(cartRoute, sessionOptions);
 
 export interface ICartItem extends IProductCard {
   quantity: number;
@@ -37,9 +34,7 @@ const checkForItemInCartThenChangeItAccordingly = (
 ) => {
   const localCartItems = [...cartItems];
 
-  const productIndex = cartItems.findIndex(
-    (item) => item.id === product.id,
-  );
+  const productIndex = cartItems.findIndex((item) => item.id === product.id);
 
   if (productIndex !== -1) {
     if (
@@ -53,8 +48,7 @@ const checkForItemInCartThenChangeItAccordingly = (
       ) {
         localCartItems[productIndex] = {
           ...localCartItems[productIndex],
-          quantity:
-            localCartItems[productIndex].currentInventory,
+          quantity: localCartItems[productIndex].currentInventory,
         };
       }
       return localCartItems;
@@ -62,14 +56,11 @@ const checkForItemInCartThenChangeItAccordingly = (
 
     localCartItems[productIndex] = {
       ...localCartItems[productIndex],
-      quantity:
-        localCartItems[productIndex].quantity + changeValue,
+      quantity: localCartItems[productIndex].quantity + changeValue,
     };
 
     if (localCartItems[productIndex].quantity === 0) {
-      return localCartItems.filter(
-        (item) => item.id !== product.id,
-      );
+      return localCartItems.filter((item) => item.id !== product.id);
     }
 
     return localCartItems;
@@ -135,9 +126,7 @@ async function cartRoute(
         }
         // Remove an item
         if (operation === 0) {
-          const cartItems = cart.items.filter(
-            (item) => item.id !== product.id,
-          );
+          const cartItems = cart.items.filter((item) => item.id !== product.id);
           const newCart = {
             ...cartItemsUpdatePayloadMaker(cartItems, cart),
           };
@@ -162,12 +151,11 @@ async function cartRoute(
         }
         // Add or deduct an item
         else if (operation === 1 || operation === -1) {
-          const cartItems =
-            checkForItemInCartThenChangeItAccordingly(
-              cart.items,
-              product,
-              operation,
-            );
+          const cartItems = checkForItemInCartThenChangeItAccordingly(
+            cart.items,
+            product,
+            operation,
+          );
           const newCart = {
             ...cartItemsUpdatePayloadMaker(cartItems, cart),
           };
@@ -198,7 +186,5 @@ async function cartRoute(
       });
     }
   }
-  return res
-    .status(400)
-    .json({ status: "ERROR", message: "Bad Request." });
+  return res.status(400).json({ status: "ERROR", message: "Bad Request." });
 }

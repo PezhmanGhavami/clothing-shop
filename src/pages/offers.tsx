@@ -23,17 +23,13 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      offerListing: JSON.parse(
-        JSON.stringify(offerListing),
-      ),
+      offerListing: JSON.parse(JSON.stringify(offerListing)),
     },
     revalidate: 60,
   };
 };
 
-const Offer: NextPageWithLayout<IOffer> = ({
-  offerListing,
-}) => {
+const Offer: NextPageWithLayout<IOffer> = ({ offerListing }) => {
   return (
     <div className="py-6">
       <Meta title="Special Offers" />

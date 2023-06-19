@@ -19,10 +19,7 @@ const Meta = ({
   return (
     <Head>
       {/* Title and others */}
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1"
-      />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="manifest" href="/manifest.json" />
       <title>{correctTitle}</title>
       <meta name="description" content={description} />
@@ -47,22 +44,13 @@ const Meta = ({
         href="/favicon-16x16.png"
       />
       {/* Twitter tags */}
-      <meta
-        name="twitter:card"
-        content="summary_large_image"
-      />
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={correctTitle} />
-      <meta
-        name="twitter:description"
-        content={description}
-      />
+      <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={tCImageUrl} />
       {/* Open graph tags */}
       <meta property="og:title" content={correctTitle} />
-      <meta
-        property="og:description"
-        content={description}
-      />
+      <meta property="og:description" content={description} />
       <meta property="og:image" content={oGImageUrl} />
     </Head>
   );
@@ -71,8 +59,7 @@ const Meta = ({
 Meta.defaultProps = {
   keywords:
     "clothe, clothing, shop, clothing shop, mens clothing, womens clothing, demo",
-  description:
-    "A demo clothing shop made for educational purposes",
+  description: "A demo clothing shop made for educational purposes",
   oGImageUrl:
     "https://res.cloudinary.com/drsgyshsf/image/upload/v1674136825/clothing-shop/og-and-tc/clothing-shop-mockup-og_pbf8jn.png",
   tCImageUrl:
