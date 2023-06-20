@@ -10,7 +10,7 @@ import Loading from "@/components/loading/loading.component";
 import useCart from "@/hooks/useCart";
 
 import { formInputStyles } from "@/app/auth/signin/signin.component";
-import currencyFormatter from "@/utils/currencyFormatter";
+import currencyFormatter from "@/utils/currency-formatter";
 
 const CheckoutComponent = () => {
   const { cart, cartIsUpdating } = useCart();

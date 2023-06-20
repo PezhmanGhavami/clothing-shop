@@ -7,7 +7,7 @@ import ReviewStars from "../product-review-stars/product-review-stars.component"
 
 import useCart from "../../hooks/useCart";
 
-import currencyFormatter from "../../utils/currencyFormatter";
+import currencyFormatter from "../../utils/currency-formatter";
 
 import { itemPopulatedWithCategoryName } from "../../pages/product/[productID]";
 

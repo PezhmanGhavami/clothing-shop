@@ -11,7 +11,7 @@ import Loading from "@/components/loading/loading.component";
 
 import useCart from "@/hooks/useCart";
 
-import currencyFormatter from "@/utils/currencyFormatter";
+import currencyFormatter from "@/utils/currency-formatter";
 
 const CartComponent = () => {
   const { cart, cartIsUpdating } = useCart();

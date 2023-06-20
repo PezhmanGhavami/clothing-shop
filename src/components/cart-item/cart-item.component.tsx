@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import useCart from "../../hooks/useCart";
 
-import currencyFormatter from "../../utils/currencyFormatter";
+import currencyFormatter from "../../utils/currency-formatter";
 
 import { ICartItem } from "../../pages/api/cart";
 

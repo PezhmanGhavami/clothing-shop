@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import currencyFormatter from "../../utils/currencyFormatter";
+import currencyFormatter from "../../utils/currency-formatter";
 
 export interface IProductCard {
   id: string;
