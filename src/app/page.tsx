@@ -1,18 +1,7 @@
-import { ReactElement } from "react";
-import { GetStaticProps } from "next";
-import { NextPageWithLayout } from "./_app";
-
 import { prisma } from "../utils/prisma-client";
-import Layout from "../components/layout/layout.component";
 import ProductCardContainer from "../components/product-card-container/product-card-container.component";
 import Slideshow from "../components/slideshow/slideshow.component";
 import Meta from "../components/meta/meta.component";
-
-import { IProductCardContainerData } from "../components/product-card-container/product-card-container.component";
-interface IHome {
-  newestProducts: IProductCardContainerData;
-  specialOffers: IProductCardContainerData;
-}
 
 const landingDir = [
   {
@@ -47,7 +36,7 @@ const landingDir = [
   },
 ];
 
-export const getStaticProps: GetStaticProps = async () => {
+const getData = async () => {
   const newestProducts = await prisma.item.findMany({
     take: 6,
     orderBy: {
@@ -76,15 +65,14 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 
   return {
-    props: {
-      newestProducts: JSON.parse(JSON.stringify(groupedNewestProducts)),
-      specialOffers: JSON.parse(JSON.stringify(groupedOfferedProducts)),
-    },
-    revalidate: 60,
+    newestProducts: groupedNewestProducts,
+    specialOffers: groupedOfferedProducts,
   };
 };
 
-const Home: NextPageWithLayout<IHome> = ({ specialOffers, newestProducts }) => {
+const Home = async () => {
+  const { newestProducts, specialOffers } = await getData();
+
   return (
     <>
       <Meta title="Home" />
@@ -102,10 +90,6 @@ const Home: NextPageWithLayout<IHome> = ({ specialOffers, newestProducts }) => {
       />
     </>
   );
-};
-
-Home.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
 };
 
 export default Home;
