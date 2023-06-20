@@ -1,20 +1,19 @@
-import { ReactElement, MouseEvent } from "react";
-import { useRouter } from "next/router";
+"use client";
+
+import { MouseEvent } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { NextPageWithLayout } from "./_app";
 import { AiOutlineClose } from "react-icons/ai";
 import { toast } from "react-toastify";
 
-import Layout from "../components/layout/layout.component";
-import CartItemsContainer from "../components/cart-items-container/cart-items-container.component";
-import Loading from "../components/loading/loading.component";
-import Meta from "../components/meta/meta.component";
+import CartItemsContainer from "@/components/cart-items-container/cart-items-container.component";
+import Loading from "@/components/loading/loading.component";
 
-import useCart from "../hooks/useCart";
+import useCart from "@/hooks/useCart";
 
-import currencyFormatter from "../utils/currencyFormatter";
+import currencyFormatter from "@/utils/currencyFormatter";
 
-const Cart: NextPageWithLayout = () => {
+const CartComponent = () => {
   const { cart, cartIsUpdating } = useCart();
   const router = useRouter();
 
@@ -40,7 +39,6 @@ const Cart: NextPageWithLayout = () => {
   }
   return (
     <div className="mx-auto px-5 py-6 sm:py-10 md:w-3/5 lg:px-8 xl:w-2/5">
-      <Meta title="Cart" />
       {/* Heading */}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-medium md:text-2xl">Shopping Cart</h2>
@@ -104,8 +102,4 @@ const Cart: NextPageWithLayout = () => {
   );
 };
 
-Cart.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
-};
-
-export default Cart;
+export default CartComponent;
