@@ -1,19 +1,18 @@
-import { ReactElement, MouseEvent, FormEvent } from "react";
+"use client";
+
+import { FormEvent } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
-import { NextPageWithLayout } from "./_app";
 
-import Layout from "../components/layout/layout.component";
-import CartItemsContainer from "../components/cart-items-container/cart-items-container.component";
-import Loading from "../components/loading/loading.component";
-import Meta from "../components/meta/meta.component";
+import CartItemsContainer from "@/components/cart-items-container/cart-items-container.component";
+import Loading from "@/components/loading/loading.component";
 
-import useCart from "../hooks/useCart";
+import useCart from "@/hooks/useCart";
 
-import { formInputStyles } from "./auth/signin";
-import currencyFormatter from "../utils/currencyFormatter";
+import { formInputStyles } from "@/app/auth/signin/signin.component";
+import currencyFormatter from "@/utils/currencyFormatter";
 
-const Checkout: NextPageWithLayout = () => {
+const CheckoutComponent = () => {
   const { cart, cartIsUpdating } = useCart();
 
   if (!cart) {
@@ -33,7 +32,6 @@ const Checkout: NextPageWithLayout = () => {
 
   return (
     <div className="mx-auto flex flex-col px-5 py-6 sm:flex-row sm:py-10 md:w-4/5 lg:px-8">
-      <Meta title="Checkout" />
       {/* Form */}
       <div className="w-full p-4">
         <form onSubmit={handleSubmit} className={`flex flex-col space-y-4`}>
@@ -205,8 +203,4 @@ const Checkout: NextPageWithLayout = () => {
   );
 };
 
-Checkout.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
-};
-
-export default Checkout;
+export default CheckoutComponent;
