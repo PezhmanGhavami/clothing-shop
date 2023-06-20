@@ -73,6 +73,8 @@ export const metadata = {
   title: "Home",
 };
 
+export const revalidate = 60;
+
 const Home = async () => {
   const { newestProducts, specialOffers } = await getData();
 
