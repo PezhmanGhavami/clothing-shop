@@ -1,7 +1,6 @@
 import { prisma } from "@/utils/prisma-client";
 import ProductCardContainer from "@/components/product-card-container/product-card-container.component";
 import Slideshow from "@/components/slideshow/slideshow.component";
-import Meta from "@/components/meta/meta.component";
 
 const landingDir = [
   {
@@ -70,12 +69,15 @@ const getData = async () => {
   };
 };
 
+export const metadata = {
+  title: "Home",
+};
+
 const Home = async () => {
   const { newestProducts, specialOffers } = await getData();
 
   return (
     <>
-      <Meta title="Home" />
       <Slideshow slides={landingDir} />
       <ProductCardContainer
         showName={true}
