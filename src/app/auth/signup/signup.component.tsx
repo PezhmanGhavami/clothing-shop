@@ -1,40 +1,29 @@
+"use client";
+
 import { useState, ChangeEvent, FormEvent, ReactElement } from "react";
 import Link from "next/link";
-import { NextPageWithLayout } from "../_app";
-import { BiShow, BiHide } from "react-icons/bi";
 import { toast } from "react-toastify";
 
-import Loading from "../../components/loading/loading.component";
-import AuthLayout from "../../components/auth-layout/auth-layout";
-import Meta from "../../components/meta/meta.component";
+import Loading from "@/components/loading/loading.component";
 
-import useUser from "../../hooks/useUser";
-import fetcher from "../../utils/fetcher";
+import useUser from "@/hooks/useUser";
+import fetcher from "@/utils/fetcher";
 
-interface IUserLoginFrom {
+import { formInputStyles } from "../signin/signin.component";
+
+interface IUserRegisterFrom {
   email: string;
   password: string;
+  confirmPassword: string;
+  displayName: string;
 }
 
 const defaultFormFields = {
+  displayName: "",
   email: "",
   password: "",
+  confirmPassword: "",
 };
-
-export const formInputStyles = {
-  container:
-    "border bg-neutral-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-700 shadow-md rounded-xl flex justify-around p-4 w-3/4 md:w-80 ",
-  inputContainerClasses: "mb-4 relative ",
-  labelClasses: "block pb-1 ",
-  inputClasses:
-    "w-full h-9 rounded-md px-2 dark:bg-slate-900 border dark:border-slate-700 focus:outline-none focus:ring focus:ring-blue-400 ",
-  inputWarnClasses: "text-sm text-red-700 dark:text-red-400",
-  aTagClasses: "text-blue-700 dark:text-blue-400 hover:underline ",
-  successButtonClasses:
-    "bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-bold w-full text-white ",
-};
-
-//TODO - Couldn't get the invalid pseudo class work correctly (always active), fix this later
 
 enum inputStatus {
   EMPTY,
@@ -42,15 +31,14 @@ enum inputStatus {
   INVALID,
 }
 
-const Login: NextPageWithLayout = () => {
+const SignUpComponent = () => {
   const [formFields, setFormFields] =
-    useState<IUserLoginFrom>(defaultFormFields);
-  const [showPassword, setShowPassword] = useState(false);
+    useState<IUserRegisterFrom>(defaultFormFields);
   const [isLoading, setIsLoading] = useState(false);
 
   const { mutateUser } = useUser();
 
-  const { email, password } = formFields;
+  const { displayName, email, password, confirmPassword } = formFields;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFormFields((prev) => ({
@@ -59,16 +47,22 @@ const Login: NextPageWithLayout = () => {
     }));
   };
 
-  const toggleShowPassword = () => {
-    setShowPassword((prev) => !prev);
-  };
-
   const validateForm = (onSubmit: boolean = false) => {
     let formIsValid = true;
+    let nameStatus = inputStatus.VALID;
     let emailStatus = inputStatus.VALID;
     let passwordStatus = inputStatus.VALID;
+    let confirmPasswordStatus = inputStatus.VALID;
     const emailRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    //TODO - Add a regex to check password strength (front and back)
+
+    if (displayName === "" || !displayName) {
+      nameStatus = inputStatus.EMPTY;
+      formIsValid = false;
+      onSubmit && toast.error("You should provide a name.");
+    }
 
     if (email === "" || !email || !emailRegex.test(email)) {
       formIsValid = false;
@@ -88,7 +82,24 @@ const Login: NextPageWithLayout = () => {
       passwordStatus = inputStatus.EMPTY;
     }
 
-    return { formIsValid, emailStatus, passwordStatus };
+    if (confirmPassword === "" || !confirmPassword) {
+      onSubmit && toast.error("You should confirm your password.");
+      formIsValid = false;
+      confirmPasswordStatus = inputStatus.EMPTY;
+    }
+
+    if (password !== confirmPassword) {
+      onSubmit && toast.error("Passwords should match.");
+      formIsValid = false;
+    }
+
+    return {
+      formIsValid,
+      emailStatus,
+      passwordStatus,
+      nameStatus,
+      confirmPasswordStatus,
+    };
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -100,9 +111,11 @@ const Login: NextPageWithLayout = () => {
 
     setIsLoading(true);
 
-    const userData = {
+    const userData: IUserRegisterFrom = {
       email,
       password,
+      confirmPassword,
+      displayName,
     };
 
     const headers = new Headers({
@@ -110,7 +123,7 @@ const Login: NextPageWithLayout = () => {
     });
     try {
       mutateUser(
-        await fetcher("/api/auth/login", {
+        await fetcher("/api/auth", {
           method: "POST",
           headers,
           body: JSON.stringify(userData),
@@ -131,9 +144,8 @@ const Login: NextPageWithLayout = () => {
 
   return (
     <>
-      <Meta title="Sign in" />
       {/* Page title */}
-      <p className="pb-4 text-lg">Sign in to Clothing Shop</p>
+      <p className="pb-4 text-lg">Sign up to Clothing Shop</p>
       <form
         onSubmit={handleSubmit}
         noValidate
@@ -141,12 +153,33 @@ const Login: NextPageWithLayout = () => {
       >
         {/* inputs container */}
         <div>
+          {/* Name container */}
+          <div className={formInputStyles.inputContainerClasses}>
+            <label
+              className={formInputStyles.labelClasses}
+              htmlFor={"sign-up-name"}
+            >
+              Name
+            </label>
+            <input
+              className={formInputStyles.inputClasses}
+              type="text"
+              name="displayName"
+              id="sign-up-name"
+              value={displayName}
+              onChange={handleChange}
+              autoComplete={"off"}
+              tabIndex={1}
+              autoFocus
+              required
+            />
+          </div>
           {/* Email container */}
           {/* NOTE - Made the autocomplete off because of input bg color change whenver an autocomplete value is used; TODO - Figure out how to solve the bg change and remove autoComplete=off */}
           <div className={formInputStyles.inputContainerClasses}>
             <label
               className={formInputStyles.labelClasses}
-              htmlFor={"sign-in-email"}
+              htmlFor={"sign-up-email"}
             >
               Email
             </label>
@@ -154,12 +187,11 @@ const Login: NextPageWithLayout = () => {
               className={formInputStyles.inputClasses}
               type="email"
               name="email"
-              id="sign-in-email"
+              id="sign-up-email"
               value={email}
               onChange={handleChange}
               autoComplete={"off"}
-              tabIndex={1}
-              autoFocus
+              tabIndex={2}
               required
             />
             {validateForm().emailStatus === inputStatus.INVALID && (
@@ -172,62 +204,67 @@ const Login: NextPageWithLayout = () => {
           <div className={formInputStyles.inputContainerClasses}>
             <label
               className={formInputStyles.labelClasses}
-              htmlFor={"sign-in-password"}
+              htmlFor={"sign-up-password"}
             >
-              Password{" "}
-              <Link
-                href="/forgot-password"
-                tabIndex={5}
-                className={formInputStyles.aTagClasses + "float-right"}
-              >
-                Forgot Password?
-              </Link>
+              Password
             </label>
             <input
-              className={formInputStyles.inputClasses + " pr-8"}
-              type={`${showPassword ? "text" : "password"}`}
+              className={formInputStyles.inputClasses}
+              type="password"
               name="password"
-              id="sign-in-password"
+              id="sign-up-password"
               value={password}
               onChange={handleChange}
-              tabIndex={2}
+              tabIndex={3}
               required
             />
-            {/* Show password button */}
-            <span
-              tabIndex={3}
-              className="absolute right-1 top-8 cursor-pointer p-1"
-              onClick={toggleShowPassword}
-              title={`Click to ${showPassword ? "Hide" : "Show"} Password`}
+          </div>
+          {/*Confirm password container */}
+          <div className={formInputStyles.inputContainerClasses}>
+            <label
+              className={formInputStyles.labelClasses}
+              htmlFor={"sign-up-confirm-password"}
             >
-              {showPassword ? (
-                <BiShow className="text-lg" />
-              ) : (
-                <BiHide className="text-lg" />
+              Confirm Password
+            </label>
+            <input
+              className={formInputStyles.inputClasses}
+              type="password"
+              name="confirmPassword"
+              id="sign-up-confirm-password"
+              value={confirmPassword}
+              onChange={handleChange}
+              tabIndex={4}
+              required
+            />
+            {confirmPassword !== "" &&
+              password !== "" &&
+              confirmPassword !== password && (
+                <span className={formInputStyles.inputWarnClasses}>
+                  *Your passwords should match.
+                </span>
               )}
-            </span>
           </div>
         </div>
-        {/* Login button */}
+        {/* Register button */}
         <button
-          tabIndex={4}
+          tabIndex={5}
           type="submit"
           className={formInputStyles.successButtonClasses}
         >
-          {isLoading ? <Loading /> : "Login"}
+          {isLoading ? <Loading /> : "Register"}
         </button>
       </form>
-      {/* Link to sign up */}
+      {/* Link to login */}
       <div className={`${formInputStyles.container} mt-4 h-12 items-center`}>
         <p>
-          {"New here? "}
+          {"Already have an account? "}
           <Link
-            href={"/auth/signup"}
+            href={"/auth/signin"}
             className={formInputStyles.aTagClasses}
             tabIndex={6}
           >
-            {" "}
-            Create an account
+            Login
           </Link>
           {"."}
         </p>
@@ -236,8 +273,4 @@ const Login: NextPageWithLayout = () => {
   );
 };
 
-Login.getLayout = function getLayout(page: ReactElement) {
-  return <AuthLayout>{page}</AuthLayout>;
-};
-
-export default Login;
+export default SignUpComponent;

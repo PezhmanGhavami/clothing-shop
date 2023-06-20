@@ -1,7 +1,7 @@
-import { prisma } from "../utils/prisma-client";
-import ProductCardContainer from "../components/product-card-container/product-card-container.component";
-import Slideshow from "../components/slideshow/slideshow.component";
-import Meta from "../components/meta/meta.component";
+import { prisma } from "@/utils/prisma-client";
+import ProductCardContainer from "@/components/product-card-container/product-card-container.component";
+import Slideshow from "@/components/slideshow/slideshow.component";
+import Meta from "@/components/meta/meta.component";
 
 const landingDir = [
   {
