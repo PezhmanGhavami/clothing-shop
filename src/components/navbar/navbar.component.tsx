@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
+"use client";
+
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { FaUser, FaSearch, FaShoppingCart } from "react-icons/fa";
 
@@ -45,20 +46,7 @@ const Navbar = () => {
   const { user } = useUser();
   const { cart } = useCart();
 
-  const router = useRouter();
-  // NOTE - I'm using router.asPath which might not work because it won't be availble unitle router.isReady
-
-  useEffect(() => {
-    const handleLoadingError = () => {
-      toast.error("Coudln't load the page; Please try again.");
-    };
-
-    router.events.on("routeChangeError", handleLoadingError);
-
-    return () => {
-      router.events.off("routeChangeError", handleLoadingError);
-    };
-  }, [router]);
+  const pathname = usePathname();
 
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
@@ -90,7 +78,7 @@ const Navbar = () => {
                 onClick={closeModal}
                 href={link.to}
                 className={`${navLinks.linkClasses}${
-                  router.asPath === link.to
+                  pathname === link.to
                     ? "border-b-slate-900 dark:border-b-white"
                     : ""
                 }`}

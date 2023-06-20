@@ -3,6 +3,9 @@ import { Metadata } from "next";
 import "@/styles/globals.css";
 import "react-toastify/dist/ReactToastify.min.css";
 
+import Navbar from "@/components/navbar/navbar.component";
+import Footer from "@/components/footer/footer.component";
+
 import ThemeProvider from "@/context/theme.context";
 
 export const metadata: Metadata = {
@@ -60,7 +63,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-white text-slate-900 dark:bg-slate-900 dark:text-white">
-        <ThemeProvider>{children}</ThemeProvider>
+        <div className="flex min-h-screen flex-col">
+          <ThemeProvider>
+            <Navbar />
+            <main className="h-full grow border-y dark:border-y-slate-700">
+              {children}
+            </main>
+            <Footer />
+          </ThemeProvider>
+        </div>
       </body>
     </html>
   );

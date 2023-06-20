@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter, usePathname } from "next/navigation";
 import useSWR from "swr";
 
 import fetcher from "../utils/fetcher";
@@ -11,9 +11,11 @@ export default function useUser() {
   const { data, mutate } = useSWR<IUser>("/api/auth", fetcher);
 
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (data?.isLoggedIn && redirectRoutes.includes(router.pathname)) {
+    if (!pathname) return;
+    if (data?.isLoggedIn && redirectRoutes.includes(pathname)) {
       router.replace("/");
     }
     // if (
@@ -22,7 +24,7 @@ export default function useUser() {
     // ) {
     //   router.replace("/auth/signin");
     // }
-  }, [data, router]);
+  }, [data, router, pathname]);
 
   return {
     user: data,
