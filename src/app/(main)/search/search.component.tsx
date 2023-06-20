@@ -1,19 +1,18 @@
-import { useState, ReactElement, ChangeEvent, FormEvent } from "react";
-import { useRouter } from "next/router";
-import { NextPageWithLayout } from "./_app";
+"use client";
+
+import { useState, ChangeEvent, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { AiOutlineClose } from "react-icons/ai";
 
-import Layout from "../components/layout/layout.component";
-import Loading from "../components/loading/loading.component";
-import Meta from "../components/meta/meta.component";
+import Loading from "@/components/loading/loading.component";
 
-import fetcher from "../utils/fetcher";
+import fetcher from "@/utils/fetcher";
 
 import ProductContainer, {
   IProductCardContainerData,
-} from "../components/product-card-container/product-card-container.component";
+} from "@/components/product-card-container/product-card-container.component";
 
-const Search: NextPageWithLayout = () => {
+const SearchComponent = () => {
   const [searchInput, setSearchInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,9 +49,6 @@ const Search: NextPageWithLayout = () => {
   // FIXME - The Html stucture is bad
   return (
     <div className="mx-auto py-6 sm:py-10">
-      <Meta
-        title={foundProducts ? "Search results for " + searchInput : "Search"}
-      />
       {/* Search input */}
       <div className="px-4 lg:px-8">
         <div className="mx-auto rounded-xl border border-neutral-200 bg-neutral-50 p-4 shadow-md dark:border-slate-600 dark:bg-slate-800 md:w-3/5 xl:w-2/5">
@@ -119,8 +115,4 @@ const Search: NextPageWithLayout = () => {
   );
 };
 
-Search.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
-};
-
-export default Search;
+export default SearchComponent;
