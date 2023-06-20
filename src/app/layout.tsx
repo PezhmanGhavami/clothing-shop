@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 
 import Navbar from "@/components/navbar/navbar.component";
 import Footer from "@/components/footer/footer.component";
+import ToastifyWrapper from "@/components/toastify-wrapper/toastify-wrapper.component";
 
 import ThemeProvider from "@/context/theme.context";
 
@@ -63,15 +64,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-white text-slate-900 dark:bg-slate-900 dark:text-white">
-        <div className="flex min-h-screen flex-col">
-          <ThemeProvider>
+        <ThemeProvider>
+          <ToastifyWrapper />
+          <div className="flex min-h-screen flex-col">
             <Navbar />
             <main className="h-full grow border-y dark:border-y-slate-700">
               {children}
             </main>
             <Footer />
-          </ThemeProvider>
-        </div>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
