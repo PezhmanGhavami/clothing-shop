@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import useSWR from "swr";
 
-import fetcher from "../utils/fetcher";
-import { IUser } from "../pages/api/auth/index";
+import fetcher from "@/utils/fetcher";
+import { IUser } from "@/pages/api/auth/index";
 
 const redirectRoutes = ["/auth/signin", "/auth/signup"];
 

@@ -8,8 +8,8 @@ import { FaUser, FaSearch, FaShoppingCart } from "react-icons/fa";
 import Hamburger from "../hamburger/hamburger.component";
 import Overlay from "../overlay/overlay.component";
 
-import useUser from "../../hooks/useUser";
-import useCart from "../../hooks/useCart";
+import useUser from "@/hooks/useUser";
+import useCart from "@/hooks/useCart";
 
 const navLinks = {
   liClasses:
