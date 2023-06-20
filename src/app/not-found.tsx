@@ -1,14 +1,12 @@
 import Link from "next/link";
-import { ReactElement } from "react";
-import { NextPageWithLayout } from "./_app";
 
-import Layout from "../components/layout/layout.component";
-import Meta from "../components/meta/meta.component";
+export const metadata = {
+  title: "Page not found",
+};
 
-const NotFound: NextPageWithLayout = () => {
+const NotFound = () => {
   return (
     <div className="flex h-[85vh] flex-col items-center justify-center">
-      <Meta title="Page not found" />
       <p className="pb-4 text-4xl">There&apos;s nothing here!</p>
       <Link
         href={"/"}
@@ -18,10 +16,6 @@ const NotFound: NextPageWithLayout = () => {
       </Link>
     </div>
   );
-};
-
-NotFound.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
 };
 
 export default NotFound;
