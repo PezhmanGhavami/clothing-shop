@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillHeart } from "react-icons/ai";
@@ -9,7 +11,7 @@ import useCart from "../../hooks/useCart";
 
 import currencyFormatter from "../../utils/currency-formatter";
 
-import { itemPopulatedWithCategoryName } from "../../pages/product/[productID]";
+import { itemPopulatedWithCategoryName } from "@/app/(main)/product/[productId]/page";
 
 interface IProductOverview {
   product: itemPopulatedWithCategoryName;

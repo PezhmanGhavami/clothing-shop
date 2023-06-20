@@ -1,27 +1,21 @@
-import { ReactElement } from "react";
-import { GetStaticProps, GetStaticPaths } from "next";
-import { NextPageWithLayout } from "../_app";
 import { Item, Review, User } from "@prisma/client";
 
-import { prisma } from "../../utils/prisma-client";
+import { prisma } from "@/utils/prisma-client";
 
-import Layout from "../../components/layout/layout.component";
-import ProductOverview from "../../components/product-overview/product-overview.component";
+import ProductOverview from "@/components/product-overview/product-overview.component";
 import ProductCardContainer, {
   IProductCardContainerData,
-} from "../../components/product-card-container/product-card-container.component";
-import ProductReviewsContainer from "../../components/product-reviews-container/product-reviews-container.component";
-import Meta from "../../components/meta/meta.component";
+} from "@/components/product-card-container/product-card-container.component";
+import ProductReviewsContainer from "@/components/product-reviews-container/product-reviews-container.component";
 
 export type itemPopulatedWithCategoryName = Item & {
   categories: { name: string; slug: string }[];
 };
 interface IProduct {
-  product: itemPopulatedWithCategoryName;
-  relatedProducts: IProductCardContainerData;
+  params: { productId: string };
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export async function generateStaticParams() {
   const categoryNames = await prisma.item.findMany({
     select: {
       id: true,
@@ -29,23 +23,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
 
   const paths = categoryNames.map(({ id }) => ({
-    params: {
-      productID: id,
-    },
+    productId: id,
   }));
 
-  return {
-    paths,
-    fallback: false,
-  };
-};
+  return paths;
+}
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const productID = params?.productID as string;
-
+const getData = async (productId: string) => {
   const product = await prisma.item.update({
     where: {
-      id: productID,
+      id: productId,
     },
     data: {
       viewed: {
@@ -66,7 +53,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
           items: {
             where: {
               NOT: {
-                id: productID,
+                id: productId,
               },
             },
             take: 6,
@@ -96,25 +83,24 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 
   return {
-    props: {
-      product: JSON.parse(JSON.stringify(product)),
-      relatedProducts: JSON.parse(JSON.stringify(relatedProducts)),
-    },
-    revalidate: 60,
+    product: product,
+    relatedProducts: relatedProducts,
   };
 };
 
-const Product: NextPageWithLayout<IProduct> = ({
-  product,
-  relatedProducts,
-}) => {
+export const revalidate = 60;
+
+/* <Meta
+title={product.name}
+description={product.description}
+oGImageUrl={product.images[0]}
+/> */
+
+const Product = async ({ params }: IProduct) => {
+  const { product, relatedProducts } = await getData(params.productId);
+
   return (
     <div>
-      <Meta
-        title={product.name}
-        description={product.description}
-        oGImageUrl={product.images[0]}
-      />
       <ProductOverview product={product} />
       <ProductCardContainer
         showName={true}
@@ -135,10 +121,6 @@ const Product: NextPageWithLayout<IProduct> = ({
       />
     </div>
   );
-};
-
-Product.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
 };
 
 export default Product;
