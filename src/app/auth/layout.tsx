@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   if (!user || user.isLoggedIn) {
     return (
-      <div className="mx-auto mt-96 text-3xl">
+      <div className="mx-auto mt-96 h-full grow text-3xl">
         <Loading />
       </div>
     );

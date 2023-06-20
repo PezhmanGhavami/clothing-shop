@@ -122,13 +122,10 @@ const Navbar = () => {
                   </Link>
                 </>
               ) : (
-                <Link
-                  className={navLinks.userClasses}
-                  href="/api/auth/logout"
-                  passHref
-                >
+                // eslint-disable-next-line
+                <a className={navLinks.userClasses} href="/api/auth/logout">
                   Logout
-                </Link>
+                </a>
               )}
             </div>
           </button>
