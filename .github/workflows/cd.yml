@@ -19,6 +19,7 @@ jobs:
           touch .env 
           echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env 
           echo SECRET_COOKIE_PASSWORD=${{ secrets.SECRET_COOKIE_PASSWORD }} >> .env
+          echo BASE_URL=${{ secrets.BASE_URL }} >> .env
       - name: Installing dependencies
         run: npm ci
       - name: Installing sharp
