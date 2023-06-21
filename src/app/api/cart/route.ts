@@ -1,5 +1,3 @@
-import bcrypt from "bcryptjs";
-
 import { getSession, createResponse } from "@/utils/session";
 import { prisma } from "@/utils/prisma-client";
 
