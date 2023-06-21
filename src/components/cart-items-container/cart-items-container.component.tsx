@@ -1,6 +1,6 @@
 import CartItem from "../cart-item/cart-item.component";
 
-import { ICartItem } from "../../pages/api/cart";
+import { ICartItem } from "@/app/api/cart/route";
 
 interface ICartItemContainer {
   cartItems: ICartItem[];

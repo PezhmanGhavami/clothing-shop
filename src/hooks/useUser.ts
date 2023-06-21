@@ -3,7 +3,7 @@ import { useRouter, usePathname } from "next/navigation";
 import useSWR from "swr";
 
 import fetcher from "@/utils/fetcher";
-import { IUser } from "@/pages/api/auth/index";
+import { IUser } from "@/app/api/auth/route";
 
 const redirectRoutes = ["/auth/signin", "/auth/signup"];
 

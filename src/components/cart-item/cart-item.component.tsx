@@ -5,7 +5,7 @@ import useCart from "../../hooks/useCart";
 
 import currencyFormatter from "../../utils/currency-formatter";
 
-import { ICartItem } from "../../pages/api/cart";
+import { ICartItem } from "@/app/api/cart/route";
 
 interface ICartItemComponent {
   item: ICartItem;
