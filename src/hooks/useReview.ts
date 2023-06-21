@@ -2,9 +2,9 @@ import useSWR from "swr";
 
 import fetcher from "../utils/fetcher";
 
-import { IReviewResponse } from "../pages/api/review/index";
+import { IReviewResponse } from "@/app/api/review/route";
 interface IUseReviews {
-  itemID: string;
+  itemId: string;
   sortBy: string;
   page: number;
   sortMethod: string;
@@ -13,14 +13,14 @@ interface IUseReviews {
 }
 
 const useReview = ({
-  itemID,
+  itemId,
   sortBy,
   page,
   sortMethod,
   selectedFilter,
   showUserReviews,
 }: IUseReviews) => {
-  const query = `itemID=${itemID}&sortBy=${sortBy}&sortMethod=${sortMethod}&page=${
+  const query = `itemId=${itemId}&sortBy=${sortBy}&sortMethod=${sortMethod}&page=${
     page - 1
   }&showUserReviews=${showUserReviews}${selectedFilter}`;
   const { data, mutate } = useSWR<IReviewResponse>(

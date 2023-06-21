@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 
 import ReviewStars from "../product-review-stars/product-review-stars.component";
 import Overlay from "../overlay/overlay.component";
-import { reviewPopulatedWithUser } from "../../pages/api/review/index";
+import { ReviewPopulatedWithUser } from "@/app/api/review/route";
 import { IReviewFormData } from "../product-reviews-container/product-reviews-container.component";
 interface IProductReview {
-  review: reviewPopulatedWithUser;
+  review: ReviewPopulatedWithUser;
   isUsersReview: boolean;
-  handleDeleteReview: (reviewID: string) => void;
-  handleEditReview: (reviewID: string, formData: IReviewFormData) => void;
+  handleDeleteReview: (reviewId: string) => void;
+  handleEditReview: (reviewId: string, formData: IReviewFormData) => void;
 }
 
 const ProductReview = ({

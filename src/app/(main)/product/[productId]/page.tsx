@@ -108,7 +108,7 @@ const Product = async ({ params }: IProduct) => {
         productGroup={relatedProducts}
       />
       <ProductReviewsContainer
-        productID={product.id}
+        productId={product.id}
         avgRating={product.reviewsAvgRating}
         reviewsCount={product.reviewsCount}
         ratingCounts={{

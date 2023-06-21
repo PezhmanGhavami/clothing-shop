@@ -45,7 +45,7 @@ export async function POST(req: Request) {
       throw new Error("Wrong email or password");
     }
     const user = {
-      userID: userExists.id,
+      userId: userExists.id,
       dateCreated: Date.now(),
     };
     session.user = user;
@@ -83,7 +83,7 @@ export async function POST(req: Request) {
 
     const payload: IUser | IApiMessage = {
       isLoggedIn: true,
-      userID: userExists.id,
+      userId: userExists.id,
     };
 
     return createResponse(res, JSON.stringify(payload), resInit);

@@ -3,7 +3,7 @@ import { getIronSession, createResponse } from "iron-session";
 import { ICart } from "@/app/api/cart/route";
 export interface IIronSessionData {
   user?: {
-    userID: string;
+    userId: string;
     dateCreated: number;
   };
   cart?: ICart;

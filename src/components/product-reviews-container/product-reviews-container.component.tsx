@@ -18,7 +18,7 @@ import fetcher from "../../utils/fetcher";
 import useReview from "../../hooks/useReview";
 import useUser from "../../hooks/useUser";
 
-import { reviewPopulatedWithUser } from "../../pages/api/review/index";
+import { ReviewPopulatedWithUser } from "@/app/api/review/route";
 interface IRatingCounts {
   rated1: number;
   rated2: number;
@@ -27,7 +27,7 @@ interface IRatingCounts {
   rated5: number;
 }
 interface IProductReviewsContainer {
-  productID: string;
+  productId: string;
   avgRating: number;
   reviewsCount: number;
   ratingCounts: IRatingCounts;
@@ -131,15 +131,15 @@ const StarFilters = ({
   );
 };
 const FormModal = ({
-  itemID,
-  reviewID,
+  itemId,
+  reviewId,
   formData,
   setFormData,
   closeModal,
   mutateReviews,
 }: {
-  itemID: string;
-  reviewID?: string;
+  itemId: string;
+  reviewId?: string;
   formData: IReviewFormData;
   setFormData: Dispatch<SetStateAction<IReviewFormData>>;
   closeModal: () => void;
@@ -177,10 +177,10 @@ const FormModal = ({
       "Content-Type": "application/json",
     });
     try {
-      const apiUrl = reviewID ? `/api/review/${reviewID}` : "/api/review";
-      const payload = reviewID ? { ...formData } : { ...formData, itemID };
+      const apiUrl = reviewId ? `/api/review/${reviewId}` : "/api/review";
+      const payload = reviewId ? { ...formData } : { ...formData, itemId };
       const res = await fetcher(apiUrl, {
-        method: reviewID ? "PUT" : "POST",
+        method: reviewId ? "PUT" : "POST",
         headers,
         body: JSON.stringify(payload),
       });
@@ -202,7 +202,7 @@ const FormModal = ({
       {/* Title and close button */}
       <div className="mb-4 flex justify-between">
         <h2 className="text-xl font-medium md:text-2xl">
-          {reviewID ? "Edit your review" : "Add a review"}
+          {reviewId ? "Edit your review" : "Add a review"}
         </h2>
         <button
           onClick={closeModal}
@@ -299,7 +299,7 @@ const cleanFormData = {
 };
 
 const ProductReviewsContainer = ({
-  productID,
+  productId,
   avgRating,
   reviewsCount,
   ratingCounts,
@@ -309,14 +309,14 @@ const ProductReviewsContainer = ({
   const [filter, setFilter] = useState("");
   const [page, setPage] = useState(1);
   const [showUserReviews, setShowUserReviews] = useState(false);
-  const [reviewID, setReviewID] = useState<string | undefined>(undefined);
+  const [reviewId, setreviewId] = useState<string | undefined>(undefined);
   const [formData, setFormData] = useState(cleanFormData);
 
   const [sortBy, sortMethod] =
     sortOptions[selectedSortOption as keyof typeof sortOptions];
   const { reviewsData, mutateReviews } = useReview({
     page: page,
-    itemID: productID,
+    itemId: productId,
     sortBy: sortBy,
     sortMethod: sortMethod,
     selectedFilter: filter,
@@ -346,7 +346,7 @@ const ProductReviewsContainer = ({
   };
   const closeModal = () => {
     setOpenModal(false);
-    setReviewID(undefined);
+    setreviewId(undefined);
     setFormData(cleanFormData);
   };
   const toggleShowUserReviews = () => {
@@ -356,9 +356,9 @@ const ProductReviewsContainer = ({
     setPage(1);
     setSelectedSortOption(event.target.value);
   };
-  const handleDeleteReview = async (reviewID: string) => {
+  const handleDeleteReview = async (reviewId: string) => {
     try {
-      const res = await fetcher("/api/review/" + reviewID, {
+      const res = await fetcher("/api/review/" + reviewId, {
         method: "DELETE",
       });
       mutateReviews();
@@ -372,8 +372,8 @@ const ProductReviewsContainer = ({
     } finally {
     }
   };
-  const handleEditReview = (reviewID: string, formData: IReviewFormData) => {
-    setReviewID(reviewID);
+  const handleEditReview = (reviewId: string, formData: IReviewFormData) => {
+    setreviewId(reviewId);
     setFormData(formData);
     toggleModal();
   };
@@ -388,8 +388,8 @@ const ProductReviewsContainer = ({
         <>
           <Overlay handleClick={closeModal} />
           <FormModal
-            itemID={productID}
-            reviewID={reviewID}
+            itemId={productId}
+            reviewId={reviewId}
             formData={formData}
             setFormData={setFormData}
             closeModal={closeModal}
@@ -461,14 +461,14 @@ const ProductReviewsContainer = ({
       {/* Reviews */}
       <div className="divide-y">
         {reviewsData ? (
-          reviewsData.reviews.length > 0 ? (
-            reviewsData.reviews.map((review) => (
+          reviewsData.reviews?.length || -1 > 0 ? (
+            reviewsData.reviews?.map((review) => (
               <ProductReview
                 key={review.id}
                 handleEditReview={handleEditReview}
                 handleDeleteReview={handleDeleteReview}
-                isUsersReview={review.userId === user?.userID}
-                review={review as reviewPopulatedWithUser}
+                isUsersReview={review.userId === user?.userId}
+                review={review as ReviewPopulatedWithUser}
               />
             ))
           ) : (

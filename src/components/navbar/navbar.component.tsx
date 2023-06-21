@@ -4,12 +4,15 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { FaUser, FaSearch, FaShoppingCart } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 import Hamburger from "../hamburger/hamburger.component";
 import Overlay from "../overlay/overlay.component";
 
 import useUser from "@/hooks/useUser";
 import useCart from "@/hooks/useCart";
+
+import fetcher from "@/utils/fetcher";
 
 const navLinks = {
   liClasses:
@@ -53,6 +56,18 @@ const Navbar = () => {
   };
   const closeModal = () => {
     setOpenModal(false);
+  };
+
+  const handleLogout = () => {
+    fetcher("/api/auth/logout", { method: "GET" })
+      .then(() => globalThis.location.reload())
+      .catch((error) => {
+        if (error instanceof Error) {
+          toast.error(error.message);
+        } else {
+          toast.error("Couldn't signout the user, please try again.");
+        }
+      });
   };
 
   return (
@@ -122,10 +137,9 @@ const Navbar = () => {
                   </Link>
                 </>
               ) : (
-                // eslint-disable-next-line
-                <a className={navLinks.userClasses} href="/api/auth/logout">
+                <div className={navLinks.userClasses} onClick={handleLogout}>
                   Logout
-                </a>
+                </div>
               )}
             </div>
           </button>

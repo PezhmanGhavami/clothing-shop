@@ -9,7 +9,7 @@ export interface IApiMessage {
 }
 export interface IUser {
   isLoggedIn: boolean;
-  userID: string;
+  userId: string;
 }
 
 export async function GET(req: Request) {
@@ -33,7 +33,7 @@ export async function GET(req: Request) {
 
     const payload: IUser | IApiMessage = {
       isLoggedIn: true,
-      userID: user.userID,
+      userId: user.userId,
     };
 
     return createResponse(res, JSON.stringify(payload), resInit);
@@ -41,7 +41,7 @@ export async function GET(req: Request) {
 
   const payload: IUser | IApiMessage = {
     isLoggedIn: false,
-    userID: "",
+    userId: "",
   };
 
   return createResponse(res, JSON.stringify(payload), resInit);
@@ -101,7 +101,7 @@ export async function POST(req: Request) {
     });
 
     const user = {
-      userID: newUser.id,
+      userId: newUser.id,
       dateCreated: Date.now(),
     };
     session.user = user;
@@ -115,7 +115,7 @@ export async function POST(req: Request) {
 
     const payload: IUser | IApiMessage = {
       isLoggedIn: true,
-      userID: newUser.id,
+      userId: newUser.id,
     };
 
     return createResponse(res, JSON.stringify(payload), resInit);
