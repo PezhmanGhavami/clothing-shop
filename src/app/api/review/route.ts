@@ -16,7 +16,6 @@ export async function GET(req: Request) {
   const res = new Response();
   const session = await getSession(req, res);
   const resInit: ResponseInit = {
-    status: 200,
     headers: { "Content-Type": "application/json" },
   };
   const { searchParams } = new URL(req.url);
@@ -141,6 +140,8 @@ export async function GET(req: Request) {
     resInit.status = 404;
     throw new Error("The resource you are looking for doesn not exist.");
   } catch (error) {
+    resInit.status = resInit.status ? resInit.status : 500;
+
     const payload: IReviewResponse | IApiMessage = {
       status: "ERROR",
       message: (error as Error).message,
@@ -154,7 +155,6 @@ export async function POST(req: Request) {
   const res = new Response();
   const session = await getSession(req, res);
   const resInit: ResponseInit = {
-    status: 200,
     headers: { "Content-Type": "application/json" },
   };
 
@@ -226,7 +226,7 @@ export async function POST(req: Request) {
       return createResponse(res, JSON.stringify(payload), resInit);
     }
   } catch (error) {
-    resInit.status = resInit.status === 200 ? 500 : resInit.status;
+    resInit.status = resInit.status ? resInit.status : 500;
 
     const payload: IApiMessage = {
       status: "ERROR",

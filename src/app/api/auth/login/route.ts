@@ -9,7 +9,6 @@ export async function POST(req: Request) {
   const res = new Response();
   const session = await getSession(req, res);
   const resInit: ResponseInit = {
-    status: 200,
     headers: { "Content-Type": "application/json" },
   };
 
@@ -88,6 +87,8 @@ export async function POST(req: Request) {
 
     return createResponse(res, JSON.stringify(payload), resInit);
   } catch (error) {
+    resInit.status = resInit.status ? resInit.status : 500;
+
     const payload: IUser | IApiMessage = {
       status: "ERROR",
       message: (error as Error).message,

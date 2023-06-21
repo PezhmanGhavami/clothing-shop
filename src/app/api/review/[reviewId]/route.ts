@@ -26,7 +26,6 @@ export async function PUT(req: Request, { params }: IRouteSegment) {
   const res = new Response();
   const session = await getSession(req, res);
   const resInit: ResponseInit = {
-    status: 200,
     headers: { "Content-Type": "application/json" },
   };
   const { reviewId } = params;
@@ -89,6 +88,8 @@ export async function PUT(req: Request, { params }: IRouteSegment) {
       return createResponse(res, JSON.stringify(payload), resInit);
     }
   } catch (error) {
+    resInit.status = resInit.status ? resInit.status : 500;
+
     const payload: IApiMessage = {
       status: "ERROR",
       message: (error as Error).message,
@@ -102,7 +103,6 @@ export async function DELETE(req: Request, { params }: IRouteSegment) {
   const res = new Response();
   const session = await getSession(req, res);
   const resInit: ResponseInit = {
-    status: 200,
     headers: { "Content-Type": "application/json" },
   };
   const { reviewId } = params;
@@ -152,6 +152,8 @@ export async function DELETE(req: Request, { params }: IRouteSegment) {
       return createResponse(res, JSON.stringify(payload), resInit);
     }
   } catch (error) {
+    resInit.status = resInit.status ? resInit.status : 500;
+
     const payload: IApiMessage = {
       status: "ERROR",
       message: (error as Error).message,

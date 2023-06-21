@@ -99,7 +99,6 @@ export async function GET(req: Request) {
   const res = new Response();
   const session = await getSession(req, res);
   const resInit: ResponseInit = {
-    status: 200,
     headers: { "Content-Type": "application/json" },
   };
   const { cart } = session;
@@ -126,7 +125,6 @@ export async function PUT(req: Request) {
   const res = new Response();
   const session = await getSession(req, res);
   const resInit: ResponseInit = {
-    status: 200,
     headers: { "Content-Type": "application/json" },
   };
   const { cart } = session;
@@ -196,6 +194,8 @@ export async function PUT(req: Request) {
       }
     }
   } catch (error) {
+    resInit.status = resInit.status ? resInit.status : 500;
+
     const payload: ICart | IApiMessage = {
       status: "ERROR",
       message: (error as Error).message,

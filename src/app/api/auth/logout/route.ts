@@ -6,7 +6,6 @@ export async function GET(req: Request) {
   const res = new Response();
   const session = await getSession(req, res);
   const resInit: ResponseInit = {
-    status: 200,
     headers: { "Content-Type": "application/json" },
   };
 

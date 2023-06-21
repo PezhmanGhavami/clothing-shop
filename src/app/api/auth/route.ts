@@ -16,7 +16,6 @@ export async function GET(req: Request) {
   const res = new Response();
   const session = await getSession(req, res);
   const resInit: ResponseInit = {
-    status: 200,
     headers: { "Content-Type": "application/json" },
   };
   const { user } = session;
@@ -50,7 +49,6 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   const res = new Response();
   const resInit: ResponseInit = {
-    status: 200,
     headers: { "Content-Type": "application/json" },
   };
   const session = await getSession(req, res);
@@ -120,6 +118,8 @@ export async function POST(req: Request) {
 
     return createResponse(res, JSON.stringify(payload), resInit);
   } catch (error) {
+    resInit.status = resInit.status ? resInit.status : 500;
+
     const payload: IUser | IApiMessage = {
       status: "ERROR",
       message: (error as Error).message,
