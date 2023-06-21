@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import fetcher from "../utils/fetcher";
 
 import { IProductCard } from "../components/product-card/product-card.component";
-import { ICart, ICartItem } from "../pages/api/cart";
+import { ICart, ICartItem } from "@/app/api/cart/route";
 
 const checkForItemInCartThenChangeItAccordingly = (
   cartItems: ICartItem[],
