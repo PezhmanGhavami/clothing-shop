@@ -1,20 +1,22 @@
-import type { IronSessionOptions } from "iron-session";
-import { ICart } from "../pages/api/cart";
+import { getIronSession, createResponse } from "iron-session";
 
-export const sessionOptions: IronSessionOptions = {
-  password: process.env.SECRET_COOKIE_PASSWORD as string,
-  cookieName: "clothingShopSeal",
-  cookieOptions: {
-    secure: process.env.NODE_ENV === "production",
-  },
+import { ICart } from "@/app/api/cart/route";
+export interface IIronSessionData {
+  user?: {
+    userID: string;
+    dateCreated: number;
+  };
+  cart?: ICart;
+}
+
+export const getSession = (req: Request, res: Response) => {
+  return getIronSession<IIronSessionData>(req, res, {
+    password: process.env.SECRET_COOKIE_PASSWORD as string,
+    cookieName: "clothingShopSeal",
+    cookieOptions: {
+      secure: process.env.NODE_ENV === "production",
+    },
+  });
 };
 
-declare module "iron-session" {
-  interface IronSessionData {
-    user?: {
-      userID: string;
-      dateCreated: number;
-    };
-    cart?: ICart;
-  }
-}
+export { createResponse };
