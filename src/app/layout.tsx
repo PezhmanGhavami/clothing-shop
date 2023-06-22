@@ -1,12 +1,11 @@
 import { Metadata } from "next";
+import { cookies } from "next/headers";
 
 import "@/styles/globals.css";
 import "react-toastify/dist/ReactToastify.min.css";
 
 import Footer from "@/components/footer/footer.component";
 import ToastifyWrapper from "@/components/toastify-wrapper/toastify-wrapper.component";
-
-import ThemeProvider from "@/context/theme.context";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.BASE_URL as string),
@@ -54,19 +53,23 @@ export const metadata: Metadata = {
   },
 };
 
+const checkCookiesForTheme = () => {
+  const cookieStore = cookies();
+
+  return cookieStore.get("theme")?.value || "dark";
+};
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html className={checkCookiesForTheme()} lang="en">
       <body className="flex min-h-screen flex-col bg-white text-slate-900 dark:bg-slate-900 dark:text-white">
-        <ThemeProvider>
-          <ToastifyWrapper />
-          {children}
-          <Footer />
-        </ThemeProvider>
+        <ToastifyWrapper />
+        {children}
+        <Footer />
       </body>
     </html>
   );
