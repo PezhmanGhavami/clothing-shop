@@ -1,3 +1,5 @@
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+
 import { getIronSession, createResponse } from "iron-session";
 
 import { ICart } from "@/app/api/cart/route";
@@ -17,6 +19,24 @@ export const getSession = (req: Request, res: Response) => {
       secure: process.env.NODE_ENV === "production",
     },
   });
+};
+
+export const getServerSession = async (
+  headers: Headers,
+  cookies: ReadonlyRequestCookies,
+) => {
+  const req = {
+    headers: headers,
+    cookies: cookies,
+  };
+  const res = {
+    getHeader: headers.get,
+    setCookie: cookies.set,
+    setHeader: headers.set,
+  };
+
+  // @ts-ignore
+  return getSession(req, res);
 };
 
 export { createResponse };

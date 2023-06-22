@@ -1,20 +1,26 @@
-"use client";
-
+import { cookies, headers } from "next/headers";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 
-import Loading from "@/components/loading/loading.component";
+import { getServerSession } from "@/utils/session";
 
-import useUser from "../../hooks/useUser";
+async function getUserSession() {
+  const headersList = headers();
+  const cookieStore = cookies();
+  const session = await getServerSession(headersList, cookieStore);
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  const { user } = useUser();
+  return session.user ? true : false;
+}
 
-  if (!user || user.isLoggedIn) {
-    return (
-      <div className="mx-auto mt-96 h-full grow text-3xl">
-        <Loading />
-      </div>
-    );
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const userExists = await getUserSession();
+
+  if (userExists) {
+    return redirect("/");
   }
 
   return (
