@@ -246,15 +246,15 @@ const SHOP_DATA = [
   },
 ];
 const BRANDS = new Array(5).fill(false).map(() => ({
-  name: faker.random.word(),
+  name: faker.lorem.word(),
 }));
 
 const salt = await bcrypt.genSalt(10);
 const hashedPassword = await bcrypt.hash("123456", salt);
 const USERS = new Array(100).fill(false).map(() => ({
-  email: `${faker.random.word()}@mail.com`,
+  email: `${faker.lorem.word()}@mail.com`,
   password: hashedPassword,
-  displayName: faker.name.fullName(),
+  displayName: faker.person.fullName(),
 }));
 
 const getRandomNumber = (min, max) => {
