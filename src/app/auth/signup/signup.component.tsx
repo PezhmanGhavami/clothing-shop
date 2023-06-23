@@ -1,15 +1,21 @@
 "use client";
 
-import { useState, ChangeEvent, FormEvent, ReactElement } from "react";
-import Link from "next/link";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { toast } from "react-toastify";
 
 import Loading from "@/components/loading/loading.component";
+import OtherAuthOption from "@/components/other-auth-option/other-auth-option.component";
+import {
+  Form,
+  Label,
+  Input,
+  Button,
+  WarningSpan,
+  InputContainer,
+} from "@/components/form/form.components";
 
 import useUser from "@/hooks/useUser";
 import fetcher from "@/utils/fetcher";
-
-import { formInputStyles } from "../signin/signin.component";
 
 interface IUserRegisterFrom {
   email: string;
@@ -146,23 +152,13 @@ const SignUpComponent = () => {
     <>
       {/* Page title */}
       <p className="pb-4 text-lg">Sign up to Clothing Shop</p>
-      <form
-        onSubmit={handleSubmit}
-        noValidate
-        className={`${formInputStyles.container} flex-col`}
-      >
+      <Form onSubmit={handleSubmit} noValidate>
         {/* inputs container */}
         <div>
           {/* Name container */}
-          <div className={formInputStyles.inputContainerClasses}>
-            <label
-              className={formInputStyles.labelClasses}
-              htmlFor={"sign-up-name"}
-            >
-              Name
-            </label>
-            <input
-              className={formInputStyles.inputClasses}
+          <InputContainer>
+            <Label htmlFor={"sign-up-name"}>Name</Label>
+            <Input
               type="text"
               name="displayName"
               id="sign-up-name"
@@ -173,18 +169,12 @@ const SignUpComponent = () => {
               autoFocus
               required
             />
-          </div>
+          </InputContainer>
           {/* Email container */}
           {/* NOTE - Made the autocomplete off because of input bg color change whenver an autocomplete value is used; TODO - Figure out how to solve the bg change and remove autoComplete=off */}
-          <div className={formInputStyles.inputContainerClasses}>
-            <label
-              className={formInputStyles.labelClasses}
-              htmlFor={"sign-up-email"}
-            >
-              Email
-            </label>
-            <input
-              className={formInputStyles.inputClasses}
+          <InputContainer>
+            <Label htmlFor={"sign-up-email"}>Email</Label>
+            <Input
               type="email"
               name="email"
               id="sign-up-email"
@@ -195,21 +185,13 @@ const SignUpComponent = () => {
               required
             />
             {validateForm().emailStatus === inputStatus.INVALID && (
-              <span className={formInputStyles.inputWarnClasses}>
-                *Please enter a correct email address
-              </span>
+              <WarningSpan>*Please enter a correct email address</WarningSpan>
             )}
-          </div>
+          </InputContainer>
           {/* Password container */}
-          <div className={formInputStyles.inputContainerClasses}>
-            <label
-              className={formInputStyles.labelClasses}
-              htmlFor={"sign-up-password"}
-            >
-              Password
-            </label>
-            <input
-              className={formInputStyles.inputClasses}
+          <InputContainer>
+            <Label htmlFor={"sign-up-password"}>Password</Label>
+            <Input
               type="password"
               name="password"
               id="sign-up-password"
@@ -218,17 +200,11 @@ const SignUpComponent = () => {
               tabIndex={3}
               required
             />
-          </div>
+          </InputContainer>
           {/*Confirm password container */}
-          <div className={formInputStyles.inputContainerClasses}>
-            <label
-              className={formInputStyles.labelClasses}
-              htmlFor={"sign-up-confirm-password"}
-            >
-              Confirm Password
-            </label>
-            <input
-              className={formInputStyles.inputClasses}
+          <InputContainer>
+            <Label htmlFor={"sign-up-confirm-password"}>Confirm Password</Label>
+            <Input
               type="password"
               name="confirmPassword"
               id="sign-up-confirm-password"
@@ -240,35 +216,22 @@ const SignUpComponent = () => {
             {confirmPassword !== "" &&
               password !== "" &&
               confirmPassword !== password && (
-                <span className={formInputStyles.inputWarnClasses}>
-                  *Your passwords should match.
-                </span>
+                <WarningSpan>*Your passwords should match.</WarningSpan>
               )}
-          </div>
+          </InputContainer>
         </div>
         {/* Register button */}
-        <button
-          tabIndex={5}
-          type="submit"
-          className={formInputStyles.successButtonClasses}
-        >
+        <Button tabIndex={5} type="submit">
           {isLoading ? <Loading /> : "Register"}
-        </button>
-      </form>
+        </Button>
+      </Form>
       {/* Link to login */}
-      <div className={`${formInputStyles.container} mt-4 h-12 items-center`}>
-        <p>
-          {"Already have an account? "}
-          <Link
-            href={"/auth/signin"}
-            className={formInputStyles.aTagClasses}
-            tabIndex={6}
-          >
-            Login
-          </Link>
-          {"."}
-        </p>
-      </div>
+      <OtherAuthOption
+        pText="Already have an account? "
+        linkText="Login"
+        linkHref="/auth/signin"
+        tabIndex={6}
+      />
     </>
   );
 };

@@ -6,10 +6,14 @@ import { toast } from "react-toastify";
 
 import CartItemsContainer from "@/components/cart-items-container/cart-items-container.component";
 import Loading from "@/components/loading/loading.component";
+import {
+  Label,
+  Input,
+  InputContainer,
+} from "@/components/form/form.components";
 
 import useCart from "@/hooks/useCart";
 
-import { formInputStyles } from "@/app/auth/signin/signin.component";
 import currencyFormatter from "@/utils/currency-formatter";
 
 const CheckoutComponent = () => {
@@ -40,15 +44,9 @@ const CheckoutComponent = () => {
             <h2 className="mb-4 text-xl font-medium md:text-2xl">
               Contact information
             </h2>
-            <div className={formInputStyles.inputContainerClasses}>
-              <label
-                className={formInputStyles.labelClasses}
-                htmlFor={"contact-email"}
-              >
-                Email
-              </label>
-              <input
-                className={formInputStyles.inputClasses}
+            <InputContainer>
+              <Label htmlFor={"contact-email"}>Email</Label>
+              <Input
                 type="email"
                 name="email"
                 id="contact-email"
@@ -59,20 +57,14 @@ const CheckoutComponent = () => {
                 autoFocus
                 required
               />
-            </div>
+            </InputContainer>
           </div>
           {/* Payment info */}
           <div className="pt-4">
             <h2 className="mb-4 text-xl font-medium md:text-2xl">Payment</h2>
-            <div className={formInputStyles.inputContainerClasses}>
-              <label
-                className={formInputStyles.labelClasses}
-                htmlFor={"card-number"}
-              >
-                Card number
-              </label>
-              <input
-                className={formInputStyles.inputClasses}
+            <InputContainer>
+              <Label htmlFor={"card-number"}>Card number</Label>
+              <Input
                 type="text"
                 name="cardNumber"
                 id="card-number"
@@ -82,16 +74,10 @@ const CheckoutComponent = () => {
                 tabIndex={2}
                 required
               />
-            </div>
-            <div className={formInputStyles.inputContainerClasses}>
-              <label
-                className={formInputStyles.labelClasses}
-                htmlFor={"name-on-card"}
-              >
-                Name on card
-              </label>
-              <input
-                className={formInputStyles.inputClasses}
+            </InputContainer>
+            <InputContainer>
+              <Label htmlFor={"name-on-card"}>Name on card</Label>
+              <Input
                 type="text"
                 name="nameOnCard"
                 id="name-on-card"
@@ -101,22 +87,17 @@ const CheckoutComponent = () => {
                 tabIndex={3}
                 required
               />
-            </div>
-            <div
+            </InputContainer>
+            <InputContainer
               className={
-                formInputStyles.inputContainerClasses +
                 "flex flex-col justify-between space-y-4 sm:flex-row sm:space-y-0"
               }
             >
               <div>
-                <label
-                  className={formInputStyles.labelClasses}
-                  htmlFor={"expiration-date"}
-                >
+                <Label htmlFor={"expiration-date"}>
                   Expiration date (MM/YY)
-                </label>
-                <input
-                  className={formInputStyles.inputClasses}
+                </Label>
+                <Input
                   type="text"
                   name="expirationDate"
                   id="expiration-date"
@@ -128,11 +109,8 @@ const CheckoutComponent = () => {
                 />
               </div>
               <div>
-                <label className={formInputStyles.labelClasses} htmlFor={"cvc"}>
-                  CVC
-                </label>
-                <input
-                  className={formInputStyles.inputClasses}
+                <Label htmlFor={"cvc"}>CVC</Label>
+                <Input
                   type="text"
                   name="cvc"
                   id="cvc"
@@ -143,7 +121,7 @@ const CheckoutComponent = () => {
                   required
                 />
               </div>
-            </div>
+            </InputContainer>
           </div>
         </form>
       </div>

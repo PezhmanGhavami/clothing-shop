@@ -1,11 +1,20 @@
 "use client";
 
 import { useState, ChangeEvent, FormEvent } from "react";
-import Link from "next/link";
 import { BiShow, BiHide } from "react-icons/bi";
 import { toast } from "react-toastify";
 
 import Loading from "@/components/loading/loading.component";
+import OtherAuthOption from "@/components/other-auth-option/other-auth-option.component";
+import {
+  Form,
+  Label,
+  Input,
+  Button,
+  FormLink,
+  WarningSpan,
+  InputContainer,
+} from "@/components/form/form.components";
 
 import useUser from "@/hooks/useUser";
 import fetcher from "@/utils/fetcher";
@@ -18,19 +27,6 @@ interface IUserLoginFrom {
 const defaultFormFields = {
   email: "",
   password: "",
-};
-
-export const formInputStyles = {
-  container:
-    "border bg-neutral-50 dark:bg-slate-800 border-neutral-200 dark:border-slate-700 shadow-md rounded-xl flex justify-around p-4 w-3/4 md:w-80 ",
-  inputContainerClasses: "mb-4 relative ",
-  labelClasses: "block pb-1 ",
-  inputClasses:
-    "w-full h-9 rounded-md px-2 dark:bg-slate-900 border dark:border-slate-700 focus:outline-none focus:ring focus:ring-blue-400 ",
-  inputWarnClasses: "text-sm text-red-700 dark:text-red-400",
-  aTagClasses: "text-blue-700 dark:text-blue-400 hover:underline ",
-  successButtonClasses:
-    "bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-md h-9 font-bold w-full text-white ",
 };
 
 //TODO - Couldn't get the invalid pseudo class work correctly (always active), fix this later
@@ -132,24 +128,14 @@ const LoginComponent = () => {
     <>
       {/* Page title */}
       <p className="pb-4 text-lg">Sign in to Clothing Shop</p>
-      <form
-        onSubmit={handleSubmit}
-        noValidate
-        className={`${formInputStyles.container} flex-col`}
-      >
+      <Form onSubmit={handleSubmit} noValidate>
         {/* inputs container */}
         <div>
           {/* Email container */}
           {/* NOTE - Made the autocomplete off because of input bg color change whenver an autocomplete value is used; TODO - Figure out how to solve the bg change and remove autoComplete=off */}
-          <div className={formInputStyles.inputContainerClasses}>
-            <label
-              className={formInputStyles.labelClasses}
-              htmlFor={"sign-in-email"}
-            >
-              Email
-            </label>
-            <input
-              className={formInputStyles.inputClasses}
+          <InputContainer>
+            <Label htmlFor={"sign-in-email"}>Email</Label>
+            <Input
               type="email"
               name="email"
               id="sign-in-email"
@@ -161,28 +147,23 @@ const LoginComponent = () => {
               required
             />
             {validateForm().emailStatus === inputStatus.INVALID && (
-              <span className={formInputStyles.inputWarnClasses}>
-                *Please enter a correct email address
-              </span>
+              <WarningSpan>*Please enter a correct email address</WarningSpan>
             )}
-          </div>
+          </InputContainer>
           {/* Password container */}
-          <div className={formInputStyles.inputContainerClasses}>
-            <label
-              className={formInputStyles.labelClasses}
-              htmlFor={"sign-in-password"}
-            >
+          <InputContainer>
+            <Label htmlFor={"sign-in-password"}>
               Password{" "}
-              <Link
+              <FormLink
                 href="/forgot-password"
                 tabIndex={5}
-                className={formInputStyles.aTagClasses + "float-right"}
+                className="float-right"
               >
                 Forgot Password?
-              </Link>
-            </label>
-            <input
-              className={formInputStyles.inputClasses + " pr-8"}
+              </FormLink>
+            </Label>
+            <Input
+              className="pr-8"
               type={`${showPassword ? "text" : "password"}`}
               name="password"
               id="sign-in-password"
@@ -204,32 +185,20 @@ const LoginComponent = () => {
                 <BiHide className="text-lg" />
               )}
             </span>
-          </div>
+          </InputContainer>
         </div>
         {/* Login button */}
-        <button
-          tabIndex={4}
-          type="submit"
-          className={formInputStyles.successButtonClasses}
-        >
+        <Button tabIndex={4} type="submit">
           {isLoading ? <Loading /> : "Login"}
-        </button>
-      </form>
+        </Button>
+      </Form>
       {/* Link to sign up */}
-      <div className={`${formInputStyles.container} mt-4 h-12 items-center`}>
-        <p>
-          {"New here? "}
-          <Link
-            href={"/auth/signup"}
-            className={formInputStyles.aTagClasses}
-            tabIndex={6}
-          >
-            {" "}
-            Create an account
-          </Link>
-          {"."}
-        </p>
-      </div>
+      <OtherAuthOption
+        pText="New here?"
+        linkText="Create an account"
+        linkHref="/auth/signup"
+        tabIndex={6}
+      />
     </>
   );
 };
