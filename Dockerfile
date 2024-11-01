@@ -1,8 +1,7 @@
-FROM node:20-alpine AS base
-ARG DATABASE_URL
-ARG SECRET_COOKIE_PASSWORD
+# DOCKER_BUILDKIT=1 docker build -t clothing-shop -f ./Dockerfile
 
-# Stage 1: Install dependencies
+FROM node:20-alpine AS base
+
 FROM base AS deps
 RUN apk update && apk add --no-cache python3 py3-pip make g++ libc6-compat
 WORKDIR /app
@@ -10,28 +9,16 @@ COPY package.json package-lock.json ./
 RUN npm install
 RUN npm install sharp
 
-# Stage 2: Build the application
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-ENV NODE_ENV="production"
-ENV PORT="3000"
-ENV HOSTNAME="0.0.0.0"
-ENV DATABASE_URL=${DATABASE_URL}
-ENV SECRET_COOKIE_PASSWORD=${SECRET_COOKIE_PASSWORD}
-RUN ls && cat .env
+RUN npx prisma generate
 RUN npm run build
 
-# Stage 3: Production server
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV="production"
-ENV PORT="3000"
-ENV HOSTNAME="0.0.0.0"
-ENV DATABASE_URL=${DATABASE_URL}
-ENV SECRET_COOKIE_PASSWORD=${SECRET_COOKIE_PASSWORD}
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 next
@@ -40,8 +27,6 @@ USER next
 COPY --from=builder --chown=next:nodejs /app/public ./public
 COPY --from=builder --chown=next:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=next:nodejs /app/.next/static ./.next/static
-
-RUN ls && cat .env
 
 EXPOSE 3000
 
