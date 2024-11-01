@@ -1,4 +1,4 @@
-FROM node:22-alpine AS base
+FROM node:20-alpine AS base
 
 # Stage 1: Install dependencies
 FROM base AS deps
@@ -25,7 +25,5 @@ COPY --from=builder --chown=next:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=next:nodejs /app/.next/static ./.next/static
 
 EXPOSE 3000
-
-RUN npx prisma seed
 
 CMD ["npm", "run", "start"]
