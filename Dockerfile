@@ -6,6 +6,7 @@ RUN apk update && apk add --no-cache python3 py3-pip make g++ libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
+RUN npm install sharp
 
 # Stage 2: Build the application
 FROM base AS builder
