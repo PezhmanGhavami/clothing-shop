@@ -15,6 +15,12 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+ENV NODE_ENV="production"
+ENV PORT="3000"
+ENV HOSTNAME="0.0.0.0"
+ENV DATABASE_URL=${DATABASE_URL}
+ENV SECRET_COOKIE_PASSWORD=${SECRET_COOKIE_PASSWORD}
+RUN ls && cat .env
 RUN npm run build
 
 # Stage 3: Production server
@@ -34,6 +40,8 @@ USER next
 COPY --from=builder --chown=next:nodejs /app/public ./public
 COPY --from=builder --chown=next:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=next:nodejs /app/.next/static ./.next/static
+
+RUN ls && cat .env
 
 EXPOSE 3000
 
