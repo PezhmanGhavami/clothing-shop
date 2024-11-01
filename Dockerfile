@@ -1,4 +1,6 @@
 FROM node:20-alpine AS base
+ARG DATABASE_URL
+ARG SECRET_COOKIE_PASSWORD
 
 # Stage 1: Install dependencies
 FROM base AS deps
@@ -18,13 +20,21 @@ RUN npm run build
 # Stage 3: Production server
 FROM base AS runner
 WORKDIR /app
+
+ENV NODE_ENV="production"
+ENV PORT="3000"
+ENV HOSTNAME="0.0.0.0"
+ENV DATABASE_URL=${DATABASE_URL}
+ENV SECRET_COOKIE_PASSWORD=${SECRET_COOKIE_PASSWORD}
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 next
 USER next
+
 COPY --from=builder --chown=next:nodejs /app/public ./public
 COPY --from=builder --chown=next:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=next:nodejs /app/.next/static ./.next/static
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD ["node", "server.js"]
