@@ -3,6 +3,8 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   experimental: { scrollRestoration: true },
+  output: "standalone",
+  compress: false,
   images: {
     remotePatterns: [
       {
