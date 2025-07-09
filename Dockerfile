@@ -1,11 +1,10 @@
-# Use Debian slim instead of Alpine for Prisma compatibility
-FROM node:20-slim AS base
+# Use the full node:20 image for maximum compatibility (Debian-based)
+FROM node:20 AS base
 
 FROM base AS deps
-RUN apt-get update \
-  && apt-get install -y python3 make g++ libc6-dev \
-  && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
+
+# Install dependencies
 COPY package.json package-lock.json ./
 RUN npm install
 RUN npm install sharp
