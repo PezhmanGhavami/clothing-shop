@@ -1,9 +1,10 @@
-# DOCKER_BUILDKIT=1 docker build -t clothing-shop -f ./Dockerfile
-
-FROM node:20-alpine AS base
+# Use Debian slim instead of Alpine for Prisma compatibility
+FROM node:20-slim AS base
 
 FROM base AS deps
-RUN apk update && apk add --no-cache python3 py3-pip make g++ libc6-compat
+RUN apt-get update \
+  && apt-get install -y python3 make g++ libc6-dev \
+  && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
@@ -18,7 +19,6 @@ RUN npm run build
 
 FROM base AS runner
 WORKDIR /app
-
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 next
